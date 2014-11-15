@@ -1,6 +1,10 @@
 // cdModule Required Vars
-$page-width: 64rem;
-$border-radius: 4px;
+$maxPageWidth: 64rem;
+$maxLineLength: 42em;
+$borderRadius: .5em;
+
+// Global Vars
+// @import '../../../_global/vars.scss';
 
 // Bower Styles
 @import '../bower_components/cd-reset/dist/reset.scss';

@@ -7,7 +7,7 @@ main {
 	padding: 2em;
 	background: white;
 	
-	@media (max-width: $page-width) {
+	@media (max-width: $maxPageWidth) {
 		border: 1px solid #EEE;
 		margin: .5em;
 	}

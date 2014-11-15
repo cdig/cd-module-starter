@@ -2,7 +2,7 @@ cd-text-bubble {
 	display: block;
 	width: 100%;
 	padding: 1em;
-	border-radius: 1em;
+	border-radius: $borderRadius * 2;
 	background-color: #AAA;
 	color: white;
 	
