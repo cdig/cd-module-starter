@@ -1,12 +1,7 @@
 /* Known limitation: by default, Chrome and Safari on OS X allow very limited styling of `select`, unless a `border` property is set. */
 /**** GENERAL [optional] NICENESS ****/
 /* I don't like margins on headers (Ivan) */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin: 0; }
 
 /* Disable text selection for UI... (Ivan) */
@@ -18,12 +13,7 @@ h6 {
   cursor: default; }
 
 /* ...but keep selection enabled for text! (Ivan) */
-p,
-p *,
-input,
-textarea,
-.selectable,
-.selectable * {
+p, p *, input, textarea, .selectable, .selectable * {
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
@@ -31,11 +21,7 @@ textarea,
   cursor: inherit; }
 
 /* Give links and inputs behaviour like real GUI elements (Ivan) */
-a,
-a *,
-input[type="submit"],
-input[type="checkbox"],
-button {
+a, a *, input[type="submit"], input[type="checkbox"], button {
   cursor: pointer; }
 
 /* Style links like their surrounding content (Ivan) */
@@ -44,11 +30,7 @@ a {
   text-decoration: none; }
 
 /* Embedded contexts should be big and beefy! (Ivan) */
-iframe,
-object,
-canvas,
-progress,
-video {
+iframe, object, canvas, progress, video {
   display: block; }
 
 /**** BEST PRACTICES ****/
@@ -58,20 +40,11 @@ html {
   height: 100%; }
 
 /* Include padding and borders in width calculations (Paul Irish: paulirish.com/2012/box-sizing-border-box-ftw) */
-*,
-*:before,
-*:after {
+*, *:before, *:after {
   box-sizing: border-box; }
 
 /* Text inputs deserve a text cursor! (Ivan) */
-input[type="email"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-input[type="tel"],
-input[type="text"],
-input[type="url"],
-textarea {
+input[type="email"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="url"], textarea {
   cursor: text; }
 
 /* Remove the 2px border around iframes (Ivan) */
@@ -92,22 +65,11 @@ body {
  * 2. details and summary in IE 10/11 and Firefox
  * 3. main in IE 11.
  */
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-main,
-nav,
-section,
-summary {
+article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
   display: block; }
 
 /* Fix IE 8/9. */
-progress,
-audio {
+progress, audio {
   display: inline-block; }
 
 /* Fix Chrome, Firefox, and Opera. */
@@ -131,13 +93,11 @@ a {
   background-color: transparent; }
 
 /* Remove those annoying link glows */
-a:active,
-a:hover {
+a:active, a:hover {
   outline: 0; }
 
 /* Don't default to bolder in Firefox, Safari, and Chrome */
-b,
-strong {
+b, strong {
   font-weight: bold; }
 
 /* Standarize h1 values within section and article contexts in Firefox, Safari, and Chrome. */
@@ -149,8 +109,7 @@ small {
   font-size: 80%; }
 
 /* Prevent `sub` and `sup` affecting `line-height` in all browsers. */
-sub,
-sup {
+sub, sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
@@ -160,7 +119,7 @@ sup {
   top: -0.5em; }
 
 sub {
-  bottom: -0.25em; }
+  bottom: -0.2em; }
 
 /* Remove border when inside `a` element in IE 8/9/10. */
 img {
@@ -183,10 +142,7 @@ pre {
   overflow: auto; }
 
 /* Address odd `em`-unit font size rendering in all browsers. */
-code,
-kbd,
-pre,
-samp {
+code, kbd, pre, samp {
   font-family: monospace, monospace;
   font-size: 1em; }
 
@@ -194,11 +150,7 @@ samp {
  * 2. Correct font properties not being inherited.
  * 3. Address margins set differently in Firefox, Safari, and Chrome.
  */
-button,
-input,
-optgroup,
-select,
-textarea {
+button, input, optgroup, select, textarea {
   color: inherit;
   /* 1 */
   font: inherit;
@@ -214,23 +166,18 @@ button {
  * 2. Correct inability to style clickable `input` types in iOS.
  * 3. Improve usability and consistency of cursor style between image-type `input` and others.
  */
-button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
   -webkit-appearance: button;
   /* 2 */
   cursor: pointer;
   /* 3 */ }
 
 /* Re-set default cursor for disabled elements. */
-button[disabled],
-html input[disabled] {
+button[disabled], html input[disabled] {
   cursor: default; }
 
 /* Remove inner padding and border in Firefox */
-button::-moz-focus-inner,
-input::-moz-focus-inner {
+button::-moz-focus-inner, input::-moz-focus-inner {
   border: 0;
   padding: 0; }
 
@@ -243,8 +190,7 @@ input {
  *
  * Remove excess padding in IE 8/9/10.
  */
-input[type="checkbox"],
-input[type="radio"] {
+input[type="checkbox"], input[type="radio"] {
   padding: 0; }
 
 /* Remove default vertical scrollbar in IE 8/9/10/11. */
@@ -256,8 +202,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-td,
-th {
+td, th {
   padding: 0; }
 
 .size-1 {
@@ -369,10 +314,10 @@ cd-page {
       box-shadow: none; } }
   @media (max-width: 667px) {
     cd-page {
-      font-size: .9em; } }
+      font-size: 0.9em; } }
   @media (max-width: 375px) {
     cd-page {
-      font-size: .8em; } }
+      font-size: 0.8em; } }
 
 cd-page > :first-child {
   margin-top: 8em; }
@@ -381,21 +326,21 @@ cd-page > :last-child {
   margin-bottom: 8em; }
 
 body {
-  padding: .5em 0; }
+  padding: 0.5em 0; }
 
 figure {
   margin: 0 0 1em;
   padding: 0; }
 
 h1 {
-  margin: 0 .3em .3em;
+  margin: 0 0.3em 0.3em;
   text-align: center;
   font-size: 3em;
   text-shadow: 0 2px white, 0 -2px white, 0 -3px white, 2px 0 white, -2px 0 white, 3px 0 white, 4px 0 white, -4px 0 white;
   background-image: linear-gradient(white, white), linear-gradient(white, white), linear-gradient(currentColor, currentColor);
-  background-size: .05em 2px, .05em 2px, 1px 2px;
+  background-size: 0.1em 2px, 0.1em 2px, 1px 2px;
   background-repeat: no-repeat, no-repeat, repeat-x;
-  background-position: left bottom .1em, right bottom .1em, left bottom .1em; }
+  background-position: left bottom 0.1em, right bottom 0.1em, left bottom 0.1em; }
   h1::-moz-selection {
     text-shadow: 0 2px #AAA, 0 -2px #AAA, 0 -3px #AAA, 2px 0 #AAA, -2px 0 #AAA, 3px 0 #AAA, 4px 0 #AAA, -4px 0 #AAA;
     background: #AAA; }
@@ -419,19 +364,23 @@ h3 {
     font-size: 2.6em; }
 
   h2 {
-    font-size: 2.0em; }
+    font-size: 2em; }
 
   h3 {
-    font-size: 1.4em; } }
+    font-size: 1.4em; }
+ }
+
 @media (max-width: 667px) {
   h1 {
-    font-size: 2.0em; }
+    font-size: 2em; }
 
   h2 {
     font-size: 1.6em; }
 
   h3 {
-    font-size: 1.4em; } }
+    font-size: 1.4em; }
+ }
+
 cd-page > img {
   width: 100%; }
 
@@ -461,7 +410,7 @@ main {
   @media (max-width: 64rem) {
     main {
       border: 1px solid #EEE;
-      margin: .5em; } }
+      margin: 0.5em; } }
   @media (max-width: 667px) {
     main {
       padding: 1em 0 0; } }
@@ -480,3 +429,4 @@ cd-text-bubble p {
   padding: 0; }
   cd-text-bubble p:last-child {
     margin-bottom: 0; }
+

@@ -453,7 +453,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 1,
 		"shouldRunBless": 0,
-		"useLibsass": 0
+		"useLibsass": 1
 		},
 	"\/source\/styles\/example-style.scss": {
 		"createSourceMap": 0,
@@ -479,9 +479,9 @@
 	},
 "projectAttributes": {
 	"bowerAbbreviatedPath": "",
-	"displayValue": "cd-module-template",
+	"displayValue": "dist",
 	"displayValueWasSetByUser": 0,
-	"iconImageName": "pencil_orange"
+	"iconImageName": "harddrive_orange"
 	},
 "projectSettings": {
 	"alwaysUseExternalServer": 0,
