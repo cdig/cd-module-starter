@@ -4,7 +4,7 @@
 
 do ()->
 	
-	PAGE_SELECTOR = "page"
+	PAGE_SELECTOR = "cd-page"
 	SCROLL_ANIMATION_SPEED = 500
 	
 	pages = null

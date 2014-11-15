@@ -10,11 +10,24 @@ $iPadPortrait: 768px;
 $iPhoneLandscape: 667px;
 $iPhonePortrait: 375px;
 
-// Common Styles
-@import 'styles/mixins/*';
-@import 'styles/classes/*';
-@import 'styles/components/*';
-@import 'styles/elements/*';
+// Mixins
+@import 'styles/mixins/magic-underlines.scss';
 
-// Component Styles
-@import 'components/*';
+// Classes
+@import 'styles/classes/size.scss';
+@import 'styles/classes/stack.scss';
+
+// Components
+@import 'styles/components/cd-row.scss';
+@import 'styles/components/cd-text-bubble.scss';
+@import 'styles/components/cd-page.scss';
+
+// Elements
+@import 'styles/elements/body.scss';
+@import 'styles/elements/figure.scss';
+@import 'styles/elements/headings.scss';
+@import 'styles/elements/img.scss';
+@import 'styles/elements/lists.scss';
+@import 'styles/elements/main.scss';
+@import 'styles/elements/object.scss';
+@import 'styles/elements/p.scss';

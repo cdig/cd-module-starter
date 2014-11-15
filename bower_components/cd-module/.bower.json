@@ -12,11 +12,11 @@
   "ignore": [],
   "license": "MIT",
   "private": true,
-  "_release": "40392cc6cc",
+  "_release": "c4c5e7a189",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "40392cc6cc9b85861540fbac9474376cd71af960"
+    "commit": "c4c5e7a189ba011d4697aabbb0b94482e73ea00f"
   },
   "_source": "git://github.com/cdig/cd-module.git",
   "_target": "*",
