@@ -1,0 +1,20 @@
+// API
+// You must provide values for these variables wherever you import this file
+// Here are recommended defaults:
+// $page-width: 64rem;
+// $border-radius: 4px;
+
+// Breakpoints
+$iPadLandscape: 1024px;
+$iPadPortrait: 768px;
+$iPhoneLandscape: 667px;
+$iPhonePortrait: 375px;
+
+// Common Styles
+@import 'styles/mixins/*';
+@import 'styles/classes/*';
+@import 'styles/components/*';
+@import 'styles/elements/*';
+
+// Component Styles
+@import 'components/*';

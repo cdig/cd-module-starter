@@ -1,0 +1,42 @@
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	flex-flow: row nowrap;
+	
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	border-top: 1px solid #BBB;
+	
+	.pageButton {
+		flex: 1 1 auto;
+		height: 2em;
+		line-height: 2em;
+		padding: 0 .5em;
+		background: #FFF;
+		cursor: pointer;
+		border-right: 1px solid #BBB;
+		
+		text-transform: capitalize;
+		font-size: .6em;
+		text-align: center;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: clip;
+		
+		&.current {
+			background: #DDD;
+		}
+		
+		&:hover, &.current:hover {
+			background: #BBB;
+		}
+		
+		&:last-child {
+			border-right: 0;
+		}
+	}
+}

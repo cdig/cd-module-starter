@@ -1,0 +1,11 @@
+li {
+	margin: 0 0 0.5em;
+}
+
+ul {
+	margin: 0 0 0.5em;
+}
+
+ul ul {
+	margin: 0.5em 0; // This might be unnecessary due to margin collapsing
+}

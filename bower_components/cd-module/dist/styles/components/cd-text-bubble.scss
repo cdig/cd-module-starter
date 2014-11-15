@@ -1,0 +1,12 @@
+cd-text-bubble {
+	display: block;
+	width: 100%;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: #AAA;
+	color: white;
+	
+	@media (max-width: $iPhoneLandscape) {
+		border-radius: 0;
+	}
+}

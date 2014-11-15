@@ -1,0 +1,25 @@
+page {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: $page-width;
+	min-height: 100%;
+	margin: 0 auto;
+	box-shadow: 64px 0px 72px -128px black, -64px 0px 72px -128px black;
+	
+	@media (max-width: $page-width) {
+		box-shadow: none;
+	}
+	
+	@media (max-width: $iPhoneLandscape) {
+		font-size: .9em;
+	}
+	
+	@media (max-width: $iPhonePortrait) {
+		font-size: .8em;
+	}
+}
+
+// Space the pages apart, and extend the shadow above and below each page
+page > :first-child { margin-top: 8em; }
+page > :last-child { margin-bottom: 8em; }
