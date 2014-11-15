@@ -19,9 +19,10 @@ $iPhonePortrait: 375px;
 @import 'styles/classes/stack.scss';
 
 // Components
+@import 'styles/components/cd-flow-arrow.scss';
+@import 'styles/components/cd-page.scss';
 @import 'styles/components/cd-row.scss';
 @import 'styles/components/cd-text-bubble.scss';
-@import 'styles/components/cd-page.scss';
 
 // Elements
 @import 'styles/elements/body.scss';

@@ -16,5 +16,6 @@
   },
   "_source": "git://github.com/cdig/cd-reset.git",
   "_target": "*",
-  "_originalSource": "cdig/cd-reset"
+  "_originalSource": "cdig/cd-reset",
+  "_direct": true
 }
