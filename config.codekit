@@ -131,6 +131,22 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
+	"\/bower_components\/cd-module\/dist\/styles\/components\/cd-page.scss": {
+		"createSourceMap": 0,
+		"debugStyle": 0,
+		"decimalPrecision": 1,
+		"fileType": 4,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/bower_components\/cd-module\/dist\/styles\/components\/cd-page.scss",
+		"outputAbbreviatedPath": "\/public\/cd-page.css",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 0,
+		"shouldRunAutoprefixer": 1,
+		"shouldRunBless": 0,
+		"useLibsass": 1
+		},
 	"\/bower_components\/cd-module\/dist\/styles\/components\/cd-row.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -291,22 +307,6 @@
 		"shouldRunBless": 0,
 		"useLibsass": 1
 		},
-	"\/bower_components\/cd-module\/dist\/styles\/elements\/page.scss": {
-		"createSourceMap": 0,
-		"debugStyle": 0,
-		"decimalPrecision": 1,
-		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/bower_components\/cd-module\/dist\/styles\/elements\/page.scss",
-		"outputAbbreviatedPath": "\/public\/page.css",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"shouldRunAutoprefixer": 1,
-		"shouldRunBless": 0,
-		"useLibsass": 1
-		},
 	"\/bower_components\/cd-module\/dist\/styles\/mixins\/magic-underlines.scss": {
 		"createSourceMap": 0,
 		"debugStyle": 0,
@@ -359,17 +359,6 @@
 		"outputStyle": 0,
 		"syntaxCheckerStyle": 0
 		},
-	"\/public\/scripts.js": {
-		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/public\/scripts.js",
-		"outputAbbreviatedPath": "\/public\/scripts.js",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"outputStyle": 0,
-		"syntaxCheckerStyle": 0
-		},
 	"\/public\/styles.css": {
 		"fileType": 16,
 		"ignore": 1,
@@ -381,8 +370,8 @@
 		},
 	"\/source\/index.kit": {
 		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/source\/index.kit",
 		"outputAbbreviatedPath": "\/public\/index.html",
 		"outputPathIsOutsideProject": 0,
@@ -390,8 +379,8 @@
 		},
 	"\/source\/libs.js": {
 		"fileType": 64,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/source\/libs.js",
 		"outputAbbreviatedPath": "\/public\/libs.js",
 		"outputPathIsOutsideProject": 0,
@@ -427,8 +416,8 @@
 	"\/source\/scripts.coffee": {
 		"createSourceMap": 0,
 		"fileType": 32,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/source\/scripts.coffee",
 		"minifyOutput": 0,
 		"outputAbbreviatedPath": "\/public\/scripts.js",
@@ -455,8 +444,8 @@
 		"debugStyle": 0,
 		"decimalPrecision": 1,
 		"fileType": 4,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
+		"ignore": 0,
+		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/source\/styles.scss",
 		"outputAbbreviatedPath": "\/public\/styles.css",
 		"outputPathIsOutsideProject": 0,
@@ -464,7 +453,7 @@
 		"outputStyle": 0,
 		"shouldRunAutoprefixer": 1,
 		"shouldRunBless": 0,
-		"useLibsass": 1
+		"useLibsass": 0
 		},
 	"\/source\/styles\/example-style.scss": {
 		"createSourceMap": 0,

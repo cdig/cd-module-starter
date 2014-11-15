@@ -1,10 +1,16 @@
+// cdModule Required Vars
+$page-width: 64rem;
+$border-radius: 4px;
+
 // Bower Styles
 @import '../bower_components/cd-reset/dist/reset.scss';
 @import '../bower_components/cd-module/dist/styles.scss';
 
 // Global Styles
-@import '../../../_global/styles.scss';
+// @import '../../../_global/styles.scss';
 
 // Module Styles
-@import 'styles/*';
-@import 'pages/*';
+@import 'styles/example-style.scss';
+
+// Page Styles
+@import 'pages/example-page.scss';
