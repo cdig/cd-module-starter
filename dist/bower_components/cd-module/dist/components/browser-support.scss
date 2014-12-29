@@ -1,0 +1,65 @@
+.browser-support {
+	display: block;
+}
+
+.js.postmessage.video.audio.localstorage.svg.inlinesvg.webaudio.pointerevents .browser-support {
+	display: none;
+}
+
+.browser-support {
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #002;
+	background: rgba(#001, .85);
+	
+	&.hide {
+		display: none;
+	}
+	
+	.support-popup {
+		position: relative;
+		top: 20%;
+		width: 40em;
+		max-width: 90%;
+		margin: 0 auto;
+		padding: 1.2em 1.6em;
+		text-align: center;
+		background: white;
+		border: 2px solid black;
+		box-shadow: 0 .8em 2em -.8em black;
+	}
+	
+	
+	h1 {
+		display: inline-block;
+		color: #F03;
+		font-size: 2em;
+	}
+	
+	
+	p {
+		width: auto;
+		text-align: left;
+	}
+	
+	
+	.support-buttons {
+		text-align: right;
+		font-weight: bold;
+		
+		& > * {
+			display: inline-block;
+			padding: .4em .8em;
+			border: 2px solid black;
+			cursor: pointer;
+			
+			&:hover {
+				background: #F6F6F6;
+			}
+		}
+	}
+}

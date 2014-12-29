@@ -1,5 +1,7 @@
 # cdModule Template
 
+For nice documentation, take a look at the [cd-module project](http://github.com/cdig/cd-module).
+
 ## There Will Be Bugs
 This is still an alpha! The format for modules is rapidly evolving, and as such, this template project might lag a bit behind the current state of the art. I will try really hard to keep it updated. But if something seems fishy, it probably is.
 

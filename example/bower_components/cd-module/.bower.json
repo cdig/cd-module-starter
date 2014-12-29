@@ -1,0 +1,25 @@
+{
+  "name": "cd-module",
+  "homepage": "https://github.com/cdig/modlib",
+  "authors": [
+    "Ivan Reese <ivan@cdiginc.com>"
+  ],
+  "description": "A standard library for LBS modules, by CD Industrial Group Inc.",
+  "main": [
+    "dist/scripts.coffee",
+    "dist/styles.scss"
+  ],
+  "ignore": [],
+  "license": "MIT",
+  "private": true,
+  "_release": "4a4a8a2234",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4a4a8a2234488f2825a9b051227cf8682ef8d6dc"
+  },
+  "_source": "git://github.com/cdig/cd-module.git",
+  "_target": "*",
+  "_originalSource": "cdig/cd-module",
+  "_direct": true
+}

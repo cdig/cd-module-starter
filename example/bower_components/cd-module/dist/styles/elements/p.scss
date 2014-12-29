@@ -1,0 +1,16 @@
+p {
+	margin: 0 0 1em;
+	max-width: $maxLineLength;
+}
+
+main p {
+	padding: 0 1em;
+}
+
+cd-text-bubble p {
+	padding: 0;
+	
+	&:last-child {
+		margin-bottom: 0;
+	}
+}

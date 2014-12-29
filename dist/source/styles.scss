@@ -1,20 +1,18 @@
-// cdModule Required Vars
-$maxPageWidth: 64rem;
-$maxLineLength: 42em;
-$borderRadius: .5em;
+// 1. Global Vars
+@import '../../../_project/vars.scss';
 
-// Global Vars
-// @import '../../../_global/vars.scss';
-
-// Bower Styles
+// 2. Bower
 @import '../bower_components/cd-reset/dist/reset.scss';
 @import '../bower_components/cd-module/dist/styles.scss';
 
-// Global Styles
-// @import '../../../_global/styles.scss';
+// 3. Global
+@import '../../../_project/styles.scss';
 
-// Module Styles
-@import 'styles/example-style.scss';
+// 4. Components
+// None yet
 
-// Page Styles
-@import 'pages/example-page.scss';
+// 5. Module
+// None yet
+
+// 6. Pages
+@import 'pages/template.scss';
