@@ -1,6 +1,5 @@
 # cdModule
-
-A solid foundation for CDIG modules.
+A standard library for CDIG modules.
 
 
 #### What's included?
@@ -8,8 +7,8 @@ cdModule gives you a carefully chosen set of styles, scripts, and HTML component
 
 
 #### What's not included?
-Anything specific to an individual project or client belongs in an _project, to be shared by all modules in the project.
-
+* Anything specific to an individual project or client belongs in an _project, to be shared by all modules in the project.
+* cdFoundation stuff. It's listed as a bower dependency, but you need to make sure to include it in your module. The [module template](https://github.com/cdig/cd-module-template) covers this.
 
 #### How do I use it?
 Consult the [module template](https://github.com/cdig/cd-module-template) and seek the wisdom of its way.
@@ -29,118 +28,96 @@ Note: At some point in the future, we need to figure out how to (automatically?)
 
 ### Components
 
-**browser-support**
-TODO: Add description.
+**browser-support** TODO: Add description.
 
+**call-outs** TODO: Add description.
 
-**call-outs**
-TODO: Add description.
+**hud** TODO: Add description.
 
+**modal-popup** TODO: Add description.
 
-**hud**
-TODO: Add description.
+**page-locking** TODO: Add description.
 
+**page-switcher** TODO: Add description.
 
-**modal-popup**
-TODO: Add description.
+**score-animation** TODO: Add description.
 
-
-**page-locking**
-TODO: Add description.
-
-
-**page-switcher**
-TODO: Add description.
-
-
-**score-animation**
-TODO: Add description.
-
-
-**scroll-hint**
-TODO: Add description.
-
+**scroll-hint** TODO: Add description.
 
 
 ### Scripts
 
-**Backend: LocalStorage**
-TODO: Add description.
+**Backend: LocalStorage** TODO: Add description.
 
-**Backend: SCORM 2004**
-TODO: Add description.
+**Backend: SCORM 2004** TODO: Add description.
 
-**Easing**
-TODO: Add description.
+**Easing** TODO: Add description.
 
-**Flash Interface**
-TODO: Add description.
+**Flash Interface** TODO: Add description.
 
-**KV Store**
-TODO: Add description.
+**KV Store** TODO: Add description.
 
-**Matches Selector**
-TODO: Add description.
+**Matches Selector** TODO: Add description.
 
-**Page Audio**
-TODO: Add description.
+**Page Audio** TODO: Add description.
 
-**Page Manager**
-TODO: Add description.
+**Page Manager** TODO: Add description.
 
-**Page Scroll Watcher**
-TODO: Add description.
+**Page Scroll Watcher** TODO: Add description.
 
-**Page Title**
-TODO: Add description.
+**Page Title** TODO: Add description.
 
-**Pages**
-TODO: Add description.
+**Pages** TODO: Add description.
 
-**Params Service**
-TODO: Add description.
+**Params Service** TODO: Add description.
 
-**Save Before Unload**
-TODO: Add description.
+**Save Before Unload** TODO: Add description.
 
-**Save With Popup**
-TODO: Add description.
+**Save With Popup** TODO: Add description.
 
-**Scoring**
-TODO: Add description.
+**Scoring** TODO: Add description.
 
-**Scroll Regions**
-TODO: Add description.
+**Scroll Regions** TODO: Add description.
 
-**Scroll To**
-TODO: Add description.
+**Scroll To** TODO: Add description.
 
-**Welcome Popup**
-TODO: Add description.
-
+**Welcome Popup** TODO: Add description.
 
 ### Styles: Custom
 TODO: These are an awful lot like components... but they're different from the (above/real) components. They're to be used in the content; they're not part of the foundational system. We may have a crisis of naming here.
 
 **cd-flow-arrow**
+
 **cd-map**
+
 **cd-page**
+
 **cd-row**
+
 **cd-text-bubble**
 
 
 ### Styles: Elements
+
 **body**
+
 **figure**
+
 **headings**
+
 **img**
+
 **lists**
+
 **main**
+
 **object**
+
 **p**
 
 
 ### Styles: Mixins
+
 **magic-underlines**
 
 

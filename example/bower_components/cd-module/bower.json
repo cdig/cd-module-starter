@@ -5,6 +5,7 @@
     "Ivan Reese <ivan@cdiginc.com>"
   ],
   "main": [
+    "dist/components.kit",
     "dist/libs.js",
     "dist/scripts.coffee",
     "dist/styles.scss"

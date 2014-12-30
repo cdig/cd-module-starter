@@ -5,6 +5,7 @@
     "Ivan Reese <ivan@cdiginc.com>"
   ],
   "main": [
+    "dist/components.kit",
     "dist/libs.js",
     "dist/scripts.coffee",
     "dist/styles.scss"
@@ -16,11 +17,11 @@
   "license": "MIT",
   "private": true,
   "homepage": "https://github.com/cdig/cd-module",
-  "_release": "80668fce0b",
+  "_release": "eee095b43b",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "80668fce0bde8d6fb886abafb8d5da91ac8874d5"
+    "commit": "eee095b43bb869c8e919db76cb7ed686e727f203"
   },
   "_source": "git://github.com/cdig/cd-module.git",
   "_target": "*",
