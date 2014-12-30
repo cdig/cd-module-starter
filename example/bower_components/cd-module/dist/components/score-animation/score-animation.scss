@@ -1,0 +1,22 @@
+score-area
+{
+	position: absolute;
+	display: none; // Overridden by JS
+	top: 0;
+	left: 0;
+	pointer-events: none; // Safe (enough) — may add performance
+	z-index: 2000;
+	backface-visibility: hidden; // Small perf improvement
+}
+
+score-point
+{
+	position: absolute;
+	top: -5px;
+	left: -5px;
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	background: green;
+	transform: translate3d(0,0,0); // 3d (rather than 2d) may boost perf
+}

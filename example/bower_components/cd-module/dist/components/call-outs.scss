@@ -1,0 +1,119 @@
+$point-size: .8em;
+$arrow-size: .8em;
+
+call-out {
+	position: absolute;
+	top: 0;
+	
+	&::before { // The pulsing point
+		content: "";
+		position: absolute;
+		width: $point-size;
+		height: $point-size;
+		margin: -$point-size/2;
+		border: 4px solid #0F7;
+		border-radius: $point-size;
+		background: rgba(white, .3);
+		animation: call-out-pulse 4s linear infinite;
+	}
+	
+	&[open] { // [open] for mobile, :hover for desktop
+		z-index: 10;
+		call-out-label {
+			visibility: visible;
+		}
+	}
+	
+	&[seen] {
+		&::before {
+			border: 4px solid #777;
+		}
+	}
+	
+	&[top] {
+		transform: translate(-50%, -100%);
+		&::before, call-out-label::after {
+			top: 100%;
+			left: 50%;
+		}
+		call-out-label {
+			top: -$arrow-size -$point-size/2;
+			&::after {
+				transform: translate(-50%, 0%);
+				border-top: $arrow-size solid white;
+			}
+		}
+	}
+	
+	&[left] {
+		transform: translate(-100%, -50%);
+		&::before, call-out-label::after {
+			top: 50%;
+			left: 100%;
+		}
+		call-out-label{
+			left: -$arrow-size -$point-size/2;
+			&::after {
+				transform: translate(0%, -50%);
+				border-left: $arrow-size solid white;
+			}
+		}
+	}
+	
+	&[right] {
+		transform: translate(0%, -50%);
+		&::before, call-out-label::after {
+			top: 50%;
+			left: 0%;
+		}
+		call-out-label {
+			right: -$arrow-size -$point-size/2;
+			&::after {
+				transform: translate(-98%, -50%);
+				border-right: $arrow-size solid white;
+			}
+		}
+	}
+	
+	&[bottom] {
+		transform: translate(-50%, 0%);
+		&::before, call-out-label::after {
+			top: 0%;
+			left: 50%;
+		}
+		call-out-label{
+			bottom: -$arrow-size -$point-size/2;
+			&::after {
+				transform: translate(-50%, -98%);
+				border-bottom: $arrow-size solid white;
+			}
+		}
+	}
+}
+
+
+call-out-label {
+	display: block;
+	visibility: hidden;
+	position: relative;
+	padding: .5em;
+	max-width: 12em;
+	text-align: center;
+	background: white;
+	box-shadow: 0 .2em 2em -.5em black;
+	
+	&::after {
+		content: "";
+		position: absolute;
+		width: 0;
+		height: 0;
+		border: $arrow-size solid transparent;
+	}
+}
+
+
+@keyframes call-out-pulse {
+	from { transform: scale(1); opacity: 0; }
+	50% { transform: scale(1); opacity: 1; }
+	to { transform: scale(2); opacity: 0; }
+}

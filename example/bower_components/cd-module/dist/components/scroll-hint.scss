@@ -1,0 +1,32 @@
+scroll-hint {
+	display: block;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	
+	scroll-hint-tab {
+		display: inline-block;
+		padding: .5em;
+		transform: translateY(100%);
+		font-size: 1.2em;
+		color: rgba(black, .6);
+		background: linear-gradient(rgba(#FAFAFA, .89), rgba(#FAFAFA, .97), rgba(#FAFAFA, .89));
+		box-shadow: 0 0px 24px -16px black;
+		transition: transform .3s cubic-bezier(.8,.8,.5,1.0);
+		
+		&[icon-text]::before {
+			content: attr(icon-text);
+			display: inline-block;
+			width: 1.8em;
+			height: 1.8em;
+			margin-right: .3em;
+			font-size: 1.2em;
+			line-height: 2em;
+			color: currentColor;
+			background: rgba(white, .7);
+			box-shadow: 0 0px 8px -5px black;
+		}
+	}
+}

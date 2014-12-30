@@ -1,23 +1,167 @@
 # cdModule
 
-A standard library for CDIG modules.
+A solid foundation for CDIG modules.
 
-In the olden days, we used Dropbox to store and sync our standard library code. It was nice because I could write some code on my computer, and save the changes, and all other computers would automatically receive the updated code. But this was fragile. If I wanted to experimentally make some changes without shipping them out to the company at large, I'd need to make sure to work on a copy of the code, not the main files in Dropbox. And if I introduced a bug, everyone caught it. And if the changes I made broke existing projects, I had no way of knowing other than to wait until someone noticed. There was no opt-in/opt-out of changes.
 
-So, now we have git and github. It's the new Dropbox "source" folder.
+#### What's included?
+cdModule gives you a carefully chosen set of styles, scripts, and HTML components, to make all our modules look and act consistently.
 
-This project contains a whole bunch of common HTML, CSS, and JS files (well, Kit, SCSS, and Coffee files). You can use any or all of them in your modules. If I change these libraries, you can update your project with a simple `bower update`. But you don't have to. It's opt-in. And I get to work on changes safely, and only push them live once they're ready.
 
-So, here's hoping this works as well as could be expected.
+#### What's not included?
+Anything specific to an individual project or client belongs in an _project, to be shared by all modules in the project.
 
-### Wait wait wait.. so what does this repo actually contain?
 
-Common stuff to be used in all modules. Anything that is specific to a particular project or client is not to be included here. So.. we're punting on that stuff.
+#### How do I use it?
+Consult the [module template](https://github.com/cdig/cd-module-template) and seek the wisdom of its way.
 
-Now, there's a lot of common styles. So, in a sense, this is like an anti-reset. It's an opinionated set of default styles and behaviours that should help standardize our modules. It's not a framework, per se. You don't use this to design your own modules. This should force your modules to look and act a certain way.
 
-### Dependencies
-Requires cdReset, I think?
+## Included Features
+
+
+### Libs
+TODO: Maybe these should be included through bower? Just a thought, you know.
+
+**[modernizr](https://modernizr.com)** works with browser-support to warn users when they're using an unsupported browser.
+
+**[jQuery](https://jquery.com)** is used by the matching game. We're gonna remove this PDQ.
+
+
+### Tools (nee Framework)
+
+**Take & Make** are a nice dependency resolution / service discovery system. It ensures that services exist before dependent code executes.
+
+**Editor** gives us drag-and-drop positioning of elements using `left` and `margin-top`.
+
+
+### Components
+
+**browser-support**
+TODO: Add description.
+
+
+**call-outs**
+TODO: Add description.
+
+
+**hud**
+TODO: Add description.
+
+
+**modal-popup**
+TODO: Add description.
+
+
+**page-locking**
+TODO: Add description.
+
+
+**page-switcher**
+TODO: Add description.
+
+
+**score-animation**
+TODO: Add description.
+
+
+**scroll-hint**
+TODO: Add description.
+
+
+
+### Scripts
+
+**Backend: LocalStorage**
+TODO: Add description.
+
+**Backend: SCORM 2004**
+TODO: Add description.
+
+**Easing**
+TODO: Add description.
+
+**Flash Interface**
+TODO: Add description.
+
+**KV Store**
+TODO: Add description.
+
+**Matches Selector**
+TODO: Add description.
+
+**Page Audio**
+TODO: Add description.
+
+**Page Manager**
+TODO: Add description.
+
+**Page Scroll Watcher**
+TODO: Add description.
+
+**Page Title**
+TODO: Add description.
+
+**Pages**
+TODO: Add description.
+
+**Params Service**
+TODO: Add description.
+
+**Save Before Unload**
+TODO: Add description.
+
+**Save With Popup**
+TODO: Add description.
+
+**Scoring**
+TODO: Add description.
+
+**Scroll Regions**
+TODO: Add description.
+
+**Scroll To**
+TODO: Add description.
+
+**Welcome Popup**
+TODO: Add description.
+
+
+### Styles: Custom
+TODO: These are an awful lot like components... but they're different from the (above/real) components. They're to be used in the content; they're not part of the foundational system. We may have a crisis of naming here.
+
+**cd-flow-arrow**
+**cd-map**
+**cd-page**
+**cd-row**
+**cd-text-bubble**
+
+
+### Styles: Elements
+**body**
+**figure**
+**headings**
+**img**
+**lists**
+**main**
+**object**
+**p**
+
+
+### Styles: Mixins
+**magic-underlines**
+
+
+## Documentation of Decisions
+
+### Z-indexes
+
+* 10: `call-out[open]` (Call Outs)
+* 1000: `cd-modal` (Modal Popup)
+* 1001:	`page-switcher` (Switcher Container)
+* 1002: `cd-hud` (HUD)
+* 2000: `score-area` (Score Animation)
+* 9999: `.browser-support` (Browser Support)
+* 10000: `editor-container` textarea (Editor)
+
 
 ## License
 Copyright (c) 2014 CD Industrial Group Inc., released under MIT license.

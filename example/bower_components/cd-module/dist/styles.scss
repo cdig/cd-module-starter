@@ -11,20 +11,30 @@ $iPadPortrait: 768px;
 $iPhoneLandscape: 667px;
 $iPhonePortrait: 375px;
 
+// Framework Styles
+@import 'framework/editor.scss';
+
+// Component Styles
+@import 'components/browser-support.scss';
+@import 'components/call-outs.scss';
+@import 'components/hud.scss';
+@import 'components/modal-popup.scss';
+@import 'components/page-locking.scss';
+@import 'components/page-switcher.scss';
+@import 'components/scroll-hint.scss';
+@import 'components/score-animation/score-animation.scss';
+
 // Mixins
 @import 'styles/mixins/magic-underlines.scss';
 
-// Classes
-@import 'styles/classes/size.scss';
-@import 'styles/classes/stack.scss';
+// Custom Elements
+@import 'styles/custom/cd-flow-arrow.scss';
+@import 'styles/custom/cd-map.scss';
+@import 'styles/custom/cd-page.scss';
+@import 'styles/custom/cd-row.scss';
+@import 'styles/custom/cd-text-bubble.scss';
 
-// Components
-@import 'styles/components/cd-flow-arrow.scss';
-@import 'styles/components/cd-page.scss';
-@import 'styles/components/cd-row.scss';
-@import 'styles/components/cd-text-bubble.scss';
-
-// Elements
+// Standard Elements
 @import 'styles/elements/body.scss';
 @import 'styles/elements/figure.scss';
 @import 'styles/elements/headings.scss';

@@ -1,0 +1,47 @@
+score-display {
+	order: 3;
+	
+	* {
+		cursor: pointer;
+	}
+	
+	svg {
+		width: 1.2em;
+		height: 1.2em;
+		transform: rotate(-90deg);
+		transition: transform 1s;
+	}
+	
+	.disk {
+		fill: currentColor;
+		transition: opacity 1s;
+	}
+	
+	.ring {
+		stroke: currentColor;
+		stroke-width: 4;
+		stroke-dashoffset: 0;
+		stroke-dasharray: 50.24;
+		fill: transparent;
+		transition: opacity 1s;
+	}
+	
+	.check {
+		fill: currentColor;
+		opacity: 0;
+		transition: opacity 1s;
+	}
+	
+	&.complete {
+		svg {
+			transform: rotate(0deg);
+		}
+		
+		.disk, .ring {
+			opacity: 0;
+		}
+		.check {
+			opacity: 1;
+		}
+	}
+}

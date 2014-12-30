@@ -5,7 +5,8 @@ cd-page {
 	max-width: $maxPageWidth;
 	min-height: 100%;
 	margin: 0 auto;
-	box-shadow: 64px 0px 72px -128px black, -64px 0px 72px -128px black;
+	box-shadow: 64px 0px 72px -128px black,
+						 -64px 0px 72px -128px black;
 	
 	@media (max-width: $maxPageWidth) {
 		box-shadow: none;

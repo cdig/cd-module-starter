@@ -1,0 +1,24 @@
+.switcher-button {
+	display: block;
+	cursor: pointer;
+	text-transform: capitalize;
+	padding: .3em .8em;
+	
+	&:first-child {
+		padding-top: .6em;
+	}
+	
+	&:hover {
+		background: #EEE;
+	}
+	
+	&.locked {
+		opacity: .4;
+		cursor: default;
+		pointer-events: none; // Safe
+		
+		&:hover {
+			background: transparent;
+		}
+	}
+}
