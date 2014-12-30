@@ -12,7 +12,7 @@
 This repo contains two modules:
 
 * `dist` is a bare-bones skeleton of a module, ready for you to flesh out with content.
-* `example` is fleshed out and dressed up, to serve as an example of all the available features and how they should be used.
+* `example` is fleshed out and dressed up, to serve as an example of all the available features and how they should be used. *This is a work in progress and is not ready to be used.*
 
 ## License
 Copyright (c) 2014 CD Industrial Group Inc.
