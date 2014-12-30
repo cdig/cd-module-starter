@@ -1,15 +1,11 @@
-# cdModule Template
-
-## Updating to the latest version
+## Updating an existing module to the latest version
 
 1. Open Terminal.
 2. cd to the module folder.
 3. Run `bower update`.
 4. Refresh CodeKit.
-5. Re-compile styles.scss. Fix any errors.
-6. Re-compile scripts.coffee and index.kit. Fix any errors.
-7. Find all instances of _global and replace with _project (use command-shift-f to do a project-wide find and replace)
-8. Update index.kit, libs.js, scripts.coffee, and styles.scss to conform to the pattern laid out in the template.
+5. Update index.kit, libs.js, scripts.coffee, and styles.scss to conform to the pattern laid out in the template, and re-compile each of them. Fix any errors.
+6. Find all instances of _global and replace with _project (use command-shift-f to do a project-wide find and replace)
 
 ## What's in the box?
 
