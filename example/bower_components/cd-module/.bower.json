@@ -1,23 +1,26 @@
 {
   "name": "cd-module",
-  "homepage": "https://github.com/cdig/modlib",
+  "description": "A standard library for learning modules, by CD Industrial Group Inc.",
   "authors": [
     "Ivan Reese <ivan@cdiginc.com>"
   ],
-  "description": "A standard library for learning modules, by CD Industrial Group Inc.",
   "main": [
     "dist/libs.js",
     "dist/scripts.coffee",
     "dist/styles.scss"
   ],
+  "dependencies": {
+    "cd-foundation": "cdig/cd-foundation"
+  },
   "ignore": [],
   "license": "MIT",
   "private": true,
-  "_release": "1f548d164a",
+  "homepage": "https://github.com/cdig/cd-module",
+  "_release": "80668fce0b",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "1f548d164a26237fd67136df635eb71a4d87e3ee"
+    "commit": "80668fce0bde8d6fb886abafb8d5da91ac8874d5"
   },
   "_source": "git://github.com/cdig/cd-module.git",
   "_target": "*",

@@ -19,18 +19,12 @@ Consult the [module template](https://github.com/cdig/cd-module-template) and se
 
 
 ### Libs
-TODO: Maybe these should be included through bower? Just a thought, you know.
 
 **[modernizr](https://modernizr.com)** works with browser-support to warn users when they're using an unsupported browser.
 
 **[jQuery](https://jquery.com)** is used by the matching game. We're gonna remove this PDQ.
 
-
-### Tools (nee Framework)
-
-**Take & Make** are a nice dependency resolution / service discovery system. It ensures that services exist before dependent code executes.
-
-**Editor** gives us drag-and-drop positioning of elements using `left` and `margin-top`.
+Note: At some point in the future, we need to figure out how to (automatically?) use CDN-hosted libs in production, for the sake of caching.
 
 
 ### Components

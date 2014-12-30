@@ -1,4 +1,5 @@
 # 1. Bower
+# @codekit-append '../bower_components/cd-foundation/dist/cd-foundation.coffee'
 # @codekit-append '../bower_components/cd-module/dist/scripts.coffee'
 
 # 2. Components

@@ -11,9 +11,6 @@ $iPadPortrait: 768px;
 $iPhoneLandscape: 667px;
 $iPhonePortrait: 375px;
 
-// Framework Styles
-@import 'framework/editor.scss';
-
 // Component Styles
 @import 'components/browser-support.scss';
 @import 'components/call-outs.scss';

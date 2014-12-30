@@ -1,4 +1,4 @@
-# Make and Take
+# Take & Make
 # Just the right amount of dependency resolution service.
 #
 # Make(name:String, value:*) registers a value with a name.
