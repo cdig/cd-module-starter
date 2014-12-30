@@ -8,23 +8,15 @@
 4. Refresh CodeKit.
 5. Re-compile styles.scss. Fix any errors.
 6. Re-compile scripts.coffee and index.kit. Fix any errors.
-7. Open libs.js, delete everything, and add the following two lines:
+7. Find all instances of _global and replace with _project (use command-shift-f to do a project-wide find and replace)
+8. Update index.kit, libs.js, scripts.coffee, and styles.scss to conform to the pattern laid out in the template.
 
-		```
-		// 1. Bower
-		// @codekit-append '../bower_components/cd-module/dist/libs.js'
+## What's in the box?
 
-		// 2. Module
-		// None yet
-		```
+This repo contains two modules:
 
-8. Find all instances of _global and replace with _project (use command-shift-f to do a project-wide find and replace)
-
-## There Will Be Bugs
-This is still an alpha! The format for modules is rapidly evolving, and as such, this template project might lag a bit behind the current state of the art. I will try really hard to keep it updated. But if something seems fishy, it probably is.
-
-### Dependencies
-Includes cdReset, cdModule in `bower_components`. So, you need Bower? Also, includes a ready-to-use `config.codekit`. So you should use CodeKit.
+* `dist` is a bare-bones skeleton of a module, ready for you to flesh out with content.
+* `example` is fleshed out and dressed up, to serve as an example of all the available features and how they should be used.
 
 ## License
 Copyright (c) 2014 CD Industrial Group Inc.
