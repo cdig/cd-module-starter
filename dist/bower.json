@@ -1,16 +1,8 @@
 {
-  "name": "cd-module-template",
-  "description": "A bare-bones skeleton of a module, ready for you to flesh out with content.",
-  "authors": [
-    "Ivan Reese <ivan@cdiginc.com>"
-  ],
+  "name": "cdig-module",
+  "description": "A CDIG Module",
   "dependencies": {
     "cd-module": "cdig/cd-module"
   },
-  "ignore": [
-    "**/.*",
-    "bower_components"
-  ],
-  "license": "MIT",
   "private": true
 }
