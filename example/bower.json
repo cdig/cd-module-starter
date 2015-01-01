@@ -1,0 +1,16 @@
+{
+	"name": "cd-module-example",
+	"description": "Fleshed out and dressed up, to serve as an example of all the available features and how they should be used.",
+	"authors": [
+		"Ivan Reese <ivan@cdiginc.com>"
+	],
+	"dependencies": {
+		"cd-module": "cdig/cd-module"
+	},
+	"ignore": [
+		"**/.*",
+		"bower_components"
+	],
+	"license": "MIT",
+	"private": true
+}

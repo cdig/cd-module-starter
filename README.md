@@ -15,4 +15,4 @@ This repo contains two modules:
 * `example` is fleshed out and dressed up, to serve as an example of all the available features and how they should be used. *This is a work in progress and is not ready to be used.*
 
 ## License
-Copyright (c) 2014 CD Industrial Group Inc.
+Copyright (c) 2014-2015 CD Industrial Group Inc., released under MIT license.
