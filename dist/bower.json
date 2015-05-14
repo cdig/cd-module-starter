@@ -2,7 +2,8 @@
   "name": "cdig-module",
   "description": "A CDIG Module",
   "dependencies": {
-    "cd-module": "cdig/cd-module"
+    "cd-module": "cdig/cd-module",
+    "_project": "cdig/lbs-project"
   },
   "private": true
 }

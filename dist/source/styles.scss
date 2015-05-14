@@ -1,11 +1,11 @@
 // 1. Global Vars
-@import '../../../_project/vars.scss';
+@import '../bower_components/_project/vars.scss';
 
 // 2. Bower
 @import '../bower_components/cd-module/dist/styles.scss';
 
 // 3. Global
-@import '../../../_project/styles.scss';
+@import '../bower_components/_project/styles.scss';
 
 // 4. Components
 // None yet
