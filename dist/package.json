@@ -11,8 +11,7 @@
     "gulp-kit": "^0.1.1",
     "gulp-sass": "^2.0.4",
     "gulp-util": "^3.0.6",
-    "merge2": "^0.3.6",
-    "wiredep": "^2.2.2"
+    "merge2": "^0.3.6"
   },
   "license": "UNLICENSED",
   "private": true
