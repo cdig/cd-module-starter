@@ -4,7 +4,9 @@
   "description": "A CDIG Module",
   "dependencies": {
     "cd-module": "cdig/cd-module",
-    "lbs-pack": "cdig/lbs-pack"
+    "lbs-pack": "cdig/lbs-pack",
+    "q-n-eh": "cdig/q-n-eh",
+    "piece-it-together": "cdig/piece-it-together"
   },
   "private": true
 }
