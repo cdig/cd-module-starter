@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "A CDIG Module",
   "dependencies": {
-    "cd-module": "cdig/cd-module",
+    "cd-module": "cdig/cd-module#v2",
     "lbs-pack": "cdig/lbs-pack",
     "q-n-eh": "cdig/q-n-eh",
     "piece-it-together": "cdig/piece-it-together"
