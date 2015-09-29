@@ -83,7 +83,7 @@ gulp.task "default", ["coffee", "kit", "sass", "serve"], ()->
 
 sortObjectKeys = (unsorted)->
   sorted = {}
-  sorted[k] = unsorted[k] for k in unsorted.keys().sort()
+  sorted[k] = unsorted[k] for k in Object.keys(unsorted).sort()
   return sorted
 
 
