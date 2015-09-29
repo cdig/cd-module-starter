@@ -114,6 +114,8 @@ gulp.task "evolve:html", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
+    .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/pages/", "<!-- @import pages/"
+    .pipe gulp_replace "_project/dist", "lbs-pack/pack"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
