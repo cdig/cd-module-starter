@@ -12,6 +12,7 @@ gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_using = require "gulp-using"
 gulp_util = require "gulp-util"
 
+
 paths =
   coffee:
     source: [
@@ -113,6 +114,8 @@ gulp.task "evolve:html", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
+    .pipe gulp_replace "_project/dist", "lbs-pack/pack"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
+
 
 gulp.task "evolve", ["evolve:bower", "evolve:del", "evolve:html"]
