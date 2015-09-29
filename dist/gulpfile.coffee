@@ -56,7 +56,7 @@ gulp.task "sass", ()->
       outputStyle: "compressed"
       precision: 1
     .pipe gulp_autoprefixer
-      browsers: "last 2 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
+      browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
     .pipe gulp_sourcemaps.write "public"
@@ -80,12 +80,28 @@ gulp.task "default", ["coffee", "kit", "sass", "serve"], ()->
 
 ###################################################################################################
 
-sortObjectByKey = (obj)->
-  sorted_obj = {}
-  sorted_keys = (k for k of obj).sort()
-  for k in sorted_keys
-    sorted_obj[k] = obj[k]
-  return sorted_obj
+
+sortObjectKeys = (unsorted)->
+  sorted = {}
+  sorted[k] = unsorted[k] for k in unsorted.keys().sort()
+  return sorted
+
+
+gulp.task "evolve:bower", ()->
+  gulp.src "bower.json"
+    .pipe gulp_json_editor (bower)->
+      dependencies = bower.dependencies
+      delete dependencies._project # Replaced by lbs-pack
+      delete dependencies["flow-arrows"] # Included by svg-activity
+      dependencies["cd-module"] = "cdig/cd-module#v2"
+      dependencies["lbs-pack"] = "cdig/lbs-pack"
+      return v2Bower =
+        name: "cdig-module"
+        description: "An LBS Module"
+        dependencies: sortObjectKeys dependencies
+        license: "UNLICENSED"
+        private: true
+    .pipe gulp.dest "."
 
 
 gulp.task "evolve:del", ()->
@@ -93,31 +109,10 @@ gulp.task "evolve:del", ()->
   del ".codekit-cache"
   
   
-gulp.task "evolve:bower", ()->
-  gulp.src "bower.json"
-    .pipe gulp_json_editor (bower)->
-      delete bower.version # Deprecated by bower
-      
-      delete bower.dependencies._project # Moved to lbs-pack
-      bower.dependencies["cd-module"] = "cdig/cd-module#v2"
-      bower.dependencies["lbs-pack"] = "cdig/lbs-pack"
-      bower.dependencies = sortObjectByKey(bower.dependencies)
-      
-      bower.license = "UNLICENSED"
-      
-      # Private should come last
-      delete bower.private
-      bower.private = true
-      
-      return bower
-      
-    .pipe gulp.dest "."
-
-
 gulp.task "evolve:html", ()->
   gulp.src "source/**/*.{kit,html}"
-    .pipe gulp_replace "<main", "<div class=\"main\""
-    .pipe gulp_replace "</main", "</div"
+    .pipe gulp_replace "<main", "<cd-main"
+    .pipe gulp_replace "</main", "</cd-main"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
-gulp.task "evolve", ["evolve:del", "evolve:bower", "evolve:html"]
+gulp.task "evolve", ["evolve:bower", "evolve:del", "evolve:html"]

@@ -1,12 +1,13 @@
 {
   "name": "cdig-module",
-  "version": "2.0.0",
-  "description": "A CDIG Module",
+  "description": "An LBS Module",
   "dependencies": {
     "cd-module": "cdig/cd-module#v2",
     "lbs-pack": "cdig/lbs-pack",
+    "piece-it-together": "cdig/piece-it-together",
     "q-n-eh": "cdig/q-n-eh",
-    "piece-it-together": "cdig/piece-it-together"
+    "svg-activity": "cdig/svg-activity"
   },
+  "license": "UNLICENSED",
   "private": true
 }
