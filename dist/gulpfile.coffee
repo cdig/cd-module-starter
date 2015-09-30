@@ -60,7 +60,7 @@ gulp.task "sass", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .pipe gulp_sourcemaps.write "public"
+    .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.css"
 
@@ -108,16 +108,21 @@ gulp.task "evolve:bower", ()->
 gulp.task "evolve:del", ()->
   del "config.codekit"
   del ".codekit-cache"
+  del "source/libs.js"
+  del "source/scripts.coffee"
+  del "source/styles.scss"
   
   
-gulp.task "evolve:html", ()->
+gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
     .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/pages/", "<!-- @import pages/"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
+    .pipe gulp.dest (vinylFile)-> vinylFile.base
+  gulp.src "source/**/*.{css,scss}"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
-gulp.task "evolve", ["evolve:bower", "evolve:del", "evolve:html"]
+gulp.task "evolve", ["evolve:bower", "evolve:del", "evolve:rewrite"]
