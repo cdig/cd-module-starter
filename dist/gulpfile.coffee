@@ -68,7 +68,6 @@ gulp.task "sass", ()->
 gulp.task "serve", ()->
   browser_sync.init
     ghostMode: false
-    logLevel: "silent"
     server: baseDir: "public"
     ui: false
 
