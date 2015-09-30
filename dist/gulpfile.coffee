@@ -11,6 +11,7 @@ gulp_sass = require "gulp-sass"
 gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_using = require "gulp-using"
 gulp_util = require "gulp-util"
+run_sequence = require "run-sequence"
 
 
 paths =
@@ -124,4 +125,5 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
-gulp.task "evolve", ["evolve:bower", "evolve:del", "evolve:rewrite"]
+gulp.task "evolve", ()->
+  run_sequence "evolve:bower", "evolve:del", "evolve:rewrite"
