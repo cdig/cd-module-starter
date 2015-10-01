@@ -11,7 +11,17 @@ gulp_sass = require "gulp-sass"
 gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_using = require "gulp-using"
 gulp_util = require "gulp-util"
+main_bower_files = require "main-bower-files"
 run_sequence = require "run-sequence"
+
+
+# Some stuff is meant to be included in the module at compile time
+  # Everything in the source folder, and all asset packs
+# Everything else is meant to be included in the module at runtime
+  # All other bower dependencies
+
+# compile+merge coffee and scss, from source + all asset packs
+# compile index.kit, folding-in .html and .kit in all asset packs
 
 
 paths =
@@ -117,8 +127,7 @@ gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
-    .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/pages/", "<!-- @import pages/"
-    .pipe gulp_replace "_project/dist", "lbs-pack/pack"
+    .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
     .pipe gulp.dest (vinylFile)-> vinylFile.base
   gulp.src "source/**/*.{css,scss}"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
