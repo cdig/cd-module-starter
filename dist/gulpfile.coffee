@@ -63,7 +63,7 @@ gulp.task "kit", ()->
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
-    .pipe inject bowerFiles, name: 'bower'
+    .pipe gulp_inject bowerFiles, name: 'bower'
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "public/**/*.html"
 
@@ -84,6 +84,10 @@ gulp.task "sass", ()->
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "public/**/*.css"
+
+
+# Thank me later ;)
+gulp.task "scss", ["sass"]
 
 
 gulp.task "serve", ()->
