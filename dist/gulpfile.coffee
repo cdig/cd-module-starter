@@ -118,9 +118,6 @@ gulp.task "evolve:bower", ()->
 gulp.task "evolve:del", ()->
   del "config.codekit"
   del ".codekit-cache"
-  del "source/libs.js"
-  del "source/scripts.coffee"
-  del "source/styles.scss"
   
   
 gulp.task "evolve:rewrite", ()->
