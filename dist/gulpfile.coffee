@@ -4,6 +4,7 @@ gulp = require "gulp"
 gulp_autoprefixer = require "gulp-autoprefixer"
 gulp_coffee = require "gulp-coffee"
 gulp_concat = require "gulp-concat"
+gulp_inject = require "gulp-inject"
 gulp_json_editor = require "gulp-json-editor"
 gulp_kit = require "gulp-kit"
 gulp_replace = require "gulp-replace"
@@ -58,9 +59,11 @@ gulp.task "coffee", ()->
 
 
 gulp.task "kit", ()->
+  bowerFiles = gulp.src main_bower_files(), read: false
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
+    .pipe inject bowerFiles, name: 'bower'
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "public/**/*.html"
 
