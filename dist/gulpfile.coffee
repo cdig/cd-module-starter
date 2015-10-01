@@ -27,16 +27,22 @@ run_sequence = require "run-sequence"
 paths =
   coffee:
     source: [
-      "bower_components/take-and-make/dist/take-and-make.coffee" # Take & Make first
-      "{bower_components,source}/**/*.coffee"
-      "!/**/*{activity,flow-arrows}*/**/*.coffee" # Exclude activity stuff
+      "bower_components/take-and-make/dist/take-and-make.coffee"
+      "bower_components/**/pack/**/*.coffee"
+      "source/**/*.coffee"
+      "!source/**/*activity*/**/*.coffee" # Exclude activity stuff
       ]
     watch: "{bower_components,source}/**/*.coffee"
   kit:
     source: "source/index.kit"
     watch: "{bower_components,source}/**/*.{kit,html}"
   sass:
-    source: "source/styles.scss"
+    source: [
+      "bower_components/**/pack/**/vars.scss"
+      "source/**/vars.scss"
+      "bower_components/**/pack/**/*.scss"
+      "source/**/*.scss"
+    ]
     watch: "{bower_components,source}/**/*.scss"
 
 
@@ -48,7 +54,7 @@ gulp.task "coffee", ()->
     .pipe gulp_coffee().on "error", gulp_util.log
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "**/*.js"
+    .pipe browser_sync.stream match: "public/**/*.js"
 
 
 gulp.task "kit", ()->
@@ -56,13 +62,14 @@ gulp.task "kit", ()->
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "**/*.html"
+    .pipe browser_sync.stream match: "public/**/*.html"
 
 
 gulp.task "sass", ()->
   gulp.src paths.sass.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
+    .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
       errLogToConsole: true
       outputStyle: "compressed"
@@ -73,7 +80,7 @@ gulp.task "sass", ()->
       remove: false
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "**/*.css"
+    .pipe browser_sync.stream match: "public/**/*.css"
 
 
 gulp.task "serve", ()->
@@ -83,7 +90,8 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["coffee", "kit", "sass", "serve"], ()->
+gulp.task "default", ["coffee", "kit", "sass"], ()->
+  gulp.run "serve"
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.sass.watch, ["sass"]
