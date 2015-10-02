@@ -9,6 +9,7 @@ gulp_json_editor = require "gulp-json-editor"
 gulp_kit = require "gulp-kit"
 gulp_replace = require "gulp-replace"
 gulp_sass = require "gulp-sass"
+gulp_shell = require "gulp-shell"
 gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_using = require "gulp-using"
 gulp_util = require "gulp-util"
@@ -147,3 +148,35 @@ gulp.task "evolve:rewrite", ()->
 
 gulp.task "evolve", ()->
   run_sequence "evolve:bower", "evolve:del", "evolve:rewrite"
+
+
+###################################################################################################
+
+expandCurlPath = (p)->
+  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}"
+
+installPaths = [
+  "package.json"
+  "gulpfile.coffee"
+  ".gitignore"
+]
+
+upgradePaths = installPaths.concat [
+  "source/pages/title.kit"
+  "source/pages/ending.kit"
+  "source/styles/fonts.scss"
+]
+
+installCmds = (expandCurlPath(path) for path in installPaths)
+
+upgradeCmds = (expandCurlPath(path) for path in upgradePaths).concat [
+  "rm -rf bower_components"
+  "npm install"
+  "gulp evolve"
+  "bower update"
+  "clear"
+  "echo \"Your jacket is now dry.\""
+]
+
+gulp.task 'install', gulp_shell.task installCmds
+gulp.task 'upgrade', gulp_shell.task upgradeCmds
