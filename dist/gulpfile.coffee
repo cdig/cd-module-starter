@@ -155,21 +155,21 @@ gulp.task "evolve", ()->
 expandCurlPath = (p)->
   "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}"
 
-installPaths = [
+updatePaths = [
   "package.json"
   "gulpfile.coffee"
   ".gitignore"
 ]
 
-upgradePaths = installPaths.concat [
+toTheFuturePaths = updatePaths.concat [
   "source/pages/title.kit"
   "source/pages/ending.kit"
   "source/styles/fonts.scss"
 ]
 
-installCmds = (expandCurlPath(path) for path in installPaths)
+updateCmds = (expandCurlPath(path) for path in updatePaths)
 
-upgradeCmds = (expandCurlPath(path) for path in upgradePaths).concat [
+toTheFutureCmds = (expandCurlPath(path) for path in toTheFuturePaths).concat [
   "rm -rf bower_components"
   "npm install"
   "gulp evolve"
@@ -177,5 +177,5 @@ upgradeCmds = (expandCurlPath(path) for path in upgradePaths).concat [
   "bower update"
 ]
 
-gulp.task 'install', gulp_shell.task installCmds
-gulp.task 'upgrade', gulp_shell.task upgradeCmds
+gulp.task 'update', gulp_shell.task updateCmds
+gulp.task 'to-the-future', gulp_shell.task toTheFutureCmds
