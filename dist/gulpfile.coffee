@@ -152,8 +152,8 @@ gulp.task "evolve", ()->
 
 ###################################################################################################
 
-expandCurlPath = (p)->
-  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}"
+expandCurlPaths = (paths)->
+  return ("curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}" for p in paths)
 
 installPaths = [
   "package.json"
@@ -161,18 +161,22 @@ installPaths = [
   ".gitignore"
 ]
 
-upgradePaths = installPaths.concat [
+upgradePaths = [
   "source/pages/title.kit"
   "source/pages/ending.kit"
   "source/styles/fonts.scss"
 ]
 
-installCmds = (expandCurlPath(path) for path in installPaths)
+installCmds = expandCurlPaths(installPaths).concat [
+  "bower prune"
+  "bower update"
+  "npm prune"
+  "npm update"
+]
 
-upgradeCmds = (expandCurlPath(path) for path in upgradePaths).concat [
-  "rm -rf bower_components"
-  "npm install"
+upgradeCmds = installCmds.concat expandCurlPaths(upgradePaths).concat [
   "gulp evolve"
+  "bower prune"
   "bower update"
   "clear"
   "echo \"Your jacket is now dry.\""
