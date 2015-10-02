@@ -8,6 +8,8 @@
     "q-n-eh": "cdig/q-n-eh",
     "svg-activity": "cdig/svg-activity"
   },
+  "main": [],
+  "ignore": [],
   "license": "UNLICENSED",
   "private": true
 }
