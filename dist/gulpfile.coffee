@@ -97,8 +97,7 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["coffee", "kit", "sass"], ()->
-  gulp.run "serve"
+gulp.task "default", ["serve", "coffee", "kit", "sass"], ()->
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.sass.watch, ["sass"]
