@@ -48,6 +48,11 @@ paths =
     watch: "{bower_components,source}/**/*.scss"
 
 
+onError = (err)->
+  console.error "Tell Ivan!", err.message
+  @emit "end"
+
+
 gulp.task "coffee", ()->
   gulp.src paths.coffee.source
     # .pipe gulp_using() # Uncomment for debug
@@ -56,7 +61,7 @@ gulp.task "coffee", ()->
     .pipe gulp_coffee().on "error", gulp_util.log
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "public/**/*.js"
+    .pipe browser_sync.stream match: "**/*.js"
 
 
 gulp.task "kit", ()->
@@ -66,7 +71,7 @@ gulp.task "kit", ()->
     .pipe gulp_kit()
     .pipe gulp_inject bowerFiles, name: 'bower'
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "public/**/*.html"
+    .pipe browser_sync.stream match: "**/*.html"
 
 
 gulp.task "sass", ()->
@@ -84,7 +89,7 @@ gulp.task "sass", ()->
       remove: false
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "public/**/*.css"
+    .pipe browser_sync.stream match: "**/*.css"
 
 
 # Thank me later ;)
