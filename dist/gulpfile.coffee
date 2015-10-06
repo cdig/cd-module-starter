@@ -123,7 +123,8 @@ gulp.task "evolve:bower", ()->
     .pipe gulp_json_editor (bower)->
       dependencies = bower.dependencies
       delete dependencies._project # Replaced by lbs-pack
-      delete dependencies["flow-arrows"] # Included by svg-activity
+      delete dependencies["flow-arrows"] # svg-activity compilation is now separate
+      delete dependencies["svg-activity"] # svg-activity compilation is now separate
       dependencies["cd-module"] = "cdig/cd-module#v2"
       dependencies["lbs-pack"] = "cdig/lbs-pack"
       return v2Bower =
