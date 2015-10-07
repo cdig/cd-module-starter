@@ -8,6 +8,7 @@ gulp_concat = require "gulp-concat"
 gulp_inject = require "gulp-inject"
 gulp_json_editor = require "gulp-json-editor"
 gulp_kit = require "gulp-kit"
+gulp_notify = require "gulp-notify"
 gulp_replace = require "gulp-replace"
 gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
@@ -64,11 +65,12 @@ gulp.task "coffee", ()->
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
-    .pipe gulp_coffee().on "error", gulp_util.log # TODO: UNDER-TESTED
+    .pipe gulp_coffee().on "error", gulp_util.log # TODO: UNTESTED
     # .on "error", onError # TODO: UNTESTED
     .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.js"
+    .pipe(gulp_notify("👍Coffee"))
 
 
 gulp.task "kit", ()->
@@ -76,10 +78,11 @@ gulp.task "kit", ()->
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
-    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNDER-TESTED
-    # .on "error", onError # TODO: UNTESTED
+    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNTESTED?
+    .on "error", onError # TODO: UNTESTED
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.html"
+    .pipe(gulp_notify("👍Kit"))
 
 
 gulp.task "sass", ()->
@@ -99,6 +102,7 @@ gulp.task "sass", ()->
     .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.css"
+    .pipe(gulp_notify("👍SCSS"))
 
 
 # Thank me later ;)
