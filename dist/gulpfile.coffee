@@ -64,7 +64,7 @@ gulp.task "coffee", ()->
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
-    .pipe gulp_coffee().on "error", gulp_util.log # TODO: UNTESTED
+    .pipe gulp_coffee().on "error", gulp_util.log # TODO: UNDER-TESTED
     # .on "error", onError # TODO: UNTESTED
     .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
@@ -76,8 +76,8 @@ gulp.task "kit", ()->
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
-    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNTESTED?
-    .on "error", onError # TODO: UNTESTED
+    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNDER-TESTED
+    # .on "error", onError # TODO: UNTESTED
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.html"
 
