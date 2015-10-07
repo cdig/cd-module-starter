@@ -173,7 +173,7 @@ updateCmds = [
   expandCurlPath "package.json"
   expandCurlPath "gulpfile.coffee"
   expandCurlPath ".gitignore"
-}
+]
 
 toTheFutureCmds = updateCmds.concat [
   "mkdir -p source/pages"
