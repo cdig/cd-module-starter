@@ -169,21 +169,18 @@ gulp.task "evolve", ()->
 expandCurlPath = (p)->
   "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}"
 
-updatePaths = [
-  "package.json"
-  "gulpfile.coffee"
-  ".gitignore"
-]
+updateCmds = [
+  expandCurlPath "package.json"
+  expandCurlPath "gulpfile.coffee"
+  expandCurlPath ".gitignore"
+}
 
-toTheFuturePaths = updatePaths.concat [
-  "source/pages/title.kit"
-  "source/pages/ending.kit"
-  "source/styles/fonts.scss"
-]
-
-updateCmds = (expandCurlPath(path) for path in updatePaths)
-
-toTheFutureCmds = (expandCurlPath(path) for path in toTheFuturePaths).concat [
+toTheFutureCmds = updateCmds.concat [
+  "mkdir -p source/pages"
+  "mkdir -p source/styles"
+  expandCurlPath "source/pages/title.kit"
+  expandCurlPath "source/pages/ending.kit"
+  expandCurlPath "source/styles/fonts.scss"
   "rm -rf bower_components"
   "npm install"
   "gulp evolve"
