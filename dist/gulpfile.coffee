@@ -1,3 +1,4 @@
+beepbeep = require "beepbeep"
 browser_sync = require("browser-sync").create()
 del = require "del"
 gulp = require "gulp"
@@ -51,7 +52,10 @@ paths =
 
 
 onError = (err)->
-  console.error "Tell Ivan!", err.message
+  beepbeep()
+  console.log gulp_util.colors.bgRed("\n## Error ##")
+  console.log gulp_util.colors.red err.message
+  console.log ""
   @emit "end"
 
 
@@ -62,7 +66,7 @@ gulp.task "coffee", ()->
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee().on "error", gulp_util.log # TODO: UNTESTED
     # .on "error", onError # TODO: UNTESTED
-    .pipe gulp_sourcemaps.write "."
+    .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.js"
 
@@ -87,12 +91,12 @@ gulp.task "sass", ()->
       errLogToConsole: true
       outputStyle: "compressed"
       precision: 1
+    .on "error", onError
     .pipe gulp_autoprefixer
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .on "error", onError # TODO: UNTESTED
-    .pipe gulp_sourcemaps.write "."
+    .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.css"
 
