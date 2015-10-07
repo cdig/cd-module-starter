@@ -32,11 +32,13 @@ paths =
       "bower_components/take-and-make/dist/take-and-make.coffee"
       "bower_components/**/pack/**/*.coffee"
       "source/**/*.coffee"
-      "!source/**/*activity*/**/*.coffee" # Exclude activity stuff
       ]
     watch: "{bower_components,source}/**/*.coffee"
   kit:
-    source: "source/index.kit"
+    source: [
+      "source/index.kit"
+      # TODO: figure out how to add Kit/HTML components from Asset Packs
+    ]
     watch: "{bower_components,source}/**/*.{kit,html}"
   sass:
     source: [
@@ -58,7 +60,8 @@ gulp.task "coffee", ()->
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
-    .pipe gulp_coffee().on "error", gulp_util.log
+    .pipe gulp_coffee().on "error", gulp_util.log # TODO: UNTESTED
+    # .on "error", onError # TODO: UNTESTED
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.js"
@@ -69,7 +72,8 @@ gulp.task "kit", ()->
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
-    .pipe gulp_inject bowerFiles, name: 'bower'
+    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNTESTED?
+    .on "error", onError # TODO: UNTESTED
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.html"
 
@@ -87,6 +91,7 @@ gulp.task "sass", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
+    .on "error", onError # TODO: UNTESTED
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream match: "**/*.css"
