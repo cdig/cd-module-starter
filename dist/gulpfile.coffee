@@ -18,6 +18,8 @@ gulp_util = require "gulp-util"
 main_bower_files = require "main-bower-files"
 run_sequence = require "run-sequence"
 
+"hi mom"
+
 
 # Some stuff is meant to be included in the module at compile time
   # Everything in the source folder, and all asset packs
