@@ -20,6 +20,8 @@ run_sequence = require "run-sequence"
 
 
 gulp_notify.logLevel(0)
+gulp_notify.on "click", ()->
+  do gulp_shell.task "open -a Terminal"
 
 
 logAndKillError = (err)->
@@ -27,6 +29,13 @@ logAndKillError = (err)->
   console.log gulp_util.colors.bgRed("\n## Error ##")
   console.log gulp_util.colors.red err.message
   console.log ""
+  gulp_notify.onError(
+    emitError: true
+    icon: false
+    message: err.message
+    title: "👻"
+    wait: true
+    )(err)
   @emit "end"
 
 
@@ -60,16 +69,14 @@ gulp.task "coffee", ()->
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
-    .on "error", gulp_notify.onError
-      emitError: true
-      icon: false
-      message: (error)-> error.message.split("\n")[1]
-      title:"👻JS/Coffee Error"
     .on "error", logAndKillError
     .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "**/*.js"
-    .pipe(gulp_notify(title:"👍", message: "JS/Coffee compiled successfully"))
+    .pipe browser_sync.stream
+      match: "**/*.js"
+    .pipe gulp_notify
+      title: "👍"
+      message: "JS/Coffee compiled successfully"
 
 
 gulp.task "kit", ()->
@@ -77,16 +84,14 @@ gulp.task "kit", ()->
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
-    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNTESTED?
-    .on "error", gulp_notify.onError
-      emitError: true
-      icon: false
-      message: (error)-> error.message.split("\n")[1]
-      title:"👻HTML/Kit Error"
     .on "error", logAndKillError
+    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNTESTED?
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "**/*.html"
-    .pipe(gulp_notify(title:"👍", message: "HTML/Kit compiled successfully"))
+    .pipe browser_sync.stream
+      match: "**/*.html"
+    .pipe gulp_notify
+      title: "👍"
+      message: "HTML/Kit compiled successfully"
 
 
 gulp.task "sass", ()->
@@ -98,11 +103,6 @@ gulp.task "sass", ()->
       errLogToConsole: true
       outputStyle: "compressed"
       precision: 1
-    .on "error", gulp_notify.onError
-      emitError: true
-      icon: false
-      message: (error)-> error.message.split("\n")[1]
-      title:"👻CSS/SCSS Error"
     .on "error", logAndKillError
     .pipe gulp_autoprefixer
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
@@ -110,8 +110,11 @@ gulp.task "sass", ()->
       remove: false
     .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream match: "**/*.css"
-    .pipe(gulp_notify(title:"👍", message: "CSS/SCSS compiled successfully"))
+    .pipe browser_sync.stream
+      match: "**/*.css"
+    .pipe gulp_notify
+      title: "👍"
+      message: "CSS/SCSS compiled successfully"
 
 
 # Thank me later ;)
@@ -121,7 +124,8 @@ gulp.task "scss", ["sass"]
 gulp.task "serve", ()->
   browser_sync.init
     ghostMode: false
-    server: baseDir: "public"
+    server:
+      baseDir: "public"
     ui: false
 
 
