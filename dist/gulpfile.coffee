@@ -42,17 +42,16 @@ logAndKillError = (err)->
 paths =
   coffee:
     source: [
-      "bower_components/take-and-make/dist/take-and-make.coffee"
       "bower_components/**/pack/**/*.coffee"
       "source/**/*.coffee"
       ]
-    watch: "{bower_components,source}/**/*.coffee"
+    watch: "source/**/*.coffee"
   kit:
     source: [
       "source/index.kit"
       # TODO: figure out how to add Kit/HTML components from Asset Packs
     ]
-    watch: "{bower_components,source}/**/*.{kit,html}"
+    watch: "source/**/*.{kit,html}"
   sass:
     source: [
       "bower_components/**/pack/**/vars.scss"
@@ -60,7 +59,7 @@ paths =
       "bower_components/**/pack/**/*.scss"
       "source/**/*.scss"
     ]
-    watch: "{bower_components,source}/**/*.scss"
+    watch: "source/**/*.scss"
 
 
 gulp.task "coffee", ()->
@@ -178,6 +177,7 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp.dest (vinylFile)-> vinylFile.base
   gulp.src "source/**/*.{css,scss}"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
+    # TODO: Add all the obsoleted $variables here
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
