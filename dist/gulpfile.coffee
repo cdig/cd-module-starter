@@ -207,6 +207,7 @@ toTheFutureCmds = updateCmds.concat [
   "gulp evolve"
   "bower prune"
   "bower update"
+  "clear && echo 'Your jacket is now dry.' && echo"
 ]
 
 gulp.task 'update', gulp_shell.task updateCmds
