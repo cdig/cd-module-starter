@@ -1,12 +1,11 @@
 {
   "name": "cdig-module",
-  "description": "An LBS Module",
+  "description": "A CDIG Module",
   "dependencies": {
     "cd-module": "cdig/cd-module#v2",
     "lbs-pack": "cdig/lbs-pack",
     "piece-it-together": "cdig/piece-it-together",
-    "q-n-eh": "cdig/q-n-eh",
-    "svg-activity": "cdig/svg-activity"
+    "q-n-eh": "cdig/q-n-eh"
   },
   "main": [],
   "ignore": [],
