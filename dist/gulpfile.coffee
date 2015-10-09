@@ -86,7 +86,7 @@ gulp.task "coffee", ()->
 
 gulp.task "libs", ()->
   gulp.src main_bower_files(), base: 'bower_components/'
-    .pipe gulp_using() # Uncomment for debug
+    # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/libs"
 
