@@ -52,6 +52,12 @@ paths =
       # TODO: figure out how to add Kit/HTML components from Asset Packs
     ]
     watch: "source/**/*.{kit,html}"
+  libs:
+    source: [
+      "public/libs/angular/angular.js"
+      "public/libs/take-and-make/dist/take-and-make.js"
+      "public/libs/**/*.*"
+    ]
   sass:
     source: [
       "bower_components/**/pack/**/vars.scss"
@@ -78,13 +84,21 @@ gulp.task "coffee", ()->
       message: "JS/Coffee compiled successfully"
 
 
-gulp.task "kit", ()->
-  bowerFiles = gulp.src main_bower_files(), read: false
+gulp.task "libs", ()->
+  gulp.src main_bower_files(), base: 'bower_components/'
+    .pipe gulp_using() # Uncomment for debug
+    .on "error", logAndKillError
+    .pipe gulp.dest "public/libs"
+
+
+gulp.task "kit", ["libs"], ()->
+  libs = gulp.src paths.libs.source, read: false
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
     .on "error", logAndKillError
-    .pipe gulp_inject bowerFiles, name: 'bower' # TODO: UNTESTED?
+    .pipe gulp_inject libs, name: 'bower', ignorePath: "/public/", addRootSlash: false
+    .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.html"
@@ -167,8 +181,9 @@ gulp.task "evolve:del", ()->
   del "source/libs.js"
   del "source/scripts.coffee"
   del "source/styles.scss"
-  
-  
+  del "public/libs.js"
+
+
 gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
