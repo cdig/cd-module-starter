@@ -25,6 +25,10 @@ gulp_notify.on "click", ()->
   do gulp_shell.task "open -a Terminal"
 
 
+fileContents = (filePath, file)->
+  file.contents.toString "utf8"
+
+
 logAndKillError = (err)->
   beepbeep()
   console.log gulp_util.colors.bgRed("\n## Error ##")
@@ -46,11 +50,10 @@ paths =
       "source/**/*.coffee"
       ]
     watch: "source/**/*.coffee"
+  html:
+    pack: "bower_components/**/pack/**/*.html"
   kit:
-    source: [
-      "source/index.kit"
-      # TODO: figure out how to add Kit/HTML components from Asset Packs
-    ]
+    source: "source/index.kit"
     watch: "source/**/*.{kit,html}"
   libs:
     source: [
@@ -104,11 +107,14 @@ gulp.task "libs", ()->
 
 gulp.task "kit", ["libs"], ()->
   libs = gulp.src paths.libs.source, read: false
+  pack = gulp.src paths.html.pack
+  
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
     .on "error", logAndKillError
-    .pipe gulp_inject libs, name: 'bower', ignorePath: "/public/", addRootSlash: false
+    .pipe gulp_inject libs, name: "bower", ignorePath: "/public/", addRootSlash: false
+    .pipe gulp_inject pack, name: "pack", transform: fileContents
     # TEMP — eventually, we'll want more control over which scripts should be normal/async/defer
     .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
     .pipe gulp.dest "public"
@@ -206,6 +212,7 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp_replace "<!-- None yet -->", ""
     .pipe gulp_replace "<!-- 5. Bottom -->", "<!-- 4. Bottom -->"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
+
   gulp.src "source/**/*.{css,scss}"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
     # TODO: Add all the obsoleted $variables here
