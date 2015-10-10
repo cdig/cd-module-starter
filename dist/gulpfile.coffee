@@ -86,11 +86,17 @@ gulp.task "coffee", ()->
 
 gulp.task "libs", ()->
   # Replace files with their minified version when possible
+  sourceMaps = []
   bowerWithMin = main_bower_files().map (path)->
     minPath = path.replace /.([^.]+)$/g, ".min.$1"
-    if path_exists minPath then minPath else path
+    if path_exists minPath
+      mapPath = minPath + ".map"
+      sourceMaps.push mapPath if path_exists mapPath
+      return minPath
+    else
+      return path
   
-  gulp.src bowerWithMin, base: 'bower_components/'
+  gulp.src bowerWithMin.concat(sourceMaps), base: 'bower_components/'
     # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/libs"
