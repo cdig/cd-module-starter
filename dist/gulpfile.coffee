@@ -201,6 +201,10 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
     .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
+    .pipe gulp_replace "<!-- 4. Components -->", ""
+    .pipe gulp_replace "<!-- @import components.kit -->", ""
+    .pipe gulp_replace "<!-- None yet -->", ""
+    .pipe gulp_replace "<!-- 5. Bottom -->", "<!-- 4. Bottom -->"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
   gulp.src "source/**/*.{css,scss}"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
