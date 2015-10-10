@@ -49,12 +49,12 @@ paths =
       "bower_components/**/pack/**/*.coffee"
       "source/**/*.coffee"
       ]
-    watch: "source/**/*.coffee"
+    watch: "{source,bower_components}/**/*.coffee"
   html:
     pack: "bower_components/**/pack/**/*.html"
   kit:
     source: "source/index.kit"
-    watch: "source/**/*.{kit,html}"
+    watch: "{source,bower_components}/**/*.{kit,html}"
   libs:
     source: [
       "public/libs/angular*/angular*.js"
@@ -69,7 +69,7 @@ paths =
       "bower_components/**/pack/**/*.scss"
       "source/**/*.scss"
     ]
-    watch: "source/**/*.scss"
+    watch: "{source,bower_components}/**/*.scss"
 
 
 gulp.task "coffee", ()->
@@ -79,7 +79,7 @@ gulp.task "coffee", ()->
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
-    .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
+    .pipe gulp_sourcemaps.write "." # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.js"
@@ -146,7 +146,7 @@ gulp.task "sass", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .pipe gulp_sourcemaps.write() # TODO: Don't write sourcemaps in production
+    .pipe gulp_sourcemaps.write "." # TODO: Don't write sourcemaps in production
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.css"
