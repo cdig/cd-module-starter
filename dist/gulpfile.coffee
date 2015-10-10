@@ -108,7 +108,7 @@ gulp.task "libs", ()->
 
 gulp.task "kit", ["libs"], ()->
   libs = gulp.src paths.libs.source, read: false
-  html = main_bower_files "**/*.{html}"
+  html = gulp.src main_bower_files "**/*.{html}"
   pack = gulp.src paths.html.pack
   
   gulp.src paths.kit.source
