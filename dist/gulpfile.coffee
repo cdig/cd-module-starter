@@ -16,6 +16,7 @@ gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_using = require "gulp-using"
 gulp_util = require "gulp-util"
 main_bower_files = require "main-bower-files"
+path_exists = require("path-exists").sync
 run_sequence = require "run-sequence"
 
 
@@ -27,8 +28,7 @@ gulp_notify.on "click", ()->
 logAndKillError = (err)->
   beepbeep()
   console.log gulp_util.colors.bgRed("\n## Error ##")
-  console.log gulp_util.colors.red err.message
-  console.log ""
+  console.log gulp_util.colors.red err.message + "\n"
   gulp_notify.onError(
     emitError: true
     icon: false
@@ -85,8 +85,13 @@ gulp.task "coffee", ()->
 
 
 gulp.task "libs", ()->
-  gulp.src main_bower_files(), base: 'bower_components/'
-    # .pipe gulp_using() # Uncomment for debug
+  # Replace files with their minified version when possible
+  bowerWithMin = main_bower_files().map (path)->
+    minPath = path.replace /.([^.]+)$/g, ".min.$1"
+    if path_exists minPath then minPath else path
+  
+  gulp.src bowerWithMin, base: 'bower_components/'
+    .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/libs"
 
@@ -98,6 +103,7 @@ gulp.task "kit", ["libs"], ()->
     .pipe gulp_kit()
     .on "error", logAndKillError
     .pipe gulp_inject libs, name: 'bower', ignorePath: "/public/", addRootSlash: false
+    # TEMP — eventually, we'll want more control over which scripts should be normal/async/defer
     .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
