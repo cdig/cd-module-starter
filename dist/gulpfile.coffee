@@ -90,7 +90,7 @@ gulp.task "coffee", ()->
 
 gulp.task "libs", ()->
   sourceMaps = []
-  bowerWithMin = main_bower_files "**/*.{html,css,js}"
+  bowerWithMin = main_bower_files "**/*.{css,js}"
     .map (path)->
       minPath = path.replace /.([^.]+)$/g, ".min.$1" # Check for minified version
       if path_exists minPath
@@ -108,6 +108,7 @@ gulp.task "libs", ()->
 
 gulp.task "kit", ["libs"], ()->
   libs = gulp.src paths.libs.source, read: false
+  html = main_bower_files "**/*.{html}"
   pack = gulp.src paths.html.pack
   
   gulp.src paths.kit.source
@@ -115,6 +116,7 @@ gulp.task "kit", ["libs"], ()->
     .pipe gulp_kit()
     .on "error", logAndKillError
     .pipe gulp_inject libs, name: "bower", ignorePath: "/public/", addRootSlash: false
+    .pipe gulp_inject html, name: "bower", transform: fileContents
     .pipe gulp_inject pack, name: "pack", transform: fileContents
     .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
     .pipe gulp.dest "public"
