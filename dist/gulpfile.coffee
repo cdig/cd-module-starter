@@ -57,7 +57,7 @@ paths =
     watch: "source/**/*.{kit,html}"
   libs:
     source: [
-      "public/libs/angular/angular.js"
+      "public/libs/angular*/angular*.js"
       "public/libs/take-and-make/dist/take-and-make.js"
       "public/libs/**/*.*"
     ]
@@ -107,9 +107,14 @@ gulp.task "libs", ()->
 
 
 gulp.task "kit", ["libs"], ()->
+  # This grabs .js.map too, but don't worry, they aren't injected
   libs = gulp.src paths.libs.source, read: false
   html = gulp.src main_bower_files "**/*.{html}"
   pack = gulp.src paths.html.pack
+  
+  # libs.pipe(gulp_using()) # Uncomment for debug
+  # html.pipe(gulp_using()) # Uncomment for debug
+  # pack.pipe(gulp_using()) # Uncomment for debug
   
   gulp.src paths.kit.source
     # .pipe gulp_using() # Uncomment for debug
