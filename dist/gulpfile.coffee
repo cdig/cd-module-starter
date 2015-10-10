@@ -215,7 +215,13 @@ gulp.task "evolve:rewrite", ()->
 
   gulp.src "source/**/*.{css,scss}"
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
-    # TODO: Add all the obsoleted $variables here
+    .pipe gulp_replace "$cdBlue", "$blue"
+    .pipe gulp_replace "$cdGrey", "$grey"
+    .pipe gulp_replace "$cdDarkRed", "$red"
+    .pipe gulp_replace "$cdDarkGrey", "$smoke"
+    .pipe gulp_replace "$lbsBackground", "$navy"
+    .pipe gulp_replace "$mainBorderColor", " $silver"
+    .pipe gulp_replace "$darkBorderColor", " $smoke"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
