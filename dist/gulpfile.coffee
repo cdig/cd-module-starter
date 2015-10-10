@@ -63,6 +63,7 @@ paths =
     ]
   sass:
     source: [
+      "bower_components/cd-reset/dist/reset.scss"
       "bower_components/**/pack/**/vars.scss"
       "source/**/vars.scss"
       "bower_components/**/pack/**/*.scss"
@@ -72,7 +73,7 @@ paths =
 
 
 gulp.task "coffee", ()->
-  gulp.src paths.coffee.source
+  gulp.src paths.coffee.source.concat main_bower_files "**/*.coffee"
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
@@ -88,16 +89,16 @@ gulp.task "coffee", ()->
 
 
 gulp.task "libs", ()->
-  # Replace files with their minified version when possible
   sourceMaps = []
-  bowerWithMin = main_bower_files().map (path)->
-    minPath = path.replace /.([^.]+)$/g, ".min.$1"
-    if path_exists minPath
-      mapPath = minPath + ".map"
-      sourceMaps.push mapPath if path_exists mapPath
-      return minPath
-    else
-      return path
+  bowerWithMin = main_bower_files "**/*.{html,css,js}"
+    .map (path)->
+      minPath = path.replace /.([^.]+)$/g, ".min.$1" # Check for minified version
+      if path_exists minPath
+        mapPath = minPath + ".map"
+        sourceMaps.push mapPath if path_exists mapPath
+        return minPath
+      else
+        return path
   
   gulp.src bowerWithMin.concat(sourceMaps), base: 'bower_components/'
     # .pipe gulp_using() # Uncomment for debug
@@ -115,7 +116,6 @@ gulp.task "kit", ["libs"], ()->
     .on "error", logAndKillError
     .pipe gulp_inject libs, name: "bower", ignorePath: "/public/", addRootSlash: false
     .pipe gulp_inject pack, name: "pack", transform: fileContents
-    # TEMP — eventually, we'll want more control over which scripts should be normal/async/defer
     .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
@@ -126,7 +126,7 @@ gulp.task "kit", ["libs"], ()->
 
 
 gulp.task "sass", ()->
-  gulp.src paths.sass.source
+  gulp.src paths.sass.source.concat main_bower_files "**/*.scss"
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "styles.scss"
@@ -204,13 +204,12 @@ gulp.task "evolve:del", ()->
 
 gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
-    .pipe gulp_replace "<main", "<cd-main"
-    .pipe gulp_replace "</main", "</cd-main"
     .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
     .pipe gulp_replace "<!-- 4. Components -->", ""
     .pipe gulp_replace "<!-- @import components.kit -->", ""
     .pipe gulp_replace "<!-- None yet -->", ""
     .pipe gulp_replace "<!-- 5. Bottom -->", "<!-- 4. Bottom -->"
+    .pipe gulp_replace "\n\n\n", "\n\n"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
   gulp.src "source/**/*.{css,scss}"
