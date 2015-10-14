@@ -85,7 +85,7 @@ gulp.task "coffee", ()->
       match: "**/*.js"
     .pipe gulp_notify
       title: "👍"
-      message: "JS/Coffee compiled successfully"
+      message: "Coffee"
 
 
 gulp.task "libs", ()->
@@ -129,7 +129,7 @@ gulp.task "kit", ["libs"], ()->
       match: "**/*.html"
     .pipe gulp_notify
       title: "👍"
-      message: "HTML/Kit compiled successfully"
+      message: "HTML"
 
 
 gulp.task "sass", ()->
@@ -152,7 +152,7 @@ gulp.task "sass", ()->
       match: "**/*.css"
     .pipe gulp_notify
       title: "👍"
-      message: "CSS/SCSS compiled successfully"
+      message: "SCSS"
 
 
 # Thank me later ;)
