@@ -211,6 +211,8 @@ gulp.task "evolve:del", ()->
 
 gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
+    .pipe gulp_replace "<main", "<cd-main"
+    .pipe gulp_replace "</main", "</cd-main"
     .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
     .pipe gulp_replace "<!-- 4. Components -->", ""
     .pipe gulp_replace "<!-- @import components.kit -->", ""
