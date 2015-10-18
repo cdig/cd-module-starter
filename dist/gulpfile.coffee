@@ -57,7 +57,7 @@ paths =
     watch: "{source,bower_components}/**/*.{kit,html}"
   libs:
     source: [
-      "public/libs/angular*/angular*.js"
+      "public/libs/angular/angular*.js"
       "public/libs/take-and-make/dist/take-and-make.js"
       "public/libs/**/*.*"
     ]
