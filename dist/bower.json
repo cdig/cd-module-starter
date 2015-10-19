@@ -5,7 +5,7 @@
     "cd-module": "cdig/cd-module#v2",
     "lbs-pack": "cdig/lbs-pack",
     "piece-it-together": "cdig/piece-it-together",
-    "q-n-eh": "cdig/q-n-eh"
+    "q-n-eh": "cdig/q-n-eh#v2"
   },
   "main": [],
   "ignore": [],
