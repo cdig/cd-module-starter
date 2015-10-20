@@ -92,10 +92,14 @@ gulp.task "coffee", ()->
       message: "Coffee"
 
 
-gulp.task "dev", ()->
+gulp.task "dev:copy", ()->
   gulp.src paths.dev
     .on "error", logAndKillError
     .pipe gulp.dest "bower_components"
+
+
+gulp.task "dev", ()->
+  run_sequence "dev:copy", "kit"
   
 
 gulp.task "libs", ()->
@@ -177,7 +181,7 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["serve", "coffee", "kit", "sass"], ()->
+gulp.task "default", ["coffee", "dev", "kit", "sass", "serve"], ()->
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
