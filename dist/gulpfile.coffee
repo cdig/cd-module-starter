@@ -200,16 +200,18 @@ sortObjectKeys = (unsorted)->
 gulp.task "evolve:bower", ()->
   gulp.src "bower.json"
     .pipe gulp_json_editor (bower)->
-      dependencies = bower.dependencies
-      delete dependencies._project # Replaced by lbs-pack
-      delete dependencies["flow-arrows"] # svg-activity compilation is now separate
-      delete dependencies["svg-activity"] # svg-activity compilation is now separate
-      dependencies["cd-module"] = "cdig/cd-module#v2"
-      dependencies["lbs-pack"] = "cdig/lbs-pack"
+      deps = bower.dependencies
+      delete deps._project # Replaced by lbs-pack
+      delete deps["flow-arrows"] # svg-activity compilation is now separate
+      delete deps["svg-activity"] # svg-activity compilation is now separate
+      deps["cd-module"] = "cdig/cd-module#v2"
+      deps["lbs-pack"] = "cdig/lbs-pack"
+      deps["piece-it-together"] = "cdig/piece-it-together#v2" if deps["piece-it-together"]?
+      deps["q-n-eh"] = "cdig/q-n-eh#v2" if deps["q-n-eh"]?
       return v2Bower =
         name: "cdig-module"
         description: "An LBS Module"
-        dependencies: sortObjectKeys dependencies
+        dependencies: sortObjectKeys deps
         license: "UNLICENSED"
         private: true
     .pipe gulp.dest "."
