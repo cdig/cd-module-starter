@@ -19,7 +19,7 @@
     "gulp-sass": "^2.0.4",
     "gulp-shell": "^0.4.3",
     "gulp-sourcemaps": "^1.5.2",
-    "gulp-using": "0.0.1",
+    "gulp-using": "0.0.x",
     "gulp-util": "^3.0.6",
     "main-bower-files": "^2.9.0",
     "path-exists": "^2.0.0",
