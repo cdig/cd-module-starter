@@ -11,7 +11,7 @@
 *.tar
 *.zip
 
-# Logs and databases and caches, oh my #
+# Caches and DBs and logs, oh my #
 ########################################
 *.log
 *.sql
@@ -35,7 +35,7 @@ Icon
 # Thumbnails
 ._*
 
-# Files that might appear on external disk
+# Files that might appear on an external disk
 .Spotlight-V100
 .Trashes
 
@@ -49,5 +49,6 @@ secrets.yml
 # Other Stuff We Don't Want #
 ################################
 bower_components
+dev
 node_modules
 resources
