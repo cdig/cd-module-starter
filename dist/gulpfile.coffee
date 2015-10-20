@@ -50,6 +50,10 @@ paths =
       "source/**/*.coffee"
       ]
     watch: "{source,bower_components}/**/*.coffee"
+  dev: [
+    "dev/*/dist/**/*.*"
+    "dev/*/bower.json"
+  ]
   html:
     pack: "bower_components/**/pack/**/*.html"
   kit:
@@ -87,6 +91,12 @@ gulp.task "coffee", ()->
       title: "👍"
       message: "Coffee"
 
+
+gulp.task "dev", ()->
+  gulp.src paths.dev
+    .on "error", logAndKillError
+    .pipe gulp.dest "bower_components"
+  
 
 gulp.task "libs", ()->
   sourceMaps = []
@@ -169,6 +179,7 @@ gulp.task "serve", ()->
 
 gulp.task "default", ["serve", "coffee", "kit", "sass"], ()->
   gulp.watch paths.coffee.watch, ["coffee"]
+  gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.sass.watch, ["sass"]
 
