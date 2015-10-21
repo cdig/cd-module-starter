@@ -77,7 +77,7 @@ paths =
 
 
 gulp.task "coffee", ()->
-  gulp.src paths.coffee.source.concat main_bower_files "**/*.coffee"
+  gulp.src paths.coffee.source#.concat main_bower_files "**/*.coffee"
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
@@ -147,7 +147,7 @@ gulp.task "kit", ["libs"], ()->
 
 
 gulp.task "sass", ()->
-  gulp.src paths.sass.source.concat main_bower_files "**/*.scss"
+  gulp.src paths.sass.source#.concat main_bower_files "**/*.scss"
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "styles.scss"
@@ -220,6 +220,8 @@ gulp.task "evolve:bower", ()->
 gulp.task "evolve:del", ()->
   del "config.codekit"
   del ".codekit-cache"
+  del "gulp-svg.coffee"
+  del "gulpfile.js"
   del "source/libs.js"
   del "source/scripts.coffee"
   del "source/styles.scss"
