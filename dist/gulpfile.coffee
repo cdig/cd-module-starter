@@ -206,6 +206,8 @@ gulp.task "evolve:bower", ()->
       delete deps["svg-activity"] # svg-activity compilation is now separate
       deps["cd-module"] = "cdig/cd-module#v2"
       deps["lbs-pack"] = "cdig/lbs-pack"
+      deps["svg-activity-components"] = "cdig/svg-activity-components"
+      deps["svg-activity-loader"] = "cdig/svg-activity-loader"
       deps["piece-it-together"] = "cdig/piece-it-together#v2" if deps["piece-it-together"]?
       deps["q-n-eh"] = "cdig/q-n-eh#v2" if deps["q-n-eh"]?
       return v2Bower =
