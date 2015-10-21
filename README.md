@@ -8,7 +8,7 @@ Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip), 
 `cd` into your new module folder, and then run the following:
 
 ```bash
-npm update --save
+npm install
 bower update
 ```
 
