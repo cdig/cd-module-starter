@@ -1,5 +1,7 @@
 # cd-module-starter
 
+What's in the box? This repo contains a bare-bones skeleton of a module, ready for you to flesh out with content.
+
 ## Getting Started
 Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip), take the `dist` folder, name it whatever your module name is, and put it somewhere else. Delete the `cd-module-starter-2` folder.
 
