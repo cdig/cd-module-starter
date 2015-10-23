@@ -1,6 +1,6 @@
 {
-  "name": "cdig-module",
-  "description": "A CDIG Module",
+  "name": "lbs-lesson",
+  "description": "An LBS Lesson",
   "dependencies": {
     "cd-module": "cdig/cd-module#v2",
     "lbs-pack": "cdig/lbs-pack",
