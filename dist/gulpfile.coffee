@@ -269,9 +269,10 @@ expandCurlPath = (p)->
   "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}"
 
 updateCmds = [
-  expandCurlPath "package.json"
-  expandCurlPath "gulpfile.coffee"
   expandCurlPath ".gitignore"
+  expandCurlPath "bower.json"
+  expandCurlPath "gulpfile.coffee"
+  expandCurlPath "package.json"
 ]
 
 toTheFutureCmds = updateCmds.concat [
