@@ -65,7 +65,7 @@ paths =
       "public/libs/take-and-make/dist/take-and-make.js"
       "public/libs/**/*"
     ]
-  sass:
+  scss:
     source: [
       "bower_components/cd-reset/dist/reset.scss"
       "bower_components/**/pack/**/vars.scss"
@@ -146,8 +146,9 @@ gulp.task "kit", ["libs"], ()->
       message: "HTML"
 
 
-gulp.task "sass", ()->
-  gulp.src paths.sass.source#.concat main_bower_files "**/*.scss"
+gulp.task "sass", ["scss"]
+gulp.task "scss", ()->
+  gulp.src paths.scss.source#.concat main_bower_files "**/*.scss"
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "styles.scss"
@@ -169,10 +170,6 @@ gulp.task "sass", ()->
       message: "SCSS"
 
 
-# Thank me later ;)
-gulp.task "scss", ["sass"]
-
-
 gulp.task "serve", ()->
   browser_sync.init
     ghostMode: false
@@ -181,11 +178,11 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["coffee", "dev", "kit", "sass", "serve"], ()->
+gulp.task "default", ["coffee", "dev", "kit", "scss", "serve"], ()->
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
-  gulp.watch paths.sass.watch, ["sass"]
+  gulp.watch paths.scss.watch, ["scss"]
 
 
 ###################################################################################################
