@@ -114,7 +114,7 @@ gulp.task "libs", ()->
       else
         return path
   
-  gulp.src bowerWithMin.concat(sourceMaps), base: 'bower_components/'
+  gulp.src bowerWithMin.concat(sourceMaps), base: "bower_components/"
     # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/libs"
@@ -288,5 +288,5 @@ toTheFutureCmds = updateCmds.concat [
   "clear && echo 'Your jacket is now dry.' && echo"
 ]
 
-gulp.task 'update', gulp_shell.task updateCmds
-gulp.task 'to-the-future', gulp_shell.task toTheFutureCmds
+gulp.task "update", gulp_shell.task updateCmds
+gulp.task "to-the-future", gulp_shell.task toTheFutureCmds
