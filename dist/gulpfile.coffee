@@ -51,7 +51,7 @@ paths =
       ]
     watch: "{source,bower_components}/**/*.coffee"
   dev: [
-    "dev/*/dist/**/*.*"
+    "dev/*/dist/**/*"
     "dev/*/bower.json"
   ]
   html:
@@ -63,7 +63,7 @@ paths =
     source: [
       "public/libs/angular/angular*.js"
       "public/libs/take-and-make/dist/take-and-make.js"
-      "public/libs/**/*.*"
+      "public/libs/**/*"
     ]
   sass:
     source: [
