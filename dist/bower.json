@@ -10,7 +10,7 @@
     "q-n-eh": "cdig/q-n-eh#v2",
     "svg-activity-components": "cdig/svg-activity-components",
     "svg-activity-loader": "cdig/svg-activity-loader",
-    "take-and-make": "cdig/take-and-make"
+    "take-and-make": "cdig/take-and-make#v2"
   },
   "main": [],
   "ignore": [],
