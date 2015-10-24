@@ -2,12 +2,14 @@
   "name": "lbs-lesson",
   "description": "An LBS Lesson",
   "dependencies": {
+    "cd-library": "cdig/cd-library",
     "cd-module": "cdig/cd-module#v2",
     "lbs-pack": "cdig/lbs-pack",
     "piece-it-together": "cdig/piece-it-together#v2",
     "q-n-eh": "cdig/q-n-eh#v2",
     "svg-activity-components": "cdig/svg-activity-components",
-    "svg-activity-loader": "cdig/svg-activity-loader"
+    "svg-activity-loader": "cdig/svg-activity-loader",
+    "take-and-make": "cdig/take-and-make"
   },
   "main": [],
   "ignore": [],
