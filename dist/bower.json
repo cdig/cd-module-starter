@@ -4,6 +4,7 @@
   "dependencies": {
     "cd-library": "cdig/cd-library",
     "cd-module": "cdig/cd-module#v2",
+    "cd-reset": "cdig/cd-reset#v2",
     "lbs-pack": "cdig/lbs-pack",
     "piece-it-together": "cdig/piece-it-together#v2",
     "q-n-eh": "cdig/q-n-eh#v2",
