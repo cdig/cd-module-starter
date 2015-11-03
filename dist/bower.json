@@ -2,7 +2,6 @@
   "name": "lbs-lesson",
   "description": "An LBS Lesson",
   "dependencies": {
-    "backend": "cdig/backend#v2",
     "cd-library": "cdig/cd-library#v2",
     "cd-map": "cdig/cd-map#v2",
     "cd-module": "cdig/cd-module#v2",
