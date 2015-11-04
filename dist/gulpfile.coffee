@@ -210,7 +210,7 @@ toTheFutureCmds = [
   "mkdir -p source/pages"
   "mkdir -p source/styles"
   "rm -rf .codekit-cache bower_components source/min"
-  "rm -f config.codekit public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
+  "rm -f config.codekit public/flash/js-wrapper.swf public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
   expandCurlPath ".gitignore"
   expandCurlPath "bower.json"
   expandCurlPath "source/pages/title.kit"
