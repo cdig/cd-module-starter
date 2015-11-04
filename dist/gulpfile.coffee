@@ -82,6 +82,10 @@ logAndKillError = (err)->
   @emit "end"
 
 
+curlFromStarter = (file)->
+  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{file} > #{file}"
+
+
 gulp.task "assets", ()->
   gulp.src paths.assets.source
     # .pipe gulp_using() # Uncomment for debug
@@ -206,38 +210,33 @@ gulp.task "default", ["assets", "coffee", "dev", "kit", "scss", "serve"], ()->
 ###################################################################################################
 
 
-expandCurlPath = (p)->
-  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{p} > #{p}"
-
-
-updateCmds = [
-  expandCurlPath ".gitignore"
-  expandCurlPath "bower.json"
-  expandCurlPath "gulpfile.coffee"
-  expandCurlPath "package.json"
-  "nvm install stable"
-  "npm update -g bower coffee-script gulp npm"
+gulp.task "update", gulp_shell.task [
+  curlFromStarter ".gitignore"
+  curlFromStarter "bower.json"
+  curlFromStarter "gulpfile.coffee"
+  curlFromStarter "package.json"
   "npm update"
 ]
 
 
-toTheFutureCmds = [
-  "mkdir -p source/pages"
-  "mkdir -p source/styles"
+###################################################################################################
+
+
+gulp.task "ttf:shell", gulp_shell.task [
   "rm -rf .codekit-cache bower_components source/min"
   "rm -f config.codekit public/flash/js-wrapper.swf public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
-  expandCurlPath ".gitignore"
-  expandCurlPath "bower.json"
-  expandCurlPath "source/pages/title.kit"
-  expandCurlPath "source/pages/ending.kit"
-  expandCurlPath "source/styles/fonts.scss"
+  "mkdir -p source/pages"
+  "mkdir -p source/styles"
+  curlFromStarter ".gitignore"
+  curlFromStarter "bower.json"
+  curlFromStarter "source/pages/title.kit"
+  curlFromStarter "source/pages/ending.kit"
+  curlFromStarter "source/styles/fonts.scss"
   "bower update"
-  "gulp evolve"
-  # "clear && echo 'Your jacket is now dry.' && echo"
 ]
 
 
-gulp.task "evolve:rewrite", ()->
+gulp.task "ttf:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_replace "<main", "<cd-main"
@@ -265,15 +264,19 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
-gulp.task "evolve:transfer", ()->
+gulp.task "ttf:transfer", ()->
   gulp.src paths.assets.public
     .pipe gulp_using() # Uncomment for debug
     .pipe gulp.dest "source"
 
 
-gulp.task "evolve", ["evolve:rewrite", "evolve:transfer"], ()->
+gulp.task "ttf:del", ()->
   del "public"
+  
+
+gulp.task "ttf:done", ()->
+  do gulp_shell.task "clear && echo 'Your jacket is now dry.' && echo"
 
 
-gulp.task "update", gulp_shell.task updateCmds
-gulp.task "to-the-future", gulp_shell.task toTheFutureCmds
+gulp.task "to-the-future", ()->
+  run_sequence "ttf:shell", "ttf:rewrite", "ttf:transfer", "ttf:del", "ttf:done"
