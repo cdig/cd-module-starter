@@ -162,7 +162,7 @@ gulp.task "kit", ["libs"], ()->
     .pipe gulp_inject libs, name: "bower", ignorePath: "/public/", addRootSlash: false
     .pipe gulp_inject html, name: "bower", transform: fileContents
     .pipe gulp_inject pack, name: "pack", transform: fileContents
-    .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
+    .pipe gulp_replace "<script src=\"_libs", "<script defer src=\"_libs"
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.{css,html,js}"
@@ -176,7 +176,7 @@ gulp.task "scss", ()->
   gulp.src paths.scss.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
-    .pipe gulp_concat "_styles.scss"
+    .pipe gulp_concat "styles.scss" # Hack: we can't use _styles here because SASS partials!
     .pipe gulp_sass
       errLogToConsole: true
       outputStyle: "compressed"
@@ -187,6 +187,7 @@ gulp.task "scss", ()->
       cascade: false
       remove: false
     .pipe gulp_sourcemaps.write "."
+    .pipe gulp_concat "_styles.css" # Hack: workaround for SASS partials issue above
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.css"
