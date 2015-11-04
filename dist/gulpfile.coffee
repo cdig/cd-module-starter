@@ -20,33 +20,13 @@ path_exists = require("path-exists").sync
 run_sequence = require "run-sequence"
 
 
-gulp_notify.logLevel(0)
-gulp_notify.on "click", ()->
-  do gulp_shell.task "open -a Terminal"
-
-
-fileContents = (filePath, file)->
-  file.contents.toString "utf8"
-
-
-logAndKillError = (err)->
-  beepbeep()
-  console.log gulp_util.colors.bgRed("\n## Error ##")
-  console.log gulp_util.colors.red err.message + "\n"
-  gulp_notify.onError(
-    emitError: true
-    icon: false
-    message: err.message
-    title: "👻"
-    wait: true
-    )(err)
-  @emit "end"
+assetTypes = "gif, jpeg, jpg, json, m4v, mp3, mp4, png, svg, swf"
 
 
 paths =
   assets:
-    public: "public/**/*.{gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf}"
-    source: "source/**/*.{gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf}"
+    public: "public/**/*.{#{assetTypes}}"
+    source: "source/**/*.{#{assetTypes}}"
   coffee:
     source: [
       "bower_components/**/pack/**/*.coffee"
@@ -79,14 +59,48 @@ paths =
     watch: "{source,bower_components}/**/*.scss"
 
 
+gulp_notify.logLevel(0)
+gulp_notify.on "click", ()->
+  do gulp_shell.task "open -a Terminal"
+
+
+fileContents = (filePath, file)->
+  file.contents.toString "utf8"
+
+
+logAndKillError = (err)->
+  beepbeep()
+  console.log gulp_util.colors.bgRed("\n## Error ##")
+  console.log gulp_util.colors.red err.message + "\n"
+  gulp_notify.onError(
+    emitError: true
+    icon: false
+    message: err.message
+    title: "👻"
+    wait: true
+    )(err)
+  @emit "end"
+
+
+gulp.task "assets", ()->
+  gulp.src paths.assets.source
+    # .pipe gulp_using() # Uncomment for debug
+    .pipe gulp.dest "public"
+    .pipe browser_sync.stream
+      match: "**/*.{#{assetTypes}}"
+    .pipe gulp_notify
+      title: "👍"
+      message: "Assets"
+  
+
 gulp.task "coffee", ()->
-  gulp.src paths.coffee.source#.concat main_bower_files "**/*.coffee"
+  gulp.src paths.coffee.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
-    .pipe gulp_sourcemaps.write "." # TODO: Don't write sourcemaps in production
+    .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.js"
@@ -151,7 +165,7 @@ gulp.task "kit", ["libs"], ()->
 
 gulp.task "sass", ["scss"]
 gulp.task "scss", ()->
-  gulp.src paths.scss.source#.concat main_bower_files "**/*.scss"
+  gulp.src paths.scss.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
     .pipe gulp_concat "styles.scss"
@@ -164,7 +178,7 @@ gulp.task "scss", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .pipe gulp_sourcemaps.write "." # TODO: Don't write sourcemaps in production
+    .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.css"
@@ -181,7 +195,8 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["coffee", "dev", "kit", "scss", "serve"], ()->
+gulp.task "default", ["assets", "coffee", "dev", "kit", "scss", "serve"], ()->
+  gulp.watch paths.assets.source, ["assets"]
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
