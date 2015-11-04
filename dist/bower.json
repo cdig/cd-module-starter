@@ -10,7 +10,7 @@
     "lbs-pack": "cdig/lbs-pack#v2",
     "piece-it-together": "cdig/piece-it-together#v2",
     "q-n-eh": "cdig/q-n-eh#v2",
-    "svg-activity-components": "cdig/svg-activity-components",
+    "svg-activity-components": "cdig/svg-activity-components#v2",
     "svg-activity-loader": "cdig/svg-activity-loader#v2",
     "take-and-make": "cdig/take-and-make#v2"
   },
