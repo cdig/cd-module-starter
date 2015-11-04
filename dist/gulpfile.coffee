@@ -44,9 +44,9 @@ paths =
     watch: "{source,bower_components}/**/*.{kit,html}"
   libs:
     source: [
-      "public/libs/angular/angular*.js"
-      "public/libs/take-and-make/dist/take-and-make.js"
-      "public/libs/**/*"
+      "public/_libs/bower/angular/angular*.js"
+      "public/_libs/bower/take-and-make/dist/take-and-make.js"
+      "public/_libs/**/*"
     ]
   scss:
     source: [
@@ -107,7 +107,7 @@ gulp.task "coffee", ()->
   gulp.src paths.coffee.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
-    .pipe gulp_concat "scripts.coffee"
+    .pipe gulp_concat "_scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
     .pipe gulp_sourcemaps.write "."
@@ -137,7 +137,12 @@ gulp.task "libs", ()->
   gulp.src bowerWithMin.concat(sourceMaps), base: "bower_components/"
     # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
-    .pipe gulp.dest "public/libs"
+    .pipe gulp.dest "public/_libs/bower"
+  
+  gulp.src "source/**/*.js"
+    # .pipe gulp_using() # Uncomment for debug
+    .on "error", logAndKillError
+    .pipe gulp.dest "public/_libs/source"
 
 
 gulp.task "kit", ["libs"], ()->
@@ -171,7 +176,7 @@ gulp.task "scss", ()->
   gulp.src paths.scss.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
-    .pipe gulp_concat "styles.scss"
+    .pipe gulp_concat "_styles.scss"
     .pipe gulp_sass
       errLogToConsole: true
       outputStyle: "compressed"
@@ -224,7 +229,7 @@ gulp.task "update", gulp_shell.task [
 
 gulp.task "ttf:shell", gulp_shell.task [
   "rm -rf .codekit-cache bower_components source/min"
-  "rm -f config.codekit public/flash/js-wrapper.swf public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
+  "rm -f config.codekit public/flash/js-wrapper.swf source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
   "mkdir -p source/pages"
   "mkdir -p source/styles"
   curlFromStarter ".gitignore"
@@ -266,7 +271,7 @@ gulp.task "ttf:rewrite", ()->
 
 gulp.task "ttf:transfer", ()->
   gulp.src paths.assets.public
-    .pipe gulp_using() # Uncomment for debug
+    # .pipe gulp_using() # Uncomment for debug
     .pipe gulp.dest "source"
 
 
