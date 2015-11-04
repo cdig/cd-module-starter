@@ -186,8 +186,8 @@ gulp.task "scss", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .pipe gulp_sourcemaps.write "."
     .pipe gulp_concat "_styles.css" # Hack: workaround for SASS partials issue above
+    .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.css"
