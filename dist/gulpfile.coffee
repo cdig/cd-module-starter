@@ -20,6 +20,9 @@ path_exists = require("path-exists").sync
 run_sequence = require "run-sequence"
 
 
+# CONFIG ##########################################################################################
+
+
 assetTypes = "gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf"
 
 
@@ -31,7 +34,7 @@ paths =
     source: [
       "bower_components/**/pack/**/*.coffee"
       "source/**/*.coffee"
-      ]
+    ]
     watch: "{source,bower_components}/**/*.coffee"
   dev: [
     "dev/*/dist/**/*"
@@ -64,6 +67,9 @@ gulp_notify.on "click", ()->
   do gulp_shell.task "open -a Terminal"
 
 
+# HELPER FUNCTIONS ################################################################################
+
+
 fileContents = (filePath, file)->
   file.contents.toString "utf8"
 
@@ -84,6 +90,9 @@ logAndKillError = (err)->
 
 curlFromStarter = (file)->
   "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{file} > #{file}"
+
+
+# TASKS: MODULE COMPILATION #######################################################################
 
 
 gulp.task "assets", ()->
@@ -200,15 +209,15 @@ gulp.task "serve", ()->
 
 
 gulp.task "default", ["assets", "coffee", "dev", "kit", "scss"], ()->
+  run_sequence "serve"
   gulp.watch paths.assets.source, ["assets"]
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.scss.watch, ["scss"]
-  run_sequence "serve"
 
 
-###################################################################################################
+# TASKS: UPDATE ###################################################################################
 
 
 gulp.task "update", gulp_shell.task [
@@ -220,7 +229,7 @@ gulp.task "update", gulp_shell.task [
 ]
 
 
-###################################################################################################
+# TASKS: TO THE FUTURE ############################################################################
 
 
 gulp.task "ttf:shell", gulp_shell.task [
