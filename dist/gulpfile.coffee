@@ -36,10 +36,7 @@ paths =
       "source/**/*.coffee"
     ]
     watch: "{source,bower_components}/**/*.coffee"
-  dev: [
-    "dev/*/dist/**/*"
-    "dev/*/bower.json"
-  ]
+  dev: "dev/**/*"
   html:
     pack: "bower_components/**/pack/**/*.html"
   kit:
@@ -122,14 +119,7 @@ gulp.task "coffee", ()->
       message: "Coffee"
 
 
-gulp.task "dev:copy", ()->
-  gulp.src paths.dev
-    .on "error", logAndKillError
-    .pipe gulp.dest "bower_components"
-
-
-gulp.task "dev", ()->
-  run_sequence "dev:copy", "kit"
+gulp.task "dev", gulp_shell.task 'rsync --exclude "*/.git/" --delete -ar dev/* bower_components'
   
 
 gulp.task "libs", ()->
@@ -170,7 +160,7 @@ gulp.task "kit", ["libs"], ()->
     .pipe gulp_replace "<script src=\"libs", "<script defer src=\"libs"
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
-      match: "**/*.html"
+      match: "**/*.{css,html,js}"
     .pipe gulp_notify
       title: "👍"
       message: "HTML"
@@ -209,12 +199,12 @@ gulp.task "serve", ()->
 
 
 gulp.task "default", ["assets", "coffee", "dev", "kit", "scss"], ()->
-  run_sequence "serve"
   gulp.watch paths.assets.source, ["assets"]
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.scss.watch, ["scss"]
+  run_sequence "serve" # Must come last
 
 
 # TASKS: UPDATE ###################################################################################
