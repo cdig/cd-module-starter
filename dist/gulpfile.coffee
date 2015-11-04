@@ -264,7 +264,7 @@ gulp.task "evolve:transfer:copy", ()->
   gulp.src paths.assets.public
     .pipe gulp.dest "source"
 gulp.task "evolve:transfer", ["evolve:transfer:copy"], ()->
-  del transferpaths
+  del paths.assets.public
 
 
 gulp.task "evolve", ()->
