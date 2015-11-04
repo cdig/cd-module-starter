@@ -191,48 +191,6 @@ gulp.task "default", ["coffee", "dev", "kit", "scss", "serve"], ()->
 ###################################################################################################
 
 
-sortObjectKeys = (unsorted)->
-  sorted = {}
-  sorted[k] = unsorted[k] for k in Object.keys(unsorted).sort()
-  return sorted
-
-
-gulp.task "evolve:bower", ()->
-  gulp.src "bower.json"
-    .pipe gulp_json_editor (bower)->
-      deps = bower.dependencies
-      delete deps._project # Replaced by lbs-pack
-      delete deps["flow-arrows"] # svg-activity compilation is now separate
-      delete deps["svg-activity"] # svg-activity compilation is now separate
-      deps["cd-module"] = "cdig/cd-module#v2"
-      deps["lbs-pack"] = "cdig/lbs-pack"
-      deps["svg-activity-components"] = "cdig/svg-activity-components"
-      deps["svg-activity-loader"] = "cdig/svg-activity-loader"
-      deps["piece-it-together"] = "cdig/piece-it-together#v2" if deps["piece-it-together"]?
-      deps["q-n-eh"] = "cdig/q-n-eh#v2" if deps["q-n-eh"]?
-      return v2Bower =
-        name: "cdig-module"
-        description: "An LBS Module"
-        dependencies: sortObjectKeys deps
-        license: "UNLICENSED"
-        private: true
-    .pipe gulp.dest "."
-
-
-gulp.task "evolve:del", ()->
-  del "config.codekit"
-  del ".codekit-cache"
-  del "gulp-svg.coffee"
-  del "gulpfile.js"
-  del "source/min/libs-min.js"
-  del "source/styles/background.scss"
-  del "source/min"
-  del "source/libs.js"
-  del "source/scripts.coffee"
-  del "source/styles.scss"
-  del "public/libs.js"
-
-
 gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
@@ -260,21 +218,17 @@ gulp.task "evolve:rewrite", ()->
 
 
 # gulp runs async, and del runs sync, so we split this into 2 tasks to avoid a race
-gulp.task "evolve:transfer:copy", ()->
-  gulp.src paths.assets.public
-    .pipe gulp.dest "source"
-gulp.task "evolve:transfer", ["evolve:transfer:copy"], ()->
-  del paths.assets.public
+gulp.task "evolve:transfer:copy", ()-> gulp.src(paths.assets.public).pipe gulp.dest "source"
+gulp.task "evolve:transfer", ["evolve:transfer:copy"], ()-> del paths.assets.public
 
 
-gulp.task "evolve", ()->
-  run_sequence "evolve:bower", "evolve:del", "evolve:rewrite", "evolve:transfer"
+gulp.task "evolve", ["evolve:rewrite", "evolve:transfer"]
 
 
 ###################################################################################################
 
 expandCurlPath = (p)->
-  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-template/v2/dist/#{p} > #{p}"
+  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{p} > #{p}"
 
 updateCmds = [
   expandCurlPath ".gitignore"
@@ -286,14 +240,21 @@ updateCmds = [
 toTheFutureCmds = updateCmds.concat [
   "mkdir -p source/pages"
   "mkdir -p source/styles"
+  "rm -f .codekit-cache"
+  "rm -rf bower_components"
+  "rm -f  config.codekit"
+  "rm -f  public/libs.js"
+  "rm -f  source/libs.js"
+  "rm -rf source/min"
+  "rm -f  source/scripts.coffee"
+  "rm -f  source/styles.scss"
+  "rm -f  source/styles/background.scss"
   expandCurlPath "source/pages/title.kit"
   expandCurlPath "source/pages/ending.kit"
   expandCurlPath "source/styles/fonts.scss"
-  "rm -rf bower_components"
   "npm install"
-  "gulp evolve"
-  "bower prune"
   "bower update"
+  "gulp evolve"
   "clear && echo 'Your jacket is now dry.' && echo"
 ]
 
