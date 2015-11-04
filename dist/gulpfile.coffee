@@ -44,6 +44,9 @@ logAndKillError = (err)->
 
 
 paths =
+  assets:
+    public: "public/**/*.{gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf}"
+    source: "source/**/*.{gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf}"
   coffee:
     source: [
       "bower_components/**/pack/**/*.coffee"
@@ -256,8 +259,16 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
+# gulp runs async, and del runs sync, so we split this into 2 tasks to avoid a race
+gulp.task "evolve:transfer:copy", ()->
+  gulp.src paths.assets.public
+    .pipe gulp.dest "source"
+gulp.task "evolve:transfer", ["evolve:transfer:copy"], ()->
+  del transferpaths
+
+
 gulp.task "evolve", ()->
-  run_sequence "evolve:bower", "evolve:del", "evolve:rewrite"
+  run_sequence "evolve:bower", "evolve:del", "evolve:rewrite", "evolve:transfer"
 
 
 ###################################################################################################
