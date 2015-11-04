@@ -199,12 +199,13 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["assets", "coffee", "dev", "kit", "scss", "serve"], ()->
+gulp.task "default", ["assets", "coffee", "dev", "kit", "scss"], ()->
   gulp.watch paths.assets.source, ["assets"]
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.scss.watch, ["scss"]
+  run_sequence "serve"
 
 
 ###################################################################################################
