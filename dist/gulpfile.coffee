@@ -237,17 +237,16 @@ updateCmds = [
   expandCurlPath "package.json"
 ]
 
-toTheFutureCmds = updateCmds.concat [
+toTheFutureCmds = [
   "mkdir -p source/pages"
   "mkdir -p source/styles"
-  "rm -rf .codekit-cache bower_components config.codekit public/libs.js source/libs.js source/min source/scripts.coffee source/styles.scss source/styles/background.scss"
+  "rm -rf .codekit-cache bower_components source/min"
+  "rm -f config.codekit public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
+  expandCurlPath ".gitignore"
+  expandCurlPath "bower.json"
   expandCurlPath "source/pages/title.kit"
   expandCurlPath "source/pages/ending.kit"
   expandCurlPath "source/styles/fonts.scss"
-  "curl -fsS https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip"
-  "unzip node_modules.zip"
-  "rm node_modules.zip"
-  "npm install"
   "bower update"
   "gulp evolve"
   "clear && echo 'Your jacket is now dry.' && echo"
