@@ -191,6 +191,37 @@ gulp.task "default", ["coffee", "dev", "kit", "scss", "serve"], ()->
 ###################################################################################################
 
 
+expandCurlPath = (p)->
+  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{p} > #{p}"
+
+
+updateCmds = [
+  expandCurlPath ".gitignore"
+  expandCurlPath "bower.json"
+  expandCurlPath "gulpfile.coffee"
+  expandCurlPath "package.json"
+  "nvm install stable"
+  "npm update -g bower coffee-script gulp npm"
+  "npm update"
+]
+
+
+toTheFutureCmds = [
+  "mkdir -p source/pages"
+  "mkdir -p source/styles"
+  "rm -rf .codekit-cache bower_components source/min"
+  "rm -f config.codekit public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
+  expandCurlPath ".gitignore"
+  expandCurlPath "bower.json"
+  expandCurlPath "source/pages/title.kit"
+  expandCurlPath "source/pages/ending.kit"
+  expandCurlPath "source/styles/fonts.scss"
+  "bower update"
+  "gulp evolve"
+  # "clear && echo 'Your jacket is now dry.' && echo"
+]
+
+
 gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
     .pipe gulp_replace "<main", "<cd-main"
@@ -217,43 +248,14 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
-# gulp runs async, and del runs sync, so we split this into 2 tasks to avoid a race
-gulp.task "evolve:transfer:copy", ()-> gulp.src(paths.assets.public).pipe gulp.dest "source"
-gulp.task "evolve:transfer", ["evolve:transfer:copy"], ()-> del paths.assets.public
+gulp.task "evolve:transfer", ()->
+  gulp.src paths.assets.public
+    .pipe gulp.dest "source"
 
 
-gulp.task "evolve", ["evolve:rewrite", "evolve:transfer"]
+gulp.task "evolve", ["evolve:rewrite", "evolve:transfer"], ()->
+  del "public"
 
-
-###################################################################################################
-
-expandCurlPath = (p)->
-  "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{p} > #{p}"
-
-updateCmds = [
-  expandCurlPath ".gitignore"
-  expandCurlPath "bower.json"
-  expandCurlPath "gulpfile.coffee"
-  expandCurlPath "package.json"
-  "nvm install stable"
-  "npm update -g bower coffee-script gulp npm"
-  "npm update"
-]
-
-toTheFutureCmds = [
-  "mkdir -p source/pages"
-  "mkdir -p source/styles"
-  "rm -rf .codekit-cache bower_components source/min"
-  "rm -f config.codekit public/libs.js source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
-  expandCurlPath ".gitignore"
-  expandCurlPath "bower.json"
-  expandCurlPath "source/pages/title.kit"
-  expandCurlPath "source/pages/ending.kit"
-  expandCurlPath "source/styles/fonts.scss"
-  "bower update"
-  "gulp evolve"
-  # "clear && echo 'Your jacket is now dry.' && echo"
-]
 
 gulp.task "update", gulp_shell.task updateCmds
 gulp.task "to-the-future", gulp_shell.task toTheFutureCmds
