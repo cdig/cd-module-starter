@@ -20,7 +20,7 @@ path_exists = require("path-exists").sync
 run_sequence = require "run-sequence"
 
 
-assetTypes = "gif, jpeg, jpg, json, m4v, mp3, mp4, png, svg, swf"
+assetTypes = "gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf"
 
 
 paths =
@@ -239,6 +239,7 @@ toTheFutureCmds = [
 
 gulp.task "evolve:rewrite", ()->
   gulp.src "source/**/*.{kit,html}"
+    # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
     .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
@@ -251,6 +252,7 @@ gulp.task "evolve:rewrite", ()->
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
   gulp.src "source/**/*.{css,scss}"
+    # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_replace "_project/dist", "lbs-pack/pack"
     .pipe gulp_replace "$cdBlue", "$blue"
     .pipe gulp_replace "$cdGrey", "$grey"
@@ -265,6 +267,7 @@ gulp.task "evolve:rewrite", ()->
 
 gulp.task "evolve:transfer", ()->
   gulp.src paths.assets.public
+    .pipe gulp_using() # Uncomment for debug
     .pipe gulp.dest "source"
 
 
