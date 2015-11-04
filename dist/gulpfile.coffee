@@ -235,6 +235,9 @@ updateCmds = [
   expandCurlPath "bower.json"
   expandCurlPath "gulpfile.coffee"
   expandCurlPath "package.json"
+  "nvm install stable"
+  "npm update -g bower coffee-script gulp npm"
+  "npm update"
 ]
 
 toTheFutureCmds = [
@@ -249,7 +252,7 @@ toTheFutureCmds = [
   expandCurlPath "source/styles/fonts.scss"
   "bower update"
   "gulp evolve"
-  "clear && echo 'Your jacket is now dry.' && echo"
+  # "clear && echo 'Your jacket is now dry.' && echo"
 ]
 
 gulp.task "update", gulp_shell.task updateCmds
