@@ -126,7 +126,9 @@ gulp.task "coffee", ()->
       message: "Coffee"
 
 
-gulp.task "dev", gulp_shell.task 'rsync --exclude "*/.git/" --delete -ar dev/* bower_components'
+gulp.task "dev", gulp_shell.task [
+  'if [ -d "dev" ]; then rsync --exclude "*/.git/" --delete -ar dev/* bower_components; fi'
+]
   
 
 gulp.task "libs", ()->
