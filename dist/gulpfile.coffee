@@ -129,9 +129,9 @@ gulp.task "coffee", ()->
 gulp.task "dev", gulp_shell.task [
   'if [ -d "dev" ]; then rsync --exclude "*/.git/" --delete -ar dev/* bower_components; fi'
 ]
-  
 
-gulp.task "libs", ()->
+
+gulp.task "libs:bower", ()->
   sourceMaps = []
   bowerWithMin = main_bower_files "**/*.{css,js}"
     .map (path)->
@@ -142,19 +142,20 @@ gulp.task "libs", ()->
         return minPath
       else
         return path
-  
   gulp.src bowerWithMin.concat(sourceMaps), base: "bower_components/"
     # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/_libs/bower"
-  
+
+
+gulp.task "libs:source", ()->
   gulp.src "source/**/*.js"
     # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/_libs/source"
 
 
-gulp.task "kit", ["libs"], ()->
+gulp.task "kit", ["libs:bower", "libs:source"], ()->
   # This grabs .js.map too, but don't worry, they aren't injected
   libs = gulp.src paths.libs.source, read: false
   html = gulp.src main_bower_files "**/*.{html}"
