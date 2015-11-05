@@ -256,6 +256,8 @@ gulp.task "ttf:rewrite", ()->
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_replace "<main", "<cd-main"
     .pipe gulp_replace "</main", "</cd-main"
+    .pipe gulp_replace "<!-- @import ../public/", "<!-- @import "
+    .pipe gulp_replace "<!-- @import ../../public/", "<!-- @import ../"
     .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
     .pipe gulp_replace "<!-- @import ../../_project/", "<!-- @import "
     .pipe gulp_replace "<!-- 4. Components -->", ""
