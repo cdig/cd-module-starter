@@ -9,6 +9,7 @@ gulp_inject = require "gulp-inject"
 gulp_json_editor = require "gulp-json-editor"
 gulp_kit = require "gulp-kit"
 gulp_notify = require "gulp-notify"
+gulp_rename = require "gulp-rename"
 gulp_replace = require "gulp-replace"
 gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
@@ -29,7 +30,10 @@ assetTypes = "gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf"
 paths =
   assets:
     public: "public/**/*.{#{assetTypes}}"
-    source: "source/**/*.{#{assetTypes}}"
+    source: [
+      "source/**/*.{#{assetTypes}}"
+      "bower_components/*/pack/**/*.{#{assetTypes}}"
+    ]
   coffee:
     source: [
       "bower_components/**/pack/**/*.coffee"
@@ -95,6 +99,9 @@ curlFromStarter = (file)->
 gulp.task "assets", ()->
   gulp.src paths.assets.source
     # .pipe gulp_using() # Uncomment for debug
+    .pipe gulp_rename (path)->
+      path.dirname = path.dirname.replace /.*\/pack\//, ''
+      path
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.{#{assetTypes}}"
@@ -107,7 +114,7 @@ gulp.task "coffee", ()->
   gulp.src paths.coffee.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
-    .pipe gulp_concat "_scripts.coffee"
+    .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
     .pipe gulp_sourcemaps.write "."
@@ -176,7 +183,7 @@ gulp.task "scss", ()->
   gulp.src paths.scss.source
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_sourcemaps.init()
-    .pipe gulp_concat "styles.scss" # Hack: we can't use _styles here because SASS partials!
+    .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
       errLogToConsole: true
       outputStyle: "compressed"
@@ -186,7 +193,6 @@ gulp.task "scss", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .pipe gulp_concat "_styles.css" # Hack: workaround for SASS partials issue above
     .pipe gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
