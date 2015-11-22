@@ -8,7 +8,12 @@ Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip), 
 `cd` into your new module folder, and then run the following:
 
 ```bash
-npm install
+curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip
+
+unzip -nq node_modules.zip
+
+rm node_modules.zip
+
 bower update
 ```
 
