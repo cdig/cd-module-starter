@@ -1,5 +1,6 @@
 beepbeep = require "beepbeep"
 browser_sync = require("browser-sync").create()
+chalk = require "chalk"
 del = require "del"
 gulp = require "gulp"
 gulp_autoprefixer = require "gulp-autoprefixer"
@@ -15,7 +16,6 @@ gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
 gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_using = require "gulp-using"
-gulp_util = require "gulp-util"
 main_bower_files = require "main-bower-files"
 path_exists = require("path-exists").sync
 run_sequence = require "run-sequence"
@@ -77,8 +77,8 @@ fileContents = (filePath, file)->
 
 logAndKillError = (err)->
   beepbeep()
-  console.log gulp_util.colors.bgRed("\n## Error ##")
-  console.log gulp_util.colors.red err.message + "\n"
+  console.log chalk.bgRed("\n## Error ##")
+  console.log chalk.red err.message + "\n"
   gulp_notify.onError(
     emitError: true
     icon: false
