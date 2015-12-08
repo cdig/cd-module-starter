@@ -5,18 +5,18 @@ What's in the box? This repo contains a bare-bones skeleton of a module, ready f
 ## Getting Started
 Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip), take the `dist` folder, name it whatever your module name is, and put it somewhere else. Delete the `cd-module-starter-2` folder.
 
-`cd` into your new module folder, and then run the following:
+`cd` into your new module folder. Copy this entire block, including the empty space at the end!
 
 ```bash
 curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip
-
 unzip -nq node_modules.zip
-
 rm node_modules.zip
-
+npm update
 bower update
+     
 ```
 
+Paste it in to your Terminal. Stuff will start running. After about 30 seconds, the setup process will finish.
 
 ## Getting Down To Work
 After you have a module set up and ready to be worked on, here's how you fire it up.
