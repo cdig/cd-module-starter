@@ -7,7 +7,9 @@ Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip). 
 
 `cd` into your new module folder. Copy this very long line. Paste, and hit enter.
 
-`curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip && unzip -nq node_modules.zip && rm node_modules.zip && npm update && bower update && clear && echo "Success"`
+```bash
+curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip && unzip -nq node_modules.zip && rm node_modules.zip && npm update && bower update && clear && echo "Success"
+```
 
 Stuff will start running. After about 30 seconds, the setup process will finish. If it is successful, your terminal will be empty, save for the word "Success".
 
