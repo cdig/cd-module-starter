@@ -3,7 +3,7 @@
 What's in the box? This repo contains a bare-bones skeleton of a module, ready for you to flesh out with content.
 
 ## Getting Started
-Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip). Unzip. Take the `dist` folder, name it whatever your module name is, and put it somewhere else. Delete the `cd-module-starter-2` folder.
+Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip). Unzip. Take the `dist` folder, name it whatever your module name is, and put it wherever you keep your working files (or [in Dropbox](https://github.com/cdig/cd-module/blob/v2/README.md#project-folders) if you work from there). Delete the `cd-module-starter-2` folder.
 
 `cd` into your new module folder. Copy this entire block, including the empty space at the end!
 
