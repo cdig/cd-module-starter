@@ -3,17 +3,18 @@
 What's in the box? This repo contains a bare-bones skeleton of a module, ready for you to flesh out with content.
 
 ## Getting Started
-Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip). Unzip. Take the `dist` folder, name it whatever your module name is, and put it wherever you keep your working files (or [in Dropbox](https://github.com/cdig/cd-module/blob/v2/README.md#project-folders) if you work from there). Delete the `cd-module-starter-2` folder.
+1. Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip). Unzip.
+2. Take the `dist` folder, name it whatever your module name is. This folder is now your "module project folder". Put it wherever you keep your working files (or [in Dropbox](https://github.com/cdig/cd-module/blob/v2/README.md#project-folders) if you just work out of there).
+3. Delete the `cd-module-starter-2` folder.
+4. `cd` into your new module project folder. Triple-click the following line to select it all. Copy, and then paste it into the terminal.
 
-`cd` into your new module folder. Copy this very long line. Paste, and hit enter.
+  ```bash
+  curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip && unzip -nq node_modules.zip && rm   node_modules.zip && npm update && bower update && clear && echo "Success"
+  ```
 
-```bash
-curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip && unzip -nq node_modules.zip && rm node_modules.zip && npm update && bower update && clear && echo "Success"
-```
-
-Stuff will start running. After about 30 seconds, the setup process will finish. If it is successful, your terminal will be empty, save for the word "Success".
-
-If it failed, the terminal will be full of info. Grab a copy of all the text in your terminal, and paste it into #bikeshed as an attachment. You're welcome to kick things around and see if you can get it to work, but you may need some Ivan-help (patent pending) before you can continue drilling profitably.
+5. Stuff will start running. After about 30 seconds, the setup process will finish.
+  - If it is successful, your terminal will be empty, save for the word "Success".
+  - If it failed, the terminal will be full of info. Grab a copy of all the text in your terminal, and paste it into #bikeshed as an attachment. You're welcome to kick things around and see if you can get it to work, but you may need some Ivan-help (patent pending) before you can continue drilling profitably.
 
 ## Getting Down To Work
 After you have a module set up and ready to be worked on, here's how you fire it up.
