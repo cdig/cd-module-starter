@@ -9,23 +9,18 @@ Click [Download Zip](https://github.com/cdig/cd-module-starter/archive/v2.zip). 
 
 ```bash
 curl https://lunchboxsessions.s3.amazonaws.com/static/cd-module/node_modules.zip > node_modules.zip
-unzip -nq node_modules.zip
-rm node_modules.zip
-npm update
-bower update
+unzip -nq node_modules.zip && rm node_modules.zip && npm update && bower update && clear && echo "Success"
      
 ```
 
-Paste it in to your Terminal. Stuff will start running. After about 30 seconds, the setup process will finish.
+Paste it in to your Terminal. Stuff will start running. After about 30 seconds, the setup process will finish. If it is successful, your terminal will be empty, save for the word "Success".
+
+If it failed, the terminal will be full of info. Grab a copy of all the text in your terminal, and paste it into #bikeshed as an attachment. You're welcome to kick things around and see if you can get it to work, but you may need some Ivan-help (patent pending) before you can continue drilling profitably.
 
 ## Getting Down To Work
 After you have a module set up and ready to be worked on, here's how you fire it up.
 
-`cd` into the module folder, and then run the following:
-
-```bash
-gulp
-```
+`cd` into the module folder, and then run `gulp`.
 
 That'll compile all your files, and open up a browser window with a running instance of browser-sync. Any changes you make to the files in `source` will be immediately compiled, and the browser will be updated accordingly.
 
