@@ -23,7 +23,7 @@ run_sequence = require "run-sequence"
 # CONFIG ##########################################################################################
 
 
-assetTypes = "gif,jpeg,jpg,json,m4v,mp3,mp4,png,svg,swf"
+assetTypes = "cdig,gif,ico,jpeg,jpg,json,m4v,mp3,mp4,pdf,png,svg,swf,txt,woff,woff2"
 
 
 paths =
