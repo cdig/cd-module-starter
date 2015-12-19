@@ -1,6 +1,6 @@
 # cd-module-starter v2
 
-What's in the box? This repo contains a bare-bones skeleton of a module, ready for you to flesh out with content.
+What's in the box? This repo contains a bare-bones skeleton of a module, ready for you to flesh it out with content.
 
 <br>
 
