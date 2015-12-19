@@ -5,7 +5,7 @@ What's in the box? This repo contains a bare-bones skeleton of a module, ready f
 <br>
 
 ### RECENT CHANGE
-Go here for documentation: https://github.com/cdig/lunchboxsessions/wiki/How-To-Make-a-Module
+Go here for documentation: https://github.com/cdig/lunchboxsessions/wiki/Make-A-New-Module
 
 <br>
 
