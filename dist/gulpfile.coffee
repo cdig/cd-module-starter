@@ -228,6 +228,7 @@ gulp.task "update", gulp_shell.task [
   curlFromStarter ".gitignore"
   curlFromStarter "bower.json"
   curlFromStarter "gulpfile.coffee"
+  curlFromStarter "npm-shrinkwrap.json"
   curlFromStarter "package.json"
   "npm update"
 ]
