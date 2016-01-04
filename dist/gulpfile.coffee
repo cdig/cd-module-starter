@@ -275,9 +275,10 @@ gulp.task "ttf:rewrite", ()->
     .pipe gulp_replace "$cdDarkRed", "$red"
     .pipe gulp_replace "$cdDarkGrey", "$smoke"
     .pipe gulp_replace "$cdDarkGreen", "$green"
-    .pipe gulp_replace "$lbsBackground", "$navy"
+    .pipe gulp_replace "$cdAccentOrange", "$orange"
     .pipe gulp_replace "$mainBorderColor", " $silver"
     .pipe gulp_replace "$darkBorderColor", " $smoke"
+    .pipe gulp_replace "$lbsBackground", "$navy"
     .pipe gulp.dest (vinylFile)-> vinylFile.base
 
 
