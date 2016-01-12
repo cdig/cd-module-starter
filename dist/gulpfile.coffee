@@ -92,6 +92,10 @@ curlFromStarter = (file)->
   "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{file} > #{file}"
 
 
+gulp.task "del-public", ()->
+  del "public"
+
+
 # TASKS: MODULE COMPILATION #######################################################################
 
 
@@ -212,13 +216,23 @@ gulp.task "serve", ()->
     ui: false
 
 
-gulp.task "default", ["assets", "coffee", "dev", "kit", "scss"], ()->
+gulp.task "compile", ["assets", "coffee", "dev", "kit", "scss"]
+
+
+gulp.task "watch", ()->
   gulp.watch paths.assets.source, ["assets"]
   gulp.watch paths.coffee.watch, ["coffee"]
   gulp.watch paths.dev, ["dev"]
   gulp.watch paths.kit.watch, ["kit"]
   gulp.watch paths.scss.watch, ["scss"]
-  run_sequence "serve" # Must come last
+
+
+gulp.task "recompile", ()-> # This is also used from the command line, for bulk updates
+  run_sequence "del-public", "compile"
+
+
+gulp.task "default", ()->
+  run_sequence "recompile", "watch", "serve"
 
 
 # TASKS: UPDATE ###################################################################################
@@ -286,10 +300,6 @@ gulp.task "ttf:transfer", ()->
   gulp.src paths.assets.public
     # .pipe gulp_using() # Uncomment for debug
     .pipe gulp.dest "source"
-
-
-gulp.task "ttf:del", ()->
-  del "public"
   
 
 gulp.task "ttf:done", ()->
@@ -297,4 +307,4 @@ gulp.task "ttf:done", ()->
 
 
 gulp.task "to-the-future", ()->
-  run_sequence "ttf:shell", "ttf:rewrite", "ttf:transfer", "ttf:del", "ttf:done"
+  run_sequence "ttf:shell", "ttf:rewrite", "ttf:transfer", "del-public", "ttf:done"
