@@ -92,7 +92,7 @@ curlFromStarter = (file)->
   "curl -fsS https://raw.githubusercontent.com/cdig/cd-module-starter/v2/dist/#{file} > #{file}"
 
 
-gulp.task "del-public", ()->
+gulp.task "del:public", ()->
   del "public"
 
 
@@ -228,7 +228,7 @@ gulp.task "watch", ()->
 
 
 gulp.task "recompile", ()-> # This is also used from the command line, for bulk updates
-  run_sequence "del-public", "compile"
+  run_sequence "del:public", "compile"
 
 
 gulp.task "default", ()->
@@ -307,4 +307,4 @@ gulp.task "ttf:done", ()->
 
 
 gulp.task "to-the-future", ()->
-  run_sequence "ttf:shell", "ttf:rewrite", "ttf:transfer", "del-public", "ttf:done"
+  run_sequence "ttf:shell", "ttf:rewrite", "ttf:transfer", "del:public", "ttf:done"
