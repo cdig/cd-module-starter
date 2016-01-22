@@ -235,19 +235,6 @@ gulp.task "default", ()->
   run_sequence "recompile", "watch", "serve"
 
 
-# TASKS: UPDATE ###################################################################################
-
-
-gulp.task "update", gulp_shell.task [
-  curlFromStarter ".gitignore"
-  curlFromStarter "bower.json"
-  curlFromStarter "gulpfile.coffee"
-  curlFromStarter "npm-shrinkwrap.json"
-  curlFromStarter "package.json"
-  "npm update"
-]
-
-
 # TASKS: TO THE FUTURE ############################################################################
 
 
