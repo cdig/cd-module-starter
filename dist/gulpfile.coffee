@@ -227,8 +227,9 @@ gulp.task "watch", ()->
   gulp.watch paths.scss.watch, ["scss"]
 
 
-gulp.task "recompile", ()-> # This is also used from the command line, for bulk updates
-  run_sequence "del:public", "compile"
+# This task is also used from the command line, for bulk updates
+gulp.task "recompile", (cb)->
+  run_sequence "del:public", "compile", cb
 
 
 gulp.task "default", ()->
