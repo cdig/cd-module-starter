@@ -1,6 +1,6 @@
 # cd-module-starter v3
 
-Download this project when starting a new cd-module.
+Download this project when starting a new [cd-module](https://github.com/cdig/cd-module).
 
 Check the [LBS Wiki](https://github.com/cdig/lunchboxsessions/wiki) for more info.
 
