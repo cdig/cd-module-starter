@@ -13,8 +13,8 @@ gulp_rename = require "gulp-rename"
 gulp_replace = require "gulp-replace"
 gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
-gulp_sourcemaps = require "gulp-sourcemaps"
-gulp_using = require "gulp-using"
+# gulp_sourcemaps = require "gulp-sourcemaps" # Uncomment and npm install for debug
+# gulp_using = require "gulp-using" # Uncomment and npm install for debug
 main_bower_files = require "main-bower-files"
 path_exists = require("path-exists").sync
 run_sequence = require "run-sequence"
@@ -116,11 +116,11 @@ gulp.task "assets", ()->
 gulp.task "coffee", ()->
   gulp.src paths.coffee.source
     # .pipe gulp_using() # Uncomment for debug
-    .pipe gulp_sourcemaps.init()
+    # .pipe gulp_sourcemaps.init() # Uncomment for debug
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
-    .pipe gulp_sourcemaps.write "."
+    # .pipe gulp_sourcemaps.write "." # Uncomment for debug
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.js"
@@ -188,7 +188,7 @@ gulp.task "sass", ["scss"]
 gulp.task "scss", ()->
   gulp.src paths.scss.source
     # .pipe gulp_using() # Uncomment for debug
-    .pipe gulp_sourcemaps.init()
+    # .pipe gulp_sourcemaps.init() # Uncomment for debug
     .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
       errLogToConsole: true
@@ -199,7 +199,7 @@ gulp.task "scss", ()->
       browsers: "last 5 Chrome versions, last 2 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
       cascade: false
       remove: false
-    .pipe gulp_sourcemaps.write "."
+    # .pipe gulp_sourcemaps.write "." # Uncomment for debug
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.css"
@@ -234,65 +234,3 @@ gulp.task "recompile", (cb)->
 
 gulp.task "default", ()->
   run_sequence "recompile", "watch", "serve"
-
-
-# TASKS: TO THE FUTURE ############################################################################
-
-
-gulp.task "ttf:shell", gulp_shell.task [
-  "rm -rf .codekit-cache bower_components source/min"
-  "rm -f config.codekit public/flash/js-wrapper.swf source/libs.js source/scripts.coffee source/styles.scss source/styles/background.scss"
-  "mkdir -p source/pages"
-  "mkdir -p source/styles"
-  curlFromStarter ".gitignore"
-  curlFromStarter "bower.json"
-  curlFromStarter "source/pages/title.kit"
-  curlFromStarter "source/pages/ending.kit"
-  curlFromStarter "source/styles/fonts.scss"
-  "bower update"
-]
-
-
-gulp.task "ttf:rewrite", ()->
-  gulp.src "source/**/*.{kit,html}"
-    # .pipe gulp_using() # Uncomment for debug
-    .pipe gulp_replace "<main", "<cd-main"
-    .pipe gulp_replace "</main", "</cd-main"
-    .pipe gulp_replace "<!-- @import ../public/", "<!-- @import "
-    .pipe gulp_replace "<!-- @import ../../public/", "<!-- @import ../"
-    .pipe gulp_replace "<!-- @import ../bower_components/_project/dist/", "<!-- @import "
-    .pipe gulp_replace "<!-- @import ../../_project/", "<!-- @import "
-    .pipe gulp_replace "<!-- 4. Components -->", ""
-    .pipe gulp_replace "<!-- @import components.kit -->", ""
-    .pipe gulp_replace "<!-- None yet -->", ""
-    .pipe gulp_replace "<!-- 5. Bottom -->", "<!-- 4. Bottom -->"
-    .pipe gulp_replace "\n\n\n", "\n\n"
-    .pipe gulp.dest (vinylFile)-> vinylFile.base
-
-  gulp.src "source/**/*.{css,scss}"
-    # .pipe gulp_using() # Uncomment for debug
-    .pipe gulp_replace "_project/dist", "lbs-pack/pack"
-    .pipe gulp_replace "$cdBlue", "$blue"
-    .pipe gulp_replace "$cdGrey", "$grey"
-    .pipe gulp_replace "$cdDarkRed", "$red"
-    .pipe gulp_replace "$cdDarkGrey", "$smoke"
-    .pipe gulp_replace "$cdDarkGreen", "$green"
-    .pipe gulp_replace "$cdAccentOrange", "$orange"
-    .pipe gulp_replace "$mainBorderColor", " $silver"
-    .pipe gulp_replace "$darkBorderColor", " $smoke"
-    .pipe gulp_replace "$lbsBackground", "$navy"
-    .pipe gulp.dest (vinylFile)-> vinylFile.base
-
-
-gulp.task "ttf:transfer", ()->
-  gulp.src paths.assets.public
-    # .pipe gulp_using() # Uncomment for debug
-    .pipe gulp.dest "source"
-  
-
-gulp.task "ttf:done", ()->
-  do gulp_shell.task "clear && echo 'Your jacket is now dry.' && echo"
-
-
-gulp.task "to-the-future", ()->
-  run_sequence "ttf:shell", "ttf:rewrite", "ttf:transfer", "del:public", "ttf:done"

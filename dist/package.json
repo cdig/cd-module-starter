@@ -1,7 +1,7 @@
 {
-  "name": "cdig-module",
-  "version": "2.1.0",
-  "description": "A CDIG Module",
+  "name": "cd-module-project",
+  "version": "3.0.0",
+  "description": "An LBS Module Project",
   "dependencies": {
     "beepbeep": "latest",
     "browser-sync": "latest",
@@ -19,8 +19,6 @@
     "gulp-replace": "latest",
     "gulp-sass": "latest",
     "gulp-shell": "latest",
-    "gulp-sourcemaps": "latest",
-    "gulp-using": "latest",
     "main-bower-files": "latest",
     "path-exists": "latest",
     "run-sequence": "latest"

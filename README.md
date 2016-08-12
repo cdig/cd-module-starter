@@ -1,16 +1,8 @@
-# cd-module-starter v2
+# cd-module-starter v3
 
-What's in the box? This repo contains a bare-bones skeleton of a module, ready for you to flesh it out with content.
+Download this project when starting a new cd-module.
 
-<br>
-
-### RECENT CHANGE
-Go here for documentation: https://github.com/cdig/lunchboxsessions/wiki/Make-A-New-Module
-
-<br>
-
-## For System Developers
-Make a folder named `dev` in the root of the module. Clone the repo of a lib or app into that folder. Run `gulp` as normal for the module, and in a separate terminal tab, run the compilation pipeline for your lib/app. When the cd-module gulp process detects changes to files in `dev/*/dist/`, it'll copy `dev/*/dist` to `bower_components/*/dist`, and copy `dev/*/bower.json` to `bower_components/*/bower.json`, and then recompile the module accordingly.
+Check the [LBS Wiki](https://github.com/cdig/lunchboxsessions/wiki) for more info.
 
 ## License
-Copyright (c) 2014-2015 CD Industrial Group Inc. http://www.cdiginc.com
+Copyright (c) 2014-2016 CD Industrial Group Inc. http://www.cdiginc.com
