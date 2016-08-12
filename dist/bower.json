@@ -6,10 +6,10 @@
     "cd-map": "cdig/cd-map#v2",
     "cd-module": "cdig/cd-module#v3",
     "cd-reset": "cdig/cd-reset#v3",
-    "editor": "cdig/editor#v2",
+    "editor": "cdig/editor#v3",
     "lbs-pack": "cdig/lbs-pack#v2",
     "piece-it-together": "cdig/piece-it-together#v2",
-    "q-n-eh": "cdig/q-n-eh#v2",
+    "q-n-eh": "cdig/q-n-eh#v3",
     "take-and-make": "cdig/take-and-make#v3"
   },
   "main": [],
