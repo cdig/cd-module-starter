@@ -31,6 +31,7 @@ paths =
     public: "public/**/*.{#{assetTypes}}"
     source: [
       "source/**/*.{#{assetTypes}}"
+      "source/**/*.html" # Support for SVGA
       "bower_components/*/pack/**/*.{#{assetTypes}}"
     ]
   coffee:
