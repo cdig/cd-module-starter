@@ -8,7 +8,7 @@
     "chalk": "latest",
     "coffee-script": "latest",
     "del": "latest",
-    "gulp": "latest",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "latest",
     "gulp-coffee": "latest",
     "gulp-concat": "latest",
@@ -20,8 +20,7 @@
     "gulp-sass": "latest",
     "gulp-shell": "latest",
     "main-bower-files": "latest",
-    "path-exists": "latest",
-    "run-sequence": "latest"
+    "path-exists": "latest"
   },
   "license": "UNLICENSED",
   "private": true
