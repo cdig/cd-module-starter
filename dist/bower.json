@@ -9,7 +9,6 @@
     "editor": "cdig/editor#v3",
     "lbs-pack": "cdig/lbs-pack#v2",
     "piece-it-together": "cdig/piece-it-together#v2",
-    "q-n-eh": "cdig/q-n-eh#v3",
     "take-and-make": "cdig/take-and-make#v3"
   },
   "main": [],
