@@ -102,9 +102,6 @@ gulp.task "assets", ()->
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.{#{assetTypes}}"
-    .pipe gulp_notify
-      title: "👍"
-      message: "Assets"
 
 
 gulp.task "coffee", ()->
