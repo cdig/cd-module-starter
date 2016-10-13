@@ -8,7 +8,7 @@
     "cd-reset": "cdig/cd-reset#v3",
     "editor": "cdig/editor#v3",
     "lbs-pack": "cdig/lbs-pack#v2",
-    "piece-it-together": "cdig/piece-it-together#v2",
+    "piece-it-together": "cdig/piece-it-together#v3",
     "take-and-make": "cdig/take-and-make#v3"
   },
   "main": [],
