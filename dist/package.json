@@ -20,8 +20,9 @@
     "gulp-replace": "latest",
     "gulp-sass": "latest",
     "gulp-shell": "latest",
-    "main-bower-files": "latest",
-    "path-exists": "latest"
+    "gulp-svgmin": "latest",
+    "gulp-uglify": "latest",
+    "main-bower-files": "latest"
   },
   "license": "UNLICENSED",
   "private": true
