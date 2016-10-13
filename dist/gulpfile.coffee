@@ -15,43 +15,38 @@ gulp_replace = require "gulp-replace"
 gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
 # gulp_sourcemaps = require "gulp-sourcemaps" # Uncomment and npm install for debug
+gulp_svgmin = require "gulp-svgmin"
+gulp_uglify = require "gulp-uglify"
 # gulp_using = require "gulp-using" # Uncomment and npm install for debug
 main_bower_files = require "main-bower-files"
-path_exists = require("path-exists").sync
 
 
 # CONFIG ##########################################################################################
 
 
-assetTypes = "cdig,gif,ico,jpeg,jpg,json,m4v,mp3,mp4,pdf,png,svg,swf,txt,woff,woff2"
+assetTypes = "cdig,gif,ico,jpeg,jpg,json,m4v,mp3,mp4,pdf,png,swf,txt,woff,woff2"
 
 
 paths =
-  assets:
-    public: "public/**/*.{#{assetTypes}}"
-    source: [
-      "source/**/*.{#{assetTypes}}"
-      "source/**/*.html" # Support for SVGA
-      "bower_components/*/pack/**/*.{#{assetTypes}}"
-    ]
-  coffee:
-    source: [
-      "bower_components/**/pack/**/*.coffee"
-      "source/**/*.coffee"
-    ]
-    watch: "{source,bower_components}/**/*.coffee"
+  assets: [
+    "source/**/*.{#{assetTypes}}"
+    "source/**/*.html" # Support for SVGA
+    "!source/pages/*.html" # But don't match pages
+    "bower_components/*/pack/**/*.{#{assetTypes}}"
+  ]
+  coffee: [
+    "bower_components/**/pack/**/*.coffee"
+    "source/**/*.coffee"
+  ]
   dev: "dev/**/*"
-  html:
-    pack: "bower_components/**/pack/**/*.html"
+  html: "bower_components/**/pack/**/*.html"
   kit:
     source: "source/index.kit"
     watch: "{source,bower_components}/**/*.{kit,html}"
-  libs:
-    source: [
-      "public/_libs/bower/angular/angular*.js"
-      "public/_libs/bower/take-and-make/dist/take-and-make.js"
-      "public/_libs/**/*"
-    ]
+  libs: [
+    "public/_libs/bower/take-and-make/dist/take-and-make.js"
+    "public/_libs/**/*"
+  ]
   scss:
     source: [
       "bower_components/cd-reset/dist/cd-reset.css"
@@ -61,6 +56,7 @@ paths =
       "source/**/*.scss"
     ]
     watch: "{source,bower_components}/**/*.scss"
+  svg: "source/**/*.svg"
 
 
 gulp_notify.logLevel(0)
@@ -93,8 +89,7 @@ logAndKillError = (err)->
 
 
 gulp.task "assets", ()->
-  gulp.src paths.assets.source
-    # .pipe gulp_using() # Uncomment for debug
+  gulp.src paths.assets
     .pipe gulp_rename (path)->
       path.dirname = path.dirname.replace /.*\/pack\//, ''
       path
@@ -105,12 +100,12 @@ gulp.task "assets", ()->
 
 
 gulp.task "coffee", ()->
-  gulp.src paths.coffee.source
-    # .pipe gulp_using() # Uncomment for debug
+  gulp.src paths.coffee
     # .pipe gulp_sourcemaps.init() # Uncomment for debug
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
+    .pipe gulp_uglify()
     # .pipe gulp_sourcemaps.write "." # Uncomment for debug
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
@@ -131,22 +126,20 @@ gulp.task "dev", gulp_shell.task [
 
 gulp.task "libs:bower", ()->
   gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
-    # .pipe gulp_using() # Uncomment for debug
     .on "error", logAndKillError
     .pipe gulp.dest "public/_libs/bower"
 
 
 gulp.task "kit", ()->
-  libs = gulp.src paths.libs.source, read: false
+  libs = gulp.src paths.libs, read: false
   # html = gulp.src main_bower_files("**/*.html")
-  pack = gulp.src paths.html.pack
+  pack = gulp.src paths.html
   
   # libs.pipe(gulp_using()) # Uncomment for debug
   # html.pipe(gulp_using()) # Uncomment for debug
   # pack.pipe(gulp_using()) # Uncomment for debug
 
   gulp.src paths.kit.source
-    # .pipe gulp_using() # Uncomment for debug
     .pipe gulp_kit()
     .on "error", logAndKillError
     .pipe gulp_inject libs, name: "bower", ignorePath: "/public/", addRootSlash: false
@@ -166,7 +159,6 @@ gulp.task "reload", (cb)->
 
 gulp.task "scss", ()->
   gulp.src paths.scss.source
-    # .pipe gulp_using() # Uncomment for debug
     # .pipe gulp_sourcemaps.init() # Uncomment for debug
     .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
@@ -187,6 +179,109 @@ gulp.task "scss", ()->
       message: "SCSS"
 
 
+
+gulp.task "svg", ()->
+  gulp.src paths.svg
+    .on "error", logAndKillError
+    .pipe gulp_replace "Lato_Regular_Regular", "Lato, sans-serif"
+    .pipe gulp_replace "Lato_Bold_Bold", "Lato, sans-serif"
+    .pipe gulp_replace "MEMBER_", "M_"
+    .pipe gulp_replace "Layer", "L"
+    .pipe gulp_replace "STROKES", "S"
+    .pipe gulp_replace "FILL", "F"
+    .pipe gulp_replace "writing-mode=\"lr\"", ""
+    .pipe gulp_replace "baseline-shift=\"0%\"", ""
+    .pipe gulp_replace "kerning=\"0\"", ""
+    .pipe gulp_replace "xml:space=\"preserve\"", ""
+    .pipe gulp_replace "fill-opacity=\".99\"", "" # This is close enough to 1 that it's not worth the cost
+    .pipe gulp_svgmin (file)->
+      full: true
+      plugins: [
+        {cleanupAttrs: true}
+        {removeDoctype: true}
+        {removeXMLProcInst: true}
+        {removeComments: true}
+        {removeMetadata: true}
+        {removeTitle: true} # disabled by default
+        {removeDesc: true}
+        {removeUselessDefs: true}
+        # {removeXMLNS: true} # for inline SVG, disabled by default
+        {removeEditorsNSData: true}
+        {removeEmptyAttrs: true}
+        {removeHiddenElems: true}
+        {removeEmptyText: true}
+        {removeEmptyContainers: true}
+        # {removeViewBox: true} # disabled by default
+        {cleanUpEnableBackground: true}
+        {minifyStyles: true}
+        {convertStyleToAttrs: true}
+        {convertColors:
+          names2hex: true
+          rgb2hex: true
+        }
+        {convertPathData:
+          applyTransforms: true
+          applyTransformsStroked: true
+          makeArcs: {
+            threshold: 20 # coefficient of rounding error
+            tolerance: 10  # percentage of radius
+          }
+          straightCurves: true
+          lineShorthands: true
+          curveSmoothShorthands: true
+          floatPrecision: 2
+          transformPrecision: 2
+          removeUseless: true
+          collapseRepeated: true
+          utilizeAbsolute: true
+          leadingZero: true
+          negativeExtraSpace: true
+        }
+        {convertTransform:
+          convertToShorts: true
+          degPrecision: 2 # transformPrecision (or matrix precision)
+          floatPrecision: 2
+          transformPrecision: 2
+          matrixToTransform: true # Setting to true causes an error because of the inverse() call in SVG Mask
+          shortTranslate: true
+          shortScale: true
+          shortRotate: true
+          removeUseless: true
+          collapseIntoOne: true
+          leadingZero: true
+          negativeExtraSpace: false
+        }
+        {removeUnknownsAndDefaults: true}
+        {removeNonInheritableGroupAttrs: true}
+        {removeUselessStrokeAndFill: true}
+        {removeUnusedNS: true}
+        {cleanupIDs: true}
+        {cleanupNumericValues:
+          floatPrecision: 2
+        }
+        {cleanupListOfValues:
+          floatPrecision: 2
+        }
+        {moveElemsAttrsToGroup: true}
+        {moveGroupAttrsToElems: true}
+        {collapseGroups: true}
+        {removeRasterImages: true} # disabled by default
+        {mergePaths: true}
+        {convertShapeToPath: true}
+        {sortAttrs: true} # disabled by default
+        # {transformsWithOnePath: true} # disabled by default
+        # {removeDimensions: true} # disabled by default
+        # {removeAttrs: attrs: []} # disabled by default
+        # {removeElementsByAttr: id: [], class: []} # disabled by default
+        # {addClassesToSVGElement: classNames: []} # disabled by default
+        # {addAttributesToSVGElement: attributes: []} # disabled by default
+        # {removeStyleElement: true} # disabled by default
+        
+      ]
+    .pipe gulp.dest "public"
+    
+
+
 gulp.task "serve", ()->
   browser_sync.init
     ghostMode: false
@@ -199,17 +294,18 @@ gulp.task "serve", ()->
 
 
 gulp.task "watch", (cb)->
-  gulp.watch paths.assets.source, gulp.series "assets"
-  gulp.watch paths.coffee.watch, gulp.series "coffee"
+  gulp.watch paths.assets, gulp.series "assets"
+  gulp.watch paths.coffee, gulp.series "coffee"
   gulp.watch paths.dev, gulp.series "dev"
   gulp.watch paths.kit.watch, gulp.series "kit", "reload"
   gulp.watch paths.scss.watch, gulp.series "scss"
+  gulp.watch paths.svg, gulp.series "svg", "reload"
   cb()
 
 
 # This task is also used from the command line, for bulk updates
 gulp.task "recompile",
-  gulp.series "del:public", "dev", "coffee", "scss", "assets", "libs:bower", "kit"
+  gulp.series "del:public", "dev", "coffee", "scss", "svg", "assets", "libs:bower", "kit"
 
 
 gulp.task "default",
