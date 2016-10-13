@@ -4,6 +4,7 @@ chalk = require "chalk"
 del = require "del"
 gulp = require "gulp"
 gulp_autoprefixer = require "gulp-autoprefixer"
+gulp_changed = require "gulp-changed"
 gulp_coffee = require "gulp-coffee"
 gulp_concat = require "gulp-concat"
 gulp_inject = require "gulp-inject"
@@ -97,6 +98,7 @@ gulp.task "assets", ()->
     .pipe gulp_rename (path)->
       path.dirname = path.dirname.replace /.*\/pack\//, ''
       path
+    .pipe gulp_changed "public"
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.{#{assetTypes}}"
