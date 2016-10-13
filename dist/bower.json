@@ -3,7 +3,7 @@
   "description": "An LBS Module Project",
   "dependencies": {
     "cd-library": "cdig/cd-library#v3",
-    "cd-map": "cdig/cd-map#v2",
+    "cd-map": "cdig/cd-map#v3",
     "cd-module": "cdig/cd-module#v3",
     "cd-reset": "cdig/cd-reset#v3",
     "editor": "cdig/editor#v3",
