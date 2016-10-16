@@ -93,10 +93,10 @@ gulp.task "assets", ()->
     .pipe gulp_rename (path)->
       path.dirname = path.dirname.replace /.*\/pack\//, ''
       path
-    .pipe gulp_changed "public"
+    .pipe gulp_changed "public", hasChanged: gulp_changed.compareSha1Digest
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
-      match: "**/*.{#{assetTypes}}"
+      match: "**/*.{#{assetTypes},html}"
 
 
 gulp.task "coffee", ()->
