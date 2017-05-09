@@ -2,9 +2,7 @@
   "name": "cd-module-project",
   "description": "An LBS Module Project",
   "dependencies": {
-    "cd-module": "cdig/cd-module#v4",
-    "cd-reset": "cdig/cd-reset#v4",
-    "take-and-make": "cdig/take-and-make#v4"
+    "cd-module": "cdig/cd-module#v4"
   },
   "main": [],
   "ignore": [],
