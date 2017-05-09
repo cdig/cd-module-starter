@@ -18,6 +18,7 @@
     "gulp-notify": "latest",
     "gulp-rename": "latest",
     "gulp-replace": "latest",
+    "gulp-rev-all": "latest",
     "gulp-sass": "latest",
     "gulp-shell": "latest",
     "gulp-svgmin": "latest",
