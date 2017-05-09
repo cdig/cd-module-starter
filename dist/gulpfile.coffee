@@ -12,6 +12,7 @@ gulp_kit = require "gulp-kit"
 gulp_notify = require "gulp-notify"
 gulp_rename = require "gulp-rename"
 gulp_replace = require "gulp-replace"
+gulp_rev_all = require "gulp-rev-all"
 gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
 # gulp_sourcemaps = require "gulp-sourcemaps" # Uncomment and npm install for debug
