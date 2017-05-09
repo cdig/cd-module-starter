@@ -2,14 +2,12 @@
   "name": "cd-module-project",
   "description": "An LBS Module Project",
   "dependencies": {
-    "cd-library": "cdig/cd-library#v3",
     "cd-map": "cdig/cd-map#v3",
     "cd-module": "cdig/cd-module#v3",
     "cd-reset": "cdig/cd-reset#v3",
     "editor": "cdig/editor#v3",
-    "lbs-pack": "cdig/lbs-pack#v3",
     "piece-it-together": "cdig/piece-it-together#v3",
-    "take-and-make": "cdig/take-and-make#v3"
+    "take-and-make": "cdig/take-and-make#v4"
   },
   "main": [],
   "ignore": [],
