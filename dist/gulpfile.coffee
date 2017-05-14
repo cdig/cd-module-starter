@@ -15,17 +15,23 @@ gulp_replace = require "gulp-replace"
 gulp_rev_all = require "gulp-rev-all"
 gulp_sass = require "gulp-sass"
 gulp_shell = require "gulp-shell"
-# gulp_sourcemaps = require "gulp-sourcemaps" # Uncomment and npm install for debug
+gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_svgmin = require "gulp-svgmin"
 gulp_uglify = require "gulp-uglify"
 # gulp_using = require "gulp-using" # Uncomment and npm install for debug
 main_bower_files = require "main-bower-files"
 
 
+# STATE ###########################################################################################
+
+
+prod = false
+
+
 # CONFIG ##########################################################################################
 
 
-assetTypes = "cdig,gif,ico,jpeg,jpg,json,m4v,mp3,mp4,pdf,png,swf,txt,woff,woff2"
+assetTypes = "cdig,gif,jpeg,jpg,json,m4v,mp3,mp4,pdf,png,swf,txt,woff,woff2"
 
 
 paths =
@@ -48,15 +54,12 @@ paths =
     "public/_libs/bower/take-and-make/dist/take-and-make.js"
     "public/_libs/**/*"
   ]
-  scss:
-    source: [
-      "bower_components/cd-reset/dist/cd-reset.css"
-      "bower_components/**/pack/**/vars.scss"
-      "source/**/vars.scss"
-      "bower_components/**/pack/**/*.scss"
-      "source/**/*.scss"
-    ]
-    watch: "{source,bower_components}/**/*.scss"
+  scss: [
+    "bower_components/**/pack/**/vars.scss"
+    "source/**/vars.scss"
+    "bower_components/**/pack/**/*.scss"
+    "source/**/*.scss"
+  ]
   svg: "source/**/*.svg"
 
 
@@ -86,6 +89,14 @@ logAndKillError = (err)->
   @emit "end"
 
 
+cond = (predicate, action)->
+  if predicate
+    action()
+  else
+    # This is what we use as a noop *shrug*
+    gulp_rename (p)-> p
+
+
 # TASKS: MODULE COMPILATION #######################################################################
 
 
@@ -102,12 +113,12 @@ gulp.task "assets", ()->
 
 gulp.task "coffee", ()->
   gulp.src paths.coffee
-    # .pipe gulp_sourcemaps.init() # Uncomment for debug
+    .pipe cond !prod, ()-> gulp_sourcemaps.init()
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
     .pipe gulp_uglify()
-    # .pipe gulp_sourcemaps.write "." # Uncomment for debug
+    .pipe cond !prod, ()-> gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.js"
@@ -159,8 +170,8 @@ gulp.task "reload", (cb)->
 
 
 gulp.task "scss", ()->
-  gulp.src paths.scss.source
-    # .pipe gulp_sourcemaps.init() # Uncomment for debug
+  gulp.src paths.scss
+    .pipe cond !prod, ()-> gulp_sourcemaps.init()
     .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
       errLogToConsole: true
@@ -168,10 +179,10 @@ gulp.task "scss", ()->
       precision: 1
     .on "error", logAndKillError
     .pipe gulp_autoprefixer
-      browsers: "last 5 Chrome versions, last 5 ff versions, IE >= 10, Safari >= 8, iOS >= 8"
+      browsers: "Android >= 4.4, Chrome >= 44, ChromeAndroid >= 44, Edge >= 12, ExplorerMobile >= 11, IE >= 11, Firefox >= 40, iOS >= 9, Safari >= 9"
       cascade: false
       remove: false
-    # .pipe gulp_sourcemaps.write "." # Uncomment for debug
+    .pipe cond !prod, ()-> gulp_sourcemaps.write "."
     .pipe gulp.dest "public"
     .pipe browser_sync.stream
       match: "**/*.css"
@@ -299,7 +310,7 @@ gulp.task "watch", (cb)->
   gulp.watch paths.coffee, gulp.series "coffee"
   gulp.watch paths.dev, gulp.series "dev"
   gulp.watch paths.kit.watch, gulp.series "kit", "reload"
-  gulp.watch paths.scss.watch, gulp.series "scss"
+  gulp.watch paths.scss, gulp.series "scss"
   gulp.watch paths.svg, gulp.series "svg", "reload"
   cb()
 
