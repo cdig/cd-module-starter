@@ -32,36 +32,38 @@ watching = false
 # CONFIG ##########################################################################################
 
 
-assetTypes = "cdig,gif,jpeg,jpg,json,m4v,mp3,mp4,pdf,png,swf,txt,woff,woff2"
+# Assets that should just be copied straight from source to public with no processing
+simpleAssetTypes = "cdig,gif,jpeg,jpg,json,m4v,min.html,mp3,mp4,pdf,png,swf,txt,woff,woff2"
 
 
 paths =
-  assets: [
-    "source/**/*.{#{assetTypes}}"
-    "source/**/*.html" # Support for SVGA
-    "!source/pages/*.html" # But don't match pages
-    "bower_components/*/pack/**/*.{#{assetTypes}}"
-  ]
   coffee: [
     "bower_components/**/pack/**/*.coffee"
     "source/**/*.coffee"
   ]
   dev: "dev/**/*"
-  html: "bower_components/**/pack/**/*.html"
   kit:
+    libs: [
+      "public/_libs/take-and-make/dist/take-and-make.js"
+      "public/_libs/**/*.{css,js}"
+    ]
+    packHtml: "bower_components/**/pack/**/*.html"
     source: "source/index.kit"
     watch: "{source,bower_components}/**/*.{kit,html}"
-  libs: [
-    "public/_libs/bower/take-and-make/dist/take-and-make.js"
-    "public/_libs/**/*"
-  ]
   scss: [
     "bower_components/**/pack/**/vars.scss"
     "source/**/vars.scss"
     "bower_components/**/pack/**/*.scss"
     "source/**/*.scss"
   ]
-  svg: "source/**/*.svg"
+  simpleAssets: [
+    "bower_components/*/pack/**/*.{#{simpleAssetTypes}}"
+    "source/**/*.{#{simpleAssetTypes}}"
+  ]
+  svg: [
+    "bower_components/**/pack/**/*.svg"
+    "source/**/*.svg"
+  ]
 
 
 svgConfig =
@@ -203,17 +205,19 @@ notify = (msg)->
       message: msg
 
 
-# TASKS: MODULE COMPILATION #######################################################################
+# TASKS ###########################################################################################
 
 
-gulp.task "assets", ()->
-  gulp.src paths.assets
+# Copy all simple assets in source and bower_component packs to public
+gulp.task "simpleAssets", ()->
+  gulp.src paths.simpleAssets
     .pipe gulp_rename stripPack
     .pipe changed()
     .pipe gulp.dest "public"
-    .pipe stream "**/*.{#{assetTypes},html}"
+    .pipe stream "**/*.{#{simpleAssetTypes},html}"
 
 
+# Compile coffee in source and bower_component packs, with sourcemaps in dev and uglify in prod
 gulp.task "coffee", ()->
   gulp.src paths.coffee
     .pipe initMaps()
@@ -227,44 +231,44 @@ gulp.task "coffee", ()->
     .pipe notify "Coffee"
 
 
-gulp.task "del:public", ()->
+# Delete the public folder
+gulp.task "deletePublic", ()->
   del "public"
 
 
+# Copy cd-reset, normalize-css, and take-and-make to the public/_libs folder
+gulp.task "libs", ()->
+  gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
+    .on "error", logAndKillError
+    .pipe gulp.dest "public/_libs"
+
+
+# Copy items in the dev folder (if it exists) to bower_components
 gulp.task "dev", gulp_shell.task [
   'if [ -d "dev" ]; then rsync --exclude "*/.git/" --delete -ar dev/* bower_components; fi'
 ]
 
 
-gulp.task "libs:bower", ()->
-  gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
-    .on "error", logAndKillError
-    .pipe gulp.dest "public/_libs/bower"
-
-
 gulp.task "kit", ()->
-  libs = gulp.src paths.libs, read: false
-  # html = gulp.src main_bower_files("**/*.html")
-  pack = gulp.src paths.html
-  # libs.pipe(gulp_using()) # Uncomment for debug
-  # html.pipe(gulp_using()) # Uncomment for debug
-  # pack.pipe(gulp_using()) # Uncomment for debug
+  libs = gulp.src paths.kit.libs, read: false
+  packHtml = gulp.src paths.kit.packHtml
   gulp.src paths.kit.source
     .pipe gulp_kit()
     .on "error", logAndKillError
-    .pipe gulp_inject libs, name: "bower", ignorePath: "/public/", addRootSlash: false
-    # .pipe gulp_inject html, name: "bower", transform: fileContents
-    .pipe gulp_inject pack, name: "pack", transform: fileContents
+    .pipe gulp_inject libs, name: "libs", ignorePath: "/public/", addRootSlash: false
+    .pipe gulp_inject packHtml, name: "pack", transform: fileContents
     .pipe gulp_replace "<script src=\"_libs", "<script defer src=\"_libs"
     .pipe gulp.dest "public"
     .pipe notify "HTML"
 
 
+# Reload the browser
 gulp.task "reload", (cb)->
   browser_sync.reload()
   cb()
 
 
+# Compile scss in source and bower_component packs, with sourcemaps in dev and autoprefixer in prod
 gulp.task "scss", ()->
   gulp.src paths.scss
     .pipe initMaps()
@@ -284,6 +288,7 @@ gulp.task "scss", ()->
     .pipe notify "SCSS"
 
 
+# Clean and minify static SVG files in source and bower_component packs
 gulp.task "svg", ()->
   gulp.src paths.svg
     .on "error", logAndKillError
@@ -313,7 +318,7 @@ gulp.task "serve", ()->
 
 gulp.task "watch", (cb)->
   watching = true
-  gulp.watch paths.assets, gulp.series "assets"
+  gulp.watch paths.simpleAssets, gulp.series "simpleAssets"
   gulp.watch paths.coffee, gulp.series "coffee"
   gulp.watch paths.dev, gulp.series "dev"
   gulp.watch paths.kit.watch, gulp.series "kit", "reload"
@@ -323,7 +328,7 @@ gulp.task "watch", (cb)->
 
 
 gulp.task "recompile",
-  gulp.series "del:public", "dev", "coffee", "scss", "svg", "assets", "libs:bower", "kit"
+  gulp.series "deletePublic", "libs", "dev", "simpleAssets", "coffee", "scss", "svg", "kit"
 
 
 gulp.task "default",
