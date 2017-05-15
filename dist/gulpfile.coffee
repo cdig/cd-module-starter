@@ -26,6 +26,7 @@ main_bower_files = require "main-bower-files"
 
 
 prod = false
+watching = false
 
 
 # CONFIG ##########################################################################################
@@ -63,6 +64,87 @@ paths =
   svg: "source/**/*.svg"
 
 
+svgConfig =
+  full: true
+  plugins: [
+    {cleanupAttrs: true}
+    {removeDoctype: true}
+    {removeXMLProcInst: true}
+    {removeComments: true}
+    {removeMetadata: true}
+    {removeTitle: true} # disabled by default
+    {removeDesc: true}
+    {removeUselessDefs: true}
+    # {removeXMLNS: true} # for inline SVG, disabled by default
+    {removeEditorsNSData: true}
+    {removeEmptyAttrs: true}
+    {removeHiddenElems: true}
+    {removeEmptyText: true}
+    {removeEmptyContainers: true}
+    # {removeViewBox: true} # disabled by default
+    {cleanUpEnableBackground: true}
+    {minifyStyles: true}
+    {convertStyleToAttrs: true}
+    {convertColors:
+      names2hex: true
+      rgb2hex: true
+    }
+    {convertPathData:
+      applyTransforms: true
+      applyTransformsStroked: true
+      makeArcs: {
+        threshold: 20 # coefficient of rounding error
+        tolerance: 10  # percentage of radius
+      }
+      straightCurves: true
+      lineShorthands: true
+      curveSmoothShorthands: true
+      floatPrecision: 2
+      transformPrecision: 2
+      removeUseless: true
+      collapseRepeated: true
+      utilizeAbsolute: true
+      leadingZero: true
+      negativeExtraSpace: true
+    }
+    {convertTransform:
+      convertToShorts: true
+      degPrecision: 2 # transformPrecision (or matrix precision)
+      floatPrecision: 2
+      transformPrecision: 2
+      matrixToTransform: true # Setting to true causes an error because of the inverse() call in SVG Mask
+      shortTranslate: true
+      shortScale: true
+      shortRotate: true
+      removeUseless: true
+      collapseIntoOne: true
+      leadingZero: true
+      negativeExtraSpace: false
+    }
+    {removeUnknownsAndDefaults: true}
+    {removeNonInheritableGroupAttrs: true}
+    {removeUselessStrokeAndFill: true}
+    {removeUnusedNS: true}
+    {cleanupIDs: true}
+    {cleanupNumericValues: floatPrecision: 2}
+    {cleanupListOfValues: floatPrecision: 2}
+    {moveElemsAttrsToGroup: true}
+    {moveGroupAttrsToElems: true}
+    {collapseGroups: true}
+    {removeRasterImages: true} # disabled by default
+    {mergePaths: true}
+    {convertShapeToPath: true}
+    {sortAttrs: true} # disabled by default
+    # {transformsWithOnePath: true} # disabled by default
+    # {removeDimensions: true} # disabled by default
+    # {removeAttrs: attrs: []} # disabled by default
+    # {removeElementsByAttr: id: [], class: []} # disabled by default
+    # {addClassesToSVGElement: classNames: []} # disabled by default
+    # {addAttributesToSVGElement: attributes: []} # disabled by default
+    # {removeStyleElement: true} # disabled by default
+  ]
+
+
 gulp_notify.logLevel(0)
 gulp_notify.on "click", ()->
   do gulp_shell.task "open -a Terminal"
@@ -73,7 +155,6 @@ gulp_notify.on "click", ()->
 
 fileContents = (filePath, file)->
   file.contents.toString "utf8"
-
 
 logAndKillError = (err)->
   beepbeep()
@@ -88,7 +169,6 @@ logAndKillError = (err)->
     )(err)
   @emit "end"
 
-
 cond = (predicate, action)->
   if predicate
     action()
@@ -96,35 +176,55 @@ cond = (predicate, action)->
     # This is what we use as a noop *shrug*
     gulp_rename (p)-> p
 
+changed = ()->
+  cond watching, ()->
+    gulp_changed "public", hasChanged: gulp_changed.compareSha1Digest
+
+stream = (glob)->
+  cond watching, ()->
+    browser_sync.stream match: glob
+
+stripPack = (path)->
+  path.dirname = path.dirname.replace /.*\/pack\//, ''
+  path
+
+initMaps = ()->
+  cond !prod, ()->
+    gulp_sourcemaps.init()
+
+emitMaps = ()->
+  cond !prod, ()->
+    gulp_sourcemaps.write "."
+
+notify = (msg)->
+  cond watching, ()->
+    gulp_notify
+      title: "👍"
+      message: msg
+
 
 # TASKS: MODULE COMPILATION #######################################################################
 
 
 gulp.task "assets", ()->
   gulp.src paths.assets
-    .pipe gulp_rename (path)->
-      path.dirname = path.dirname.replace /.*\/pack\//, ''
-      path
-    .pipe gulp_changed "public", hasChanged: gulp_changed.compareSha1Digest
+    .pipe gulp_rename stripPack
+    .pipe changed()
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream
-      match: "**/*.{#{assetTypes},html}"
+    .pipe stream "**/*.{#{assetTypes},html}"
 
 
 gulp.task "coffee", ()->
   gulp.src paths.coffee
-    .pipe cond !prod, ()-> gulp_sourcemaps.init()
+    .pipe initMaps()
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
     .on "error", logAndKillError
-    .pipe gulp_uglify()
-    .pipe cond !prod, ()-> gulp_sourcemaps.write "."
+    .pipe cond prod, ()-> gulp_uglify()
+    .pipe emitMaps()
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream
-      match: "**/*.js"
-    .pipe gulp_notify
-      title: "👍"
-      message: "Coffee"
+    .pipe stream "**/*.js"
+    .pipe notify "Coffee"
 
 
 gulp.task "del:public", ()->
@@ -146,11 +246,9 @@ gulp.task "kit", ()->
   libs = gulp.src paths.libs, read: false
   # html = gulp.src main_bower_files("**/*.html")
   pack = gulp.src paths.html
-  
   # libs.pipe(gulp_using()) # Uncomment for debug
   # html.pipe(gulp_using()) # Uncomment for debug
   # pack.pipe(gulp_using()) # Uncomment for debug
-
   gulp.src paths.kit.source
     .pipe gulp_kit()
     .on "error", logAndKillError
@@ -159,9 +257,7 @@ gulp.task "kit", ()->
     .pipe gulp_inject pack, name: "pack", transform: fileContents
     .pipe gulp_replace "<script src=\"_libs", "<script defer src=\"_libs"
     .pipe gulp.dest "public"
-    .pipe gulp_notify
-      title: "👍"
-      message: "HTML"
+    .pipe notify "HTML"
 
 
 gulp.task "reload", (cb)->
@@ -171,25 +267,21 @@ gulp.task "reload", (cb)->
 
 gulp.task "scss", ()->
   gulp.src paths.scss
-    .pipe cond !prod, ()-> gulp_sourcemaps.init()
+    .pipe initMaps()
     .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
       errLogToConsole: true
       outputStyle: "compressed"
       precision: 1
     .on "error", logAndKillError
-    .pipe gulp_autoprefixer
+    .pipe cond prod, ()-> gulp_autoprefixer
       browsers: "Android >= 4.4, Chrome >= 44, ChromeAndroid >= 44, Edge >= 12, ExplorerMobile >= 11, IE >= 11, Firefox >= 40, iOS >= 9, Safari >= 9"
       cascade: false
       remove: false
-    .pipe cond !prod, ()-> gulp_sourcemaps.write "."
+    .pipe emitMaps()
     .pipe gulp.dest "public"
-    .pipe browser_sync.stream
-      match: "**/*.css"
-    .pipe gulp_notify
-      title: "👍"
-      message: "SCSS"
-
+    .pipe stream "**/*.css"
+    .pipe notify "SCSS"
 
 
 gulp.task "svg", ()->
@@ -205,107 +297,22 @@ gulp.task "svg", ()->
     .pipe gulp_replace "baseline-shift=\"0%\"", ""
     .pipe gulp_replace "kerning=\"0\"", ""
     .pipe gulp_replace "xml:space=\"preserve\"", ""
-    .pipe gulp_replace "fill-opacity=\".99\"", "" # This is close enough to 1 that it's not worth the cost
-    .pipe gulp_svgmin (file)->
-      full: true
-      plugins: [
-        {cleanupAttrs: true}
-        {removeDoctype: true}
-        {removeXMLProcInst: true}
-        {removeComments: true}
-        {removeMetadata: true}
-        {removeTitle: true} # disabled by default
-        {removeDesc: true}
-        {removeUselessDefs: true}
-        # {removeXMLNS: true} # for inline SVG, disabled by default
-        {removeEditorsNSData: true}
-        {removeEmptyAttrs: true}
-        {removeHiddenElems: true}
-        {removeEmptyText: true}
-        {removeEmptyContainers: true}
-        # {removeViewBox: true} # disabled by default
-        {cleanUpEnableBackground: true}
-        {minifyStyles: true}
-        {convertStyleToAttrs: true}
-        {convertColors:
-          names2hex: true
-          rgb2hex: true
-        }
-        {convertPathData:
-          applyTransforms: true
-          applyTransformsStroked: true
-          makeArcs: {
-            threshold: 20 # coefficient of rounding error
-            tolerance: 10  # percentage of radius
-          }
-          straightCurves: true
-          lineShorthands: true
-          curveSmoothShorthands: true
-          floatPrecision: 2
-          transformPrecision: 2
-          removeUseless: true
-          collapseRepeated: true
-          utilizeAbsolute: true
-          leadingZero: true
-          negativeExtraSpace: true
-        }
-        {convertTransform:
-          convertToShorts: true
-          degPrecision: 2 # transformPrecision (or matrix precision)
-          floatPrecision: 2
-          transformPrecision: 2
-          matrixToTransform: true # Setting to true causes an error because of the inverse() call in SVG Mask
-          shortTranslate: true
-          shortScale: true
-          shortRotate: true
-          removeUseless: true
-          collapseIntoOne: true
-          leadingZero: true
-          negativeExtraSpace: false
-        }
-        {removeUnknownsAndDefaults: true}
-        {removeNonInheritableGroupAttrs: true}
-        {removeUselessStrokeAndFill: true}
-        {removeUnusedNS: true}
-        {cleanupIDs: true}
-        {cleanupNumericValues:
-          floatPrecision: 2
-        }
-        {cleanupListOfValues:
-          floatPrecision: 2
-        }
-        {moveElemsAttrsToGroup: true}
-        {moveGroupAttrsToElems: true}
-        {collapseGroups: true}
-        {removeRasterImages: true} # disabled by default
-        {mergePaths: true}
-        {convertShapeToPath: true}
-        {sortAttrs: true} # disabled by default
-        # {transformsWithOnePath: true} # disabled by default
-        # {removeDimensions: true} # disabled by default
-        # {removeAttrs: attrs: []} # disabled by default
-        # {removeElementsByAttr: id: [], class: []} # disabled by default
-        # {addClassesToSVGElement: classNames: []} # disabled by default
-        # {addAttributesToSVGElement: attributes: []} # disabled by default
-        # {removeStyleElement: true} # disabled by default
-        
-      ]
+    .pipe gulp_replace "fill-opacity=\".99\"", "" # This is close enough to 1 that it's not worth the perf cost
+    .pipe gulp_svgmin (file)-> svgConfig
     .pipe gulp.dest "public"
-    
 
 
 gulp.task "serve", ()->
   browser_sync.init
     ghostMode: false
     notify: false
-    server:
-      baseDir: "public"
+    server: baseDir: "public"
     ui: false
-    watchOptions:
-      ignoreInitial: true
+    watchOptions: ignoreInitial: true
 
 
 gulp.task "watch", (cb)->
+  watching = true
   gulp.watch paths.assets, gulp.series "assets"
   gulp.watch paths.coffee, gulp.series "coffee"
   gulp.watch paths.dev, gulp.series "dev"
@@ -315,7 +322,6 @@ gulp.task "watch", (cb)->
   cb()
 
 
-# This task is also used from the command line, for bulk updates
 gulp.task "recompile",
   gulp.series "del:public", "dev", "coffee", "scss", "svg", "assets", "libs:bower", "kit"
 
