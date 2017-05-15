@@ -33,10 +33,14 @@ watching = false
 
 
 # Assets that should just be copied straight from source to public with no processing
-simpleAssetTypes = "cdig,gif,jpeg,jpg,json,m4v,min.html,mp3,mp4,pdf,png,swf,txt,woff,woff2"
+basicAssetTypes = "cdig,gif,jpeg,jpg,json,m4v,min.html,mp3,mp4,pdf,png,swf,txt,woff,woff2"
 
 
 paths =
+  basicAssets: [
+    "bower_components/*/pack/**/*.{#{basicAssetTypes}}"
+    "source/**/*.{#{basicAssetTypes}}"
+  ]
   coffee: [
     "bower_components/**/pack/**/*.coffee"
     "source/**/*.coffee"
@@ -55,10 +59,6 @@ paths =
     "source/**/vars.scss"
     "bower_components/**/pack/**/*.scss"
     "source/**/*.scss"
-  ]
-  simpleAssets: [
-    "bower_components/*/pack/**/*.{#{simpleAssetTypes}}"
-    "source/**/*.{#{simpleAssetTypes}}"
   ]
   svg: [
     "bower_components/**/pack/**/*.svg"
@@ -208,13 +208,13 @@ notify = (msg)->
 # TASKS ###########################################################################################
 
 
-# Copy all simple assets in source and bower_component packs to public
-gulp.task "simpleAssets", ()->
-  gulp.src paths.simpleAssets
+# Copy all basic assets in source and bower_component packs to public
+gulp.task "basicAssets", ()->
+  gulp.src paths.basicAssets
     .pipe gulp_rename stripPack
     .pipe changed()
     .pipe gulp.dest "public"
-    .pipe stream "**/*.{#{simpleAssetTypes},html}"
+    .pipe stream "**/*.{#{basicAssetTypes},html}"
 
 
 # Compile coffee in source and bower_component packs, with sourcemaps in dev and uglify in prod
@@ -236,13 +236,6 @@ gulp.task "deletePublic", ()->
   del "public"
 
 
-# Copy cd-reset, normalize-css, and take-and-make to the public/_libs folder
-gulp.task "libs", ()->
-  gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
-    .on "error", logAndKillError
-    .pipe gulp.dest "public/_libs"
-
-
 # Copy items in the dev folder (if it exists) to bower_components
 gulp.task "dev", gulp_shell.task [
   'if [ -d "dev" ]; then rsync --exclude "*/.git/" --delete -ar dev/* bower_components; fi'
@@ -260,6 +253,13 @@ gulp.task "kit", ()->
     .pipe gulp_replace "<script src=\"_libs", "<script defer src=\"_libs"
     .pipe gulp.dest "public"
     .pipe notify "HTML"
+
+
+# Copy cd-reset, normalize-css, and take-and-make to the public/_libs folder
+gulp.task "libs", ()->
+  gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
+    .on "error", logAndKillError
+    .pipe gulp.dest "public/_libs"
 
 
 # Reload the browser
@@ -318,7 +318,7 @@ gulp.task "serve", ()->
 
 gulp.task "watch", (cb)->
   watching = true
-  gulp.watch paths.simpleAssets, gulp.series "simpleAssets"
+  gulp.watch paths.basicAssets, gulp.series "basicAssets"
   gulp.watch paths.coffee, gulp.series "coffee"
   gulp.watch paths.dev, gulp.series "dev"
   gulp.watch paths.kit.watch, gulp.series "kit", "reload"
@@ -328,7 +328,7 @@ gulp.task "watch", (cb)->
 
 
 gulp.task "recompile",
-  gulp.series "deletePublic", "libs", "dev", "simpleAssets", "coffee", "scss", "svg", "kit"
+  gulp.series "deletePublic", "dev", "libs", "basicAssets", "coffee", "scss", "svg", "kit"
 
 
 gulp.task "default",
