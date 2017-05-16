@@ -327,7 +327,7 @@ gulp.task "rev", ()->
         gulp_shell.task("mkdir .deploy && touch .deploy/#{name}")() if file.revPathOriginal.indexOf("/public/index.html") > 0
         name
     .pipe gulp_rename (path)->
-      path.dirname = "/v4/#{projectName}"
+      path.dirname = projectName
       path
     .pipe gulp.dest "deploy"
 
