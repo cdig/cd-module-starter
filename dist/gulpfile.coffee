@@ -21,7 +21,6 @@ gulp_uglify = require "gulp-uglify"
 # gulp_using = require "gulp-using" # Uncomment and npm install for debug
 main_bower_files = require "main-bower-files"
 
-
 # STATE ###########################################################################################
 
 
@@ -205,7 +204,7 @@ notify = (msg)->
       message: msg
 
 
-# TASKS ###########################################################################################
+# TASKS: COMPILATION ##############################################################################
 
 
 # Copy all basic assets in source and bower_component packs to public
@@ -229,11 +228,6 @@ gulp.task "coffee", ()->
     .pipe gulp.dest "public"
     .pipe stream "**/*.js"
     .pipe notify "Coffee"
-
-
-# Delete the public folder
-gulp.task "deletePublic", ()->
-  del "public"
 
 
 # Copy items in the dev folder (if it exists) to bower_components
@@ -260,12 +254,6 @@ gulp.task "libs", ()->
   gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
     .on "error", logAndKillError
     .pipe gulp.dest "public/_libs"
-
-
-# Reload the browser
-gulp.task "reload", (cb)->
-  browser_sync.reload()
-  cb()
 
 
 # Compile scss in source and bower_component packs, with sourcemaps in dev and autoprefixer in prod
@@ -307,6 +295,40 @@ gulp.task "svg", ()->
     .pipe gulp.dest "public"
 
 
+# TASKS: SYSTEM ###################################################################################
+
+
+gulp.task "del:public", ()->
+  del "public"
+
+
+gulp.task "del:deploy", ()->
+  del "deploy"
+
+
+gulp.task "prod", (cb)->
+  prod = true
+  cb()
+  
+
+gulp.task "reload", (cb)->
+  browser_sync.reload()
+  cb()
+  
+  
+gulp.task "rev", ()->
+  gulp.src "public/**"
+    .pipe gulp_rev_all.revision
+      transformPath: (rev, source, path)->
+        rev.replace /.*\//, ""
+      transformFilename: (file, hash)->
+        file.revHash + file.extname
+    .pipe gulp_rename (path)->
+      path.dirname = ""
+      path
+    .pipe gulp.dest "deploy"
+  
+
 gulp.task "serve", ()->
   browser_sync.init
     ghostMode: false
@@ -328,7 +350,11 @@ gulp.task "watch", (cb)->
 
 
 gulp.task "recompile",
-  gulp.series "deletePublic", "dev", "libs", "basicAssets", "coffee", "scss", "svg", "kit"
+  gulp.series "del:public", "dev", "libs", "basicAssets", "coffee", "scss", "svg", "kit"
+
+
+gulp.task "prod",
+  gulp.series "prod", "recompile", "del:deploy", "rev"
 
 
 gulp.task "default",
