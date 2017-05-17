@@ -322,7 +322,7 @@ gulp.task "rev", ()->
         rev.replace /.*\//, ""
       transformFilename: (file, hash)->
         name = file.revHash + file.extname
-        gulp_shell.task("rm -r .deploy && mkdir .deploy && touch .deploy/#{name}")() if file.revPathOriginal.indexOf("/public/index.html") > 0
+        gulp_shell.task("rm -rf .deploy && mkdir .deploy && touch .deploy/#{name}")() if file.revPathOriginal.indexOf("/public/index.html") > 0
         name
     .pipe gulp_rename (path)->
       path.dirname = ""
