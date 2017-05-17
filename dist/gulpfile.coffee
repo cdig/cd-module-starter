@@ -26,7 +26,6 @@ main_bower_files = require "main-bower-files"
 
 prod = false
 watching = false
-projectName = null
 
 # CONFIG ##########################################################################################
 
@@ -322,12 +321,11 @@ gulp.task "rev", ()->
       transformPath: (rev, source, path)-> # Applies to file references inside HTML/CSS/JS
         rev.replace /.*\//, ""
       transformFilename: (file, hash)->
-        projectName ?= file.revPathOriginal.split("/public/").shift().split("/").pop()
         name = file.revHash + file.extname
         gulp_shell.task("mkdir .deploy && touch .deploy/#{name}")() if file.revPathOriginal.indexOf("/public/index.html") > 0
         name
     .pipe gulp_rename (path)->
-      path.dirname = projectName
+      path.dirname = ""
       path
     .pipe gulp.dest "deploy"
 
