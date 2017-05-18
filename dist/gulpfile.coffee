@@ -305,7 +305,7 @@ gulp.task "del:deploy", ()->
   del "deploy"
 
 
-gulp.task "prod", (cb)->
+gulp.task "prod:setup", (cb)->
   prod = true
   cb()
   
@@ -355,7 +355,7 @@ gulp.task "recompile",
 
 
 gulp.task "prod",
-  gulp.series "prod", "recompile", "del:deploy", "rev"
+  gulp.series "prod:setup", "recompile", "del:deploy", "rev"
 
 
 gulp.task "default",
