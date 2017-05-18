@@ -45,7 +45,7 @@ paths =
     "bower_components/**/pack/**/*.coffee"
     "source/**/*.coffee"
   ]
-  dev: "dev/**/*"
+  dev: "dev/**/{dist,pack}/**/*"
   kit:
     libs: [
       "public/_libs/take-and-make/dist/take-and-make.js"
