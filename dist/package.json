@@ -5,6 +5,7 @@
   "dependencies": {
     "beepbeep": "latest",
     "browser-sync": "latest",
+    "cd-module": "cdig/cd-module#v4",
     "chalk": "latest",
     "coffee-script": "latest",
     "del": "latest",
