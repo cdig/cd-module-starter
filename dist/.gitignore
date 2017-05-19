@@ -1,8 +1,6 @@
-.deploy
 .DS_Store
 deploy
 dev
-dist
 node_modules
 public
 resources
