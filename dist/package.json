@@ -25,8 +25,7 @@
     "gulp-shell": "latest",
     "gulp-sourcemaps": "latest",
     "gulp-svgmin": "latest",
-    "gulp-uglify": "latest",
-    "main-bower-files": "latest"
+    "gulp-uglify": "latest"
   },
   "license": "UNLICENSED",
   "private": true

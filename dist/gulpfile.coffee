@@ -20,7 +20,6 @@ gulp_sourcemaps = require "gulp-sourcemaps"
 gulp_svgmin = require "gulp-svgmin"
 gulp_uglify = require "gulp-uglify"
 # gulp_using = require "gulp-using" # Uncomment and npm install for debug
-main_bower_files = require "main-bower-files"
 
 
 # STATE ###########################################################################################
@@ -33,36 +32,42 @@ watching = false
 # CONFIG ##########################################################################################
 
 
+# Deps that conform to the Asset Pack pattern (ie: they contain a pack folder)
+assetPacks = "cd-module"
+
 # Assets that should just be copied straight from source to public with no processing
 basicAssetTypes = "cdig,gif,jpeg,jpg,json,m4v,min.html,mp3,mp4,pdf,png,swf,txt,woff,woff2"
 
-
 paths =
   basicAssets: [
-    "bower_components/*/pack/**/*.{#{basicAssetTypes}}"
+    "node_modules/{#{assetPacks}}/pack/**/*.{#{basicAssetTypes}}"
     "source/**/*.{#{basicAssetTypes}}"
   ]
   coffee: [
-    "bower_components/**/pack/**/*.coffee"
+    "node_modules/{#{assetPacks}}/pack/**/*.coffee"
     "source/**/*.coffee"
   ]
   dev: "dev/**/{dist,pack}/**/*"
   kit:
     libs: [
-      "public/_libs/take-and-make/dist/take-and-make.js"
-      "public/_libs/**/*.{css,js}"
+      "node_modules/take-and-make/dist/take-and-make.js"
+      "node_modules/normalize.css/normalize.css"
+      "node_modules/cd-reset/dist/reset.css"
     ]
-    packHtml: "bower_components/**/pack/**/*.html"
+    packHtml: "node_modules/{#{assetPacks}}/pack/**/*.html"
     source: "source/index.kit"
-    watch: "{source,bower_components}/**/*.{kit,html}"
+    watch: [
+      "source/**/*.{kit,html}"
+      "node_modules/{#{assetPacks}}/pack/**/*.{kit,html}"
+    ]
   scss: [
-    "bower_components/**/pack/**/vars.scss"
+    "node_modules/{#{assetPacks}}/pack/**/vars.scss"
     "source/**/vars.scss"
-    "bower_components/**/pack/**/*.scss"
+    "node_modules/{#{assetPacks}}/pack/**/*.scss"
     "source/**/*.scss"
   ]
   svg: [
-    "bower_components/**/pack/**/*.svg"
+    "node_modules/{#{assetPacks}}/pack/**/*.svg"
     "source/**/*.svg"
   ]
 
@@ -209,7 +214,7 @@ notify = (msg)->
 # TASKS: COMPILATION ##############################################################################
 
 
-# Copy all basic assets in source and bower_component packs to public
+# Copy all basic assets in source and asset packs to public
 gulp.task "basicAssets", ()->
   gulp.src paths.basicAssets
     .pipe gulp_rename stripPack
@@ -218,7 +223,7 @@ gulp.task "basicAssets", ()->
     .pipe stream "**/*.{#{basicAssetTypes},html}"
 
 
-# Compile coffee in source and bower_component packs, with sourcemaps in dev and uglify in prod
+# Compile coffee in source and asset packs, with sourcemaps in dev and uglify in prod
 gulp.task "coffee", ()->
   gulp.src paths.coffee
     .pipe gulp_natural_sort()
@@ -233,15 +238,15 @@ gulp.task "coffee", ()->
     .pipe notify "Coffee"
 
 
-# Copy items in the dev folder (if it exists) to bower_components
+# Copy items in the dev folder (if it exists) to node_modules
 gulp.task "dev", gulp_shell.task [
-  'if [ -d "dev" ]; then rsync --exclude "*/.git/" --delete -ar dev/* bower_components; fi'
+  'if [ -d "dev" ]; then rsync --exclude "*/.git/" --delete -ar dev/* node_modules; fi'
 ]
 
 
 gulp.task "kit", ()->
-  libs = gulp.src paths.kit.libs, read: false
-    .pipe gulp_natural_sort()
+  libs = gulp.src paths.kit.libs
+    .pipe gulp.dest "public/_libs"
   packHtml = gulp.src paths.kit.packHtml
     .pipe gulp_natural_sort()
   gulp.src paths.kit.source
@@ -254,14 +259,7 @@ gulp.task "kit", ()->
     .pipe notify "HTML"
 
 
-# Copy cd-reset, normalize-css, and take-and-make to the public/_libs folder
-gulp.task "libs", ()->
-  gulp.src main_bower_files("**/*.{css,js}"), base: "bower_components/"
-    .on "error", logAndKillError
-    .pipe gulp.dest "public/_libs"
-
-
-# Compile scss in source and bower_component packs, with sourcemaps in dev and autoprefixer in prod
+# Compile scss in source and asset packs, with sourcemaps in dev and autoprefixer in prod
 gulp.task "scss", ()->
   gulp.src paths.scss
     # .pipe gulp_natural_sort()
@@ -270,7 +268,7 @@ gulp.task "scss", ()->
     .pipe gulp_sass
       errLogToConsole: true
       outputStyle: "compressed"
-      precision: 1
+      precision: 2
     .on "error", logAndKillError
     .pipe cond prod, ()-> gulp_autoprefixer
       browsers: "Android >= 4.4, Chrome >= 44, ChromeAndroid >= 44, Edge >= 12, ExplorerMobile >= 11, IE >= 11, Firefox >= 40, iOS >= 9, Safari >= 9"
@@ -282,7 +280,7 @@ gulp.task "scss", ()->
     .pipe notify "SCSS"
 
 
-# Clean and minify static SVG files in source and bower_component packs
+# Clean and minify static SVG files in source and asset packs
 gulp.task "svg", ()->
   gulp.src paths.svg
     .on "error", logAndKillError
@@ -358,7 +356,7 @@ gulp.task "watch", (cb)->
 
 
 gulp.task "recompile",
-  gulp.series "del:public", "dev", "libs", "basicAssets", "coffee", "scss", "svg", "kit"
+  gulp.series "del:public", "dev", "basicAssets", "coffee", "scss", "svg", "kit"
 
 
 gulp.task "prod",
