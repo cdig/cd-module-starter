@@ -1,6 +1,5 @@
 .deploy
 .DS_Store
-bower_components
 deploy
 dev
 dist

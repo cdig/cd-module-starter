@@ -54,8 +54,8 @@ paths =
       "node_modules/normalize.css/normalize.css"
       "node_modules/cd-reset/dist/cd-reset.css"
     ]
+    index: "source/index.kit"
     packHtml: "node_modules/#{assetPacks}/pack/**/*.html"
-    source: "source/index.kit"
     watch: [
       "source/**/*.{kit,html}"
       "node_modules/#{assetPacks}/pack/**/*.{kit,html}"
@@ -244,12 +244,12 @@ gulp.task "dev", gulp_shell.task [
 ]
 
 
-gulp.task "kit", ()->
+gulp.task "kit:compile", ()->
   libs = gulp.src paths.kit.libs
     .pipe gulp.dest "public/_libs"
   packHtml = gulp.src paths.kit.packHtml
     .pipe gulp_natural_sort()
-  gulp.src paths.kit.source
+  gulp.src paths.kit.index
     .pipe gulp_kit()
     .on "error", logAndKillError
     .pipe gulp_inject libs, name: "libs", ignorePath: "/public/", addRootSlash: false
@@ -257,6 +257,16 @@ gulp.task "kit", ()->
     .pipe gulp_replace "<script src=\"_libs", "<script defer src=\"_libs"
     .pipe gulp.dest "public"
     .pipe notify "HTML"
+
+
+gulp.task "kit:fix", ()->
+  gulp.src paths.kit.index
+    .pipe gulp_replace "bower_components", "node_modules"
+    .pipe gulp.dest "source"
+
+
+gulp.task "kit",
+  gulp.series "kit:fix", "kit:compile"
 
 
 # Compile scss in source and asset packs, with sourcemaps in dev and autoprefixer in prod
