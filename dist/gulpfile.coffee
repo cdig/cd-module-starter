@@ -9,6 +9,7 @@ gulp_coffee = require "gulp-coffee"
 gulp_concat = require "gulp-concat"
 gulp_inject = require "gulp-inject"
 gulp_kit = require "gulp-kit"
+gulp_natural_sort = require "gulp-natural-sort"
 gulp_notify = require "gulp-notify"
 gulp_rename = require "gulp-rename"
 gulp_replace = require "gulp-replace"
@@ -220,6 +221,7 @@ gulp.task "basicAssets", ()->
 # Compile coffee in source and bower_component packs, with sourcemaps in dev and uglify in prod
 gulp.task "coffee", ()->
   gulp.src paths.coffee
+    .pipe gulp_natural_sort()
     .pipe initMaps()
     .pipe gulp_concat "scripts.coffee"
     .pipe gulp_coffee()
@@ -260,6 +262,7 @@ gulp.task "libs", ()->
 # Compile scss in source and bower_component packs, with sourcemaps in dev and autoprefixer in prod
 gulp.task "scss", ()->
   gulp.src paths.scss
+    .pipe gulp_natural_sort()
     .pipe initMaps()
     .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
