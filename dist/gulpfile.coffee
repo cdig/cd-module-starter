@@ -241,7 +241,9 @@ gulp.task "dev", gulp_shell.task [
 
 gulp.task "kit", ()->
   libs = gulp.src paths.kit.libs, read: false
+    .pipe gulp_natural_sort()
   packHtml = gulp.src paths.kit.packHtml
+    .pipe gulp_natural_sort()
   gulp.src paths.kit.source
     .pipe gulp_kit()
     .on "error", logAndKillError
@@ -262,7 +264,7 @@ gulp.task "libs", ()->
 # Compile scss in source and bower_component packs, with sourcemaps in dev and autoprefixer in prod
 gulp.task "scss", ()->
   gulp.src paths.scss
-    .pipe gulp_natural_sort()
+    # .pipe gulp_natural_sort()
     .pipe initMaps()
     .pipe gulp_concat "styles.scss"
     .pipe gulp_sass
