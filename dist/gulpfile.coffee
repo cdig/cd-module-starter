@@ -40,11 +40,11 @@ basicAssetTypes = "cdig,gif,jpeg,jpg,json,m4v,min.html,mp3,mp4,pdf,png,swf,txt,w
 
 paths =
   basicAssets: [
-    "node_modules/{#{assetPacks}}/pack/**/*.{#{basicAssetTypes}}"
+    "node_modules/#{assetPacks}/pack/**/*.{#{basicAssetTypes}}"
     "source/**/*.{#{basicAssetTypes}}"
   ]
   coffee: [
-    "node_modules/{#{assetPacks}}/pack/**/*.coffee"
+    "node_modules/#{assetPacks}/pack/**/*.coffee"
     "source/**/*.coffee"
   ]
   dev: "dev/**/{dist,pack}/**/*"
@@ -52,22 +52,22 @@ paths =
     libs: [
       "node_modules/take-and-make/dist/take-and-make.js"
       "node_modules/normalize.css/normalize.css"
-      "node_modules/cd-reset/dist/reset.css"
+      "node_modules/cd-reset/dist/cd-reset.css"
     ]
-    packHtml: "node_modules/{#{assetPacks}}/pack/**/*.html"
+    packHtml: "node_modules/#{assetPacks}/pack/**/*.html"
     source: "source/index.kit"
     watch: [
       "source/**/*.{kit,html}"
-      "node_modules/{#{assetPacks}}/pack/**/*.{kit,html}"
+      "node_modules/#{assetPacks}/pack/**/*.{kit,html}"
     ]
   scss: [
-    "node_modules/{#{assetPacks}}/pack/**/vars.scss"
+    "node_modules/#{assetPacks}/pack/**/vars.scss"
     "source/**/vars.scss"
-    "node_modules/{#{assetPacks}}/pack/**/*.scss"
+    "node_modules/#{assetPacks}/pack/**/*.scss"
     "source/**/*.scss"
   ]
   svg: [
-    "node_modules/{#{assetPacks}}/pack/**/*.svg"
+    "node_modules/#{assetPacks}/pack/**/*.svg"
     "source/**/*.svg"
   ]
 
