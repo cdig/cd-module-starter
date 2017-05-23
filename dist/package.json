@@ -2,31 +2,10 @@
   "name": "cd-module-project",
   "version": "4.0.0",
   "description": "An LBS Module Project",
-  "dependencies": {
-    "beepbeep": "latest",
-    "browser-sync": "latest",
-    "cd-module": "cdig/cd-module#v4",
-    "chalk": "latest",
-    "coffee-script": "latest",
-    "del": "latest",
-    "gulp": "github:gulpjs/gulp#4.0",
-    "gulp-autoprefixer": "latest",
-    "gulp-changed": "latest",
-    "gulp-coffee": "latest",
-    "gulp-concat": "latest",
-    "gulp-inject": "latest",
-    "gulp-kit": "latest",
-    "gulp-natural-sort": "latest",
-    "gulp-notify": "latest",
-    "gulp-rename": "latest",
-    "gulp-replace": "latest",
-    "gulp-rev-all": "latest",
-    "gulp-sass": "latest",
-    "gulp-shell": "latest",
-    "gulp-sourcemaps": "latest",
-    "gulp-svgmin": "latest",
-    "gulp-uglify": "latest"
-  },
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "cd-gulp": "cdig/cd-gulp#v4",
+    "cd-module": "cdig/cd-module#v4"
+  }
 }
