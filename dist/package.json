@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "cd-core": "cdig/cd-core",
+    "cd-core": "cdig/cd-core#v4",
     "cd-module": "cdig/cd-module#v4",
     "svga": "cdig/svga#v4"
   }
