@@ -1,4 +1,4 @@
-# cd-module-starter v4
+# cd-module-starter v4.1
 This repo contains the default files needed for a new [cd-module](https://github.com/cdig/cd-module) project.
 It's used by the `cdig` CLI tool.
 
