@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "cd-core": "cdig/cd-core",
-    "cd-module": "cdig/cd-module#v4",
-    "svga": "cdig/svga#v4"
+    "cd-module": "cdig/cd-module#v4-1",
+    "svga": "cdig/svga#v4-1"
   }
 }
